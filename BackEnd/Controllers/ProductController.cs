@@ -1,4 +1,6 @@
-﻿using MiCanastaBE.model;
+﻿using MiCanastaBE.Dto;
+using MiCanastaBE.model;
+using MiCanastaBE.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,32 +12,49 @@ namespace MiCanastaBE.Controllers
     [ApiController]
     [Route("products")]
     public class ProductController : ControllerBase
-    // No olvidar la herencia
     {
-        // Ya que no tenemos DB
-        private static List<Product> Products = new List<Product>
+        private readonly ProductService _productService;
+
+        public ProductController(ProductService ProductService)
         {
-            new Product{ ProductId = 1, Name = "guitarra eléctrica", Price = 1200, Description = "blablabla1" },
-            new Product{ ProductId = 2, Name = "amplificador", Price = 800, Description = "blablabla2" },
-            new Product{ ProductId = 3, Name = "bajo eléctrico", Price = 1100, Description = "blablabla3" },
-            new Product{ ProductId = 4, Name = "ukelele", Price = 500, Description = "blablabla4" }
-        };
+            _productService = ProductService;
+        }
 
         [HttpGet]
-        public ActionResult<List<Product>> GetAll() { return Products; }
+        public ActionResult<List<ProductDto>> GetAll()
+        {
+            return _productService.GetAll();
+        }
 
         [HttpGet("{id}")]
-        public ActionResult<Product> Get(int id)
+        public ActionResult<ProductDto> GetById(int id)
         {
-            return Products.Single(x => x.ProductId == id);
+            return _productService.GetById(id);
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(ProductCreateDto model)
         {
-            product.ProductId = Products.Count() + 1;
-            Products.Add(product);
-            return CreatedAtAction("Get", new { id = product.ProductId }, product);
+            var result = _productService.Create(model);
+            return CreatedAtAction(
+                "GetById",
+                new { id = result.ProductId },
+                result
+            );
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Update(int id, ProductUpdateDto model)
+        {
+            _productService.Update(id, model);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Remove(int id)
+        {
+            _productService.Remove(id);
+            return NoContent();
         }
     }
 }

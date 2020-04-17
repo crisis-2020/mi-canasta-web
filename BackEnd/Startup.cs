@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MiCanastaBE.Persistence;
+using MiCanastaBE.Services;
+using MiCanastaBE.Services.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +35,8 @@ namespace MiCanastaBE
                 .UseMySql("Server=localhost;Database=data;User=root;Password=root;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<ProductService, ProductServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

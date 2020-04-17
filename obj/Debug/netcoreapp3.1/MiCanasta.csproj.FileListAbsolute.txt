@@ -1,6 +1,4 @@
 C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.csprojAssemblyReference.cache
-C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.csproj.CoreCompileInputs.cache
-C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.MvcApplicationPartsAssemblyInfo.cache
 C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.AssemblyInfoInputs.cache
 C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.AssemblyInfo.cs
 C:\Jimena\Aplicaciones Web\MiCanastaBE\bin\Debug\netcoreapp3.1\BackEnd\appsettings.Development.json
@@ -42,3 +40,6 @@ C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\staticwebassets\M
 C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.dll
 C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.pdb
 C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.genruntimeconfig.cache
+C:\Jimena\Aplicaciones Web\MiCanastaBE\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.csproj.CoreCompileInputs.cache
+C:\Jimena\Aplicaciones Web\MiCanastaBE\obj\Debug\netcoreapp3.1\MiCanasta.MvcApplicationPartsAssemblyInfo.cache
