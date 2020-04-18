@@ -1672,11 +1672,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Jimena\\Aplicaciones Web\\MiCanastaBE\\MiCanasta.csproj",
+      "projectUniqueName": "C:\\Jimena\\Aplicaciones Web\\git\\MiCanasta\\BackEnd\\MiCanasta.csproj",
       "projectName": "MiCanasta",
-      "projectPath": "C:\\Jimena\\Aplicaciones Web\\MiCanastaBE\\MiCanasta.csproj",
+      "projectPath": "C:\\Jimena\\Aplicaciones Web\\git\\MiCanasta\\BackEnd\\MiCanasta.csproj",
       "packagesPath": "C:\\Users\\jimen\\.nuget\\packages\\",
-      "outputPath": "C:\\Jimena\\Aplicaciones Web\\MiCanastaBE\\obj\\",
+      "outputPath": "C:\\Jimena\\Aplicaciones Web\\git\\MiCanasta\\BackEnd\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
