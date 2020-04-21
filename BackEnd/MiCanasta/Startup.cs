@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MiCanastaBE.Persistence;
-using MiCanastaBE.Services;
-using MiCanastaBE.Services.Impl;
+using MiCanasta.MiCanasta.Services;
+using MiCanasta.MiCanasta.Services.Impl;
+using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
-namespace MiCanastaBE
+namespace MiCanasta
 {
     public class Startup
     {
@@ -32,11 +32,21 @@ namespace MiCanastaBE
         {
             services.AddControllers();
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                .UseMySql("Server=localhost;Database=data;User=root;Password=root;", mySqlOptions => mySqlOptions
+                .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=root;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
+
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Mi Canasta",
+                    Version = "v1"
+                });
+            });
+
             services.AddAutoMapper(typeof(Startup));
-            services.AddTransient<ProductService, ProductServiceImpl>();
+            services.AddTransient<UsuarioTiendaService, UsuarioTiendaServiceImpl>();
+            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +65,12 @@ namespace MiCanastaBE
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mi Canasta");
+            });
+
         }
     }
 }
