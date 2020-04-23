@@ -13,5 +13,7 @@ namespace MiCanasta.MiCanasta.Model
         public string ApellidoMaterno { get; set; }
         public string Contrasena { get; set; }
         public string Correo { get; set; }
+
+        public List<RolUsuario> RolUsuarios { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace MiCanasta.MiCanasta.Model
     public class RolUsuario
     {
         public int Dni { get; set; }
+        public Usuario Usuario { get; set; }
         public int RolPerfilId { get; set; }
         public RolPerfil RolPerfil { get; set; }
 
