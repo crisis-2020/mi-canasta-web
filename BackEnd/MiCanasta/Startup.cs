@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MiCanasta.MiCanasta.Services;
-using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,8 +43,6 @@ namespace MiCanasta
             });
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddTransient<UsuarioTiendaService, UsuarioTiendaServiceImpl>();
-            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

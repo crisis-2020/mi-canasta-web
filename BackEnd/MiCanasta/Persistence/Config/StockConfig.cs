@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MiCanasta.MiCanasta.Persistence.Config
+namespace MiCanasta.MiCanasta.Persistence
 {
-    public class UsuarioConfig
+    public class StockConfig
     {
-        public UsuarioConfig(EntityTypeBuilder<Usuario> entityBuilder)
+        public StockConfig(EntityTypeBuilder<Stock> entityBuilder)
         {
-            entityBuilder.HasKey(x => x.Dni);
 
         }
     }

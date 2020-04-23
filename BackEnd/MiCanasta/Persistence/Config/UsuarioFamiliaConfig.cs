@@ -11,12 +11,7 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public UsuarioFamiliaConfig(EntityTypeBuilder<UsuarioFamilia> entityBuilder)
         {
-            entityBuilder.Property(x => x.Dni).IsRequired();
-            entityBuilder.Property(x => x.FamiliaId).IsRequired();
-            entityBuilder.Property(x => x.RolPerfilId).IsRequired();
-            entityBuilder.HasOne(x => x.Familia).WithMany(x => x.UsuarioFamilias);
 
         }
-
     }
 }

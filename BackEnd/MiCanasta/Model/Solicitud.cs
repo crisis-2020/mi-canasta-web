@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Model
 {
-    public class Familia
+    public class Solicitud
     {
         public int FamiliaId { get; set; }
-        public string Nombre { get; set; }
-        public bool AceptaSolicitudes { get; set; }
-        public int Cantidad { get; set; }
+        public Familia Familia { get; set; }
+        public int Dni { get; set; }
+        public Usuario Usuario { get; set; }
 
     }
 }

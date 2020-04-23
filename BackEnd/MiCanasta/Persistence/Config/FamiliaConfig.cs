@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Persistence.Config
 {
-    public class UsuarioConfig
+    public class FamiliaConfig
     {
-        public UsuarioConfig(EntityTypeBuilder<Usuario> entityBuilder)
+        public FamiliaConfig(EntityTypeBuilder<Familia> entityBuilder)
         {
-            entityBuilder.HasKey(x => x.Dni);
 
         }
     }

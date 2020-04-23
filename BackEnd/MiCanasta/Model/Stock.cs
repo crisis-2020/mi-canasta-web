@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Model
 {
-    public class UsuarioTienda
+    public class Stock
     {
-        public int Dni { get; set; }
-        public Usuario Usuario { get; set; }
+        public int ProductoId {get; set;}
+        public Producto Producto { get; set; }
         public int TiendaId { get; set; }
         public Tienda Tienda { get; set; }
-
+        public int Cantidad { get; set; }
     }
 }
