@@ -10,6 +10,6 @@ namespace MiCanasta.MiCanasta.Model
         public int CategoriaId { get; set; }
         public string Descripcion { get; set; }
         public string TipoUnidad { get; set; }
-
+        public List<Producto> Productos { get; set; }
     }
 }

@@ -11,7 +11,15 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public UsuarioTiendaConfig(EntityTypeBuilder<UsuarioTienda> entityBuilder)
         {
+            entityBuilder.HasKey(x => new
+            {
+                x.Dni,
+                x.TiendaId
+            });
 
+            entityBuilder.HasOne(x => x.Tienda)
+            .WithMany(x => x.UsuarioTiendas)
+            .HasForeignKey(x => x.TiendaId);
         }
     }
 }

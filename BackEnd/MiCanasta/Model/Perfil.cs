@@ -9,5 +9,6 @@ namespace MiCanasta.MiCanasta.Model
     {
         public int PerfilId { get; set; }
         public string Descripcion { get; set; }
+        public List<RolPerfil> RolPerfiles { get; set; }
     }
 }

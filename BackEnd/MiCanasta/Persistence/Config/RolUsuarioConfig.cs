@@ -11,7 +11,14 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public RolUsuarioConfig(EntityTypeBuilder<RolUsuario> entityBuilder)
         {
-            
+            entityBuilder.HasKey(x => new
+            {
+                x.Dni,
+                x.RolPerfilId
+            });
+            entityBuilder.HasOne(x => x.RolPerfil)
+            .WithMany(x => x.RolUsuarios)
+            .HasForeignKey(x => x.RolPerfilId);
         }
     }
 }

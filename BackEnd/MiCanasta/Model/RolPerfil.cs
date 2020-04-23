@@ -13,5 +13,6 @@ namespace MiCanasta.MiCanasta.Model
 
         public int PerfilId;
         public Perfil Perfil {get;set;}
+        public List<RolUsuario> RolUsuarios { get; set; }
     }
 }

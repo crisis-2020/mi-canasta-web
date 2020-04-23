@@ -12,5 +12,8 @@ namespace MiCanasta.MiCanasta.Model
         public Categoria Categoria { get; set; }
         public string Descripcion { get; set; }
         public int CantidadUnit { get; set; }
+
+        public List<Historial> Historiales { get; set; }
+        public List<Stock> Stocks { get; set; }
     }
 }

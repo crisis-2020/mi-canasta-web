@@ -11,7 +11,23 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public HistorialConfig(EntityTypeBuilder<Historial> entityBuilder)
         {
+            entityBuilder.HasKey(x=> new { 
+                x.FamiliaId,
+                x.TiendaId,
+                x.ProductoId            
+            });
+            
+            entityBuilder.HasOne(x => x.Familia)
+            .WithMany(x => x.Historiales)
+            .HasForeignKey(x => x.FamiliaId);
 
+            entityBuilder.HasOne(x => x.Tienda)
+            .WithMany(x => x.Historiales)
+            .HasForeignKey(x => x.TiendaId);
+
+            entityBuilder.HasOne(x => x.Producto)
+            .WithMany(x => x.Historiales)
+            .HasForeignKey(x => x.ProductoId);
         }
     }
 }

@@ -11,7 +11,19 @@ namespace MiCanasta.MiCanasta.Persistence
     {
         public StockConfig(EntityTypeBuilder<Stock> entityBuilder)
         {
+            entityBuilder.HasKey(x => new
+            {
+                x.ProductoId,
+                x.TiendaId
+            });
+            
+            entityBuilder.HasOne(x => x.Tienda)
+            .WithMany(x => x.Stocks)
+            .HasForeignKey(x => x.TiendaId);
 
+            entityBuilder.HasOne(x => x.Producto)
+            .WithMany(x => x.Stocks)
+            .HasForeignKey(x => x.ProductoId);
         }
     }
 }

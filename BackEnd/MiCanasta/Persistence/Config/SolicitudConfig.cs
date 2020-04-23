@@ -11,6 +11,15 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public SolicitudConfig(EntityTypeBuilder<Solicitud> entityBuilder)
         {
+            entityBuilder.HasKey(x => new
+            {
+                x.Dni,
+                x.FamiliaId
+            });
+
+            entityBuilder.HasOne(x => x.Familia)
+            .WithMany(x => x.Solicitudes)
+            .HasForeignKey(x => x.FamiliaId);
 
         }
     }

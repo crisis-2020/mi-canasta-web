@@ -11,7 +11,9 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public ProductoConfig(EntityTypeBuilder<Producto> entityBuilder)
         {
-
+            entityBuilder.HasOne(x => x.Categoria)
+            .WithMany(x => x.Productos)
+            .HasForeignKey(x => x.CategoriaId);
         }
     }
 }

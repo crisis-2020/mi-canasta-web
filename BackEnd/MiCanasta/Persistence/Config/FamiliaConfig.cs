@@ -11,7 +11,7 @@ namespace MiCanasta.MiCanasta.Persistence.Config
     {
         public FamiliaConfig(EntityTypeBuilder<Familia> entityBuilder)
         {
-
+          
         }
     }
 }
