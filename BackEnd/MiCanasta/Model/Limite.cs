@@ -9,7 +9,7 @@ namespace MiCanasta.MiCanasta.Model
     {
         public int LimiteId { get; set; }
         public int CantidadPersona { get; set; }
-        public int CatagoriaId { get; set; }
+        public int CategoriaId { get; set; }
         public Categoria Categoria { get; set; }
     }
 }
