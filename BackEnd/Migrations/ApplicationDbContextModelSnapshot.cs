@@ -290,7 +290,7 @@ namespace MiCanasta.Migrations
 
                     b.HasIndex("TiendaId");
 
-                    b.ToTable("UsuarioTienas");
+                    b.ToTable("UsuarioTiendas");
                 });
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.Historial", b =>

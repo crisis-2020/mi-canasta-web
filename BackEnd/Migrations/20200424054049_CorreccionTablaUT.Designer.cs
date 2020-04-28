@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiCanasta.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200423045329_NuevasTablas")]
-    partial class NuevasTablas
+    [Migration("20200424054049_CorreccionTablaUT")]
+    partial class CorreccionTablaUT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -292,7 +292,7 @@ namespace MiCanasta.Migrations
 
                     b.HasIndex("TiendaId");
 
-                    b.ToTable("UsuarioTienas");
+                    b.ToTable("UsuarioTiendas");
                 });
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.Historial", b =>
