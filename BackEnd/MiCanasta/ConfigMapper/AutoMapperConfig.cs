@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace MiCanasta.BackEnd.ConfigMapper
     {
         public AutoMapperConfig()
         {
-            //CreateMap<Product, ProductDto>();
+            CreateMap<Solicitud, SolicitudDto>();
         }
     }
 }
