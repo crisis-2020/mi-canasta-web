@@ -2,7 +2,7 @@
 
 namespace MiCanasta.Migrations
 {
-    public partial class CorreccionTablaUT : Migration
+    public partial class Correcciones1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
