@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Jimena\\Aplicaciones Web\\Copia de seguridad\\MiCanasta\\BackEnd\\MiCanasta.csproj": {}
+    "C:\\Jimena\\Aplicaciones Web\\MiCanasta\\BackEnd\\MiCanasta.csproj": {}
   },
   "projects": {
-    "C:\\Jimena\\Aplicaciones Web\\Copia de seguridad\\MiCanasta\\BackEnd\\MiCanasta.csproj": {
+    "C:\\Jimena\\Aplicaciones Web\\MiCanasta\\BackEnd\\MiCanasta.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Jimena\\Aplicaciones Web\\Copia de seguridad\\MiCanasta\\BackEnd\\MiCanasta.csproj",
+        "projectUniqueName": "C:\\Jimena\\Aplicaciones Web\\MiCanasta\\BackEnd\\MiCanasta.csproj",
         "projectName": "MiCanasta",
-        "projectPath": "C:\\Jimena\\Aplicaciones Web\\Copia de seguridad\\MiCanasta\\BackEnd\\MiCanasta.csproj",
+        "projectPath": "C:\\Jimena\\Aplicaciones Web\\MiCanasta\\BackEnd\\MiCanasta.csproj",
         "packagesPath": "C:\\Users\\jimen\\.nuget\\packages\\",
-        "outputPath": "C:\\Jimena\\Aplicaciones Web\\Copia de seguridad\\MiCanasta\\BackEnd\\obj\\",
+        "outputPath": "C:\\Jimena\\Aplicaciones Web\\MiCanasta\\BackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

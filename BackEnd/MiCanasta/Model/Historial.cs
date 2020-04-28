@@ -15,6 +15,5 @@ namespace MiCanasta.MiCanasta.Model
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
         public DateTime FechaCompra { get; set; }
-        public int Dni { get; set; }
     }
 }

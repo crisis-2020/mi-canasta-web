@@ -7,7 +7,7 @@ namespace MiCanasta.MiCanasta.Model
 {
     public class UsuarioTienda
     {
-        public int Dni { get; set; }
+        public string Dni { get; set; }
         public Usuario Usuario { get; set; }
         public int TiendaId { get; set; }
         public Tienda Tienda { get; set; }
