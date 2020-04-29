@@ -1,10 +1,10 @@
 <template>
-  <h2>Soy el login</h2>
+  <h2>Componente login</h2>
 </template>
 
 <script>
 export default {
-    name: "LoginPage"
+    name: "ComponenteLogin"
 }
 </script>
 
