@@ -12,8 +12,7 @@ namespace MiCanasta.MiCanasta.Dto
         public string Direccion { get; set; }
         public string Latitud { get; set; }
         public string Longitud { get; set; }
-        public DateTime HoraApertura { get; set; }
-        public DateTime HoraCierre { get; set; }
+        public string Horario { get; set; }
         public List<UsuarioTiendaDto> UsuarioTiendas { get; set; }
         public List<StockDto> Stocks { get; set; }
         public List<HistorialDto> Historiales { get; set; }
@@ -25,8 +24,7 @@ namespace MiCanasta.MiCanasta.Dto
         public string Direccion { get; set; }
         public string Latitud { get; set; }
         public string Longitud { get; set; }
-        public DateTime HoraApertura { get; set; }
-        public DateTime HoraCierre { get; set; }
+        public string Horario { get; set; }
 
         public class TiendaUpdateDto
         {
@@ -34,8 +32,7 @@ namespace MiCanasta.MiCanasta.Dto
             public string Direccion { get; set; }
             public string Latitud { get; set; }
             public string Longitud { get; set; }
-            public DateTime HoraApertura { get; set; }
-            public DateTime HoraCierre { get; set; }
+            public string Horario { get; set; }
             public List<UsuarioTiendaDto> UsuarioTiendas { get; set; }
             public List<StockDto> Stocks { get; set; }
         }

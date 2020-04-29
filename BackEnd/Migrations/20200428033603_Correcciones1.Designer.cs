@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiCanasta.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200424054049_CorreccionTablaUT")]
-    partial class CorreccionTablaUT
+    [Migration("20200428033603_Correcciones1")]
+    partial class Correcciones1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,10 +94,7 @@ namespace MiCanasta.Migrations
                     b.Property<int>("CantidadPersona")
                         .HasColumnType("int");
 
-                    b.Property<int>("CatagoriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoriaId")
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.HasKey("LimiteId");
@@ -164,8 +161,8 @@ namespace MiCanasta.Migrations
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.RolUsuario", b =>
                 {
-                    b.Property<int>("Dni")
-                        .HasColumnType("int");
+                    b.Property<string>("Dni")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("RolPerfilId")
                         .HasColumnType("int");
@@ -179,8 +176,8 @@ namespace MiCanasta.Migrations
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.Solicitud", b =>
                 {
-                    b.Property<int>("Dni")
-                        .HasColumnType("int");
+                    b.Property<string>("Dni")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("FamiliaId")
                         .HasColumnType("int");
@@ -241,9 +238,8 @@ namespace MiCanasta.Migrations
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.Usuario", b =>
                 {
-                    b.Property<int>("Dni")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Dni")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ApellidoMaterno")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -267,8 +263,8 @@ namespace MiCanasta.Migrations
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.UsuarioFamilia", b =>
                 {
-                    b.Property<int>("Dni")
-                        .HasColumnType("int");
+                    b.Property<string>("Dni")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("FamiliaId")
                         .HasColumnType("int");
@@ -282,8 +278,8 @@ namespace MiCanasta.Migrations
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.UsuarioTienda", b =>
                 {
-                    b.Property<int>("Dni")
-                        .HasColumnType("int");
+                    b.Property<string>("Dni")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<int>("TiendaId")
                         .HasColumnType("int");
@@ -320,7 +316,9 @@ namespace MiCanasta.Migrations
                 {
                     b.HasOne("MiCanasta.MiCanasta.Model.Categoria", "Categoria")
                         .WithMany()
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MiCanasta.MiCanasta.Model.Producto", b =>

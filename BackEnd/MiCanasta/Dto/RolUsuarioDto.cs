@@ -7,7 +7,7 @@ namespace MiCanasta.Dto
 {
     public class RolUsuarioDto
     {
-        public int Dni { get; set; }
+        public string Dni { get; set; }
         public UsuarioDto Usuario { get; set; }
         public int RolPerfilId { get; set; }
         public RolPerfilDto RolPerfil { get; set; }
@@ -15,7 +15,7 @@ namespace MiCanasta.Dto
 
     public class RolUsuarioCreateDto
     {
-        public int Dni { get; set; }
+        public string Dni { get; set; }
         public UsuarioDto Usuario { get; set; }
         public int RolPerfilId { get; set; }
         public RolPerfilDto RolPerfil { get; set; }
