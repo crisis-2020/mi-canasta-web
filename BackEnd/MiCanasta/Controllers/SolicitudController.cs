@@ -10,7 +10,7 @@ namespace MiCanasta.MiCanasta.Controllers
 {
     [ApiController]
     [Route("solicitudes")]
-    public class SolicitudController: ControllerBase
+    public class SolicitudController : ControllerBase
     {
         private readonly SolicitudService _solicitudService;
 
@@ -18,32 +18,43 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             _solicitudService = SolicitudService;
         }
-
-        [HttpGet]
+        
+        /*[HttpGet]
         public ActionResult<List<SolicitudDto>> GetAll()
         {
             return _solicitudService.GetAll();
-        }
+        }*/
 
-        [HttpGet("{dni}/{familiaNombre}")]
+        /*[HttpGet("{dni}/{familiaNombre}")]
         public ActionResult<SolicitudDto> GetById(string dni, string familiaNombre)
         {
             return _solicitudService.GetById(dni, familiaNombre);
-        }
+        }*/
 
         [HttpPost]
         public ActionResult Create(SolicitudCreateDto model)
         {
             var result = _solicitudService.Create(model);
 
-            return CreatedAtAction(
-                "GetById",
-                new {
-                    model.Dni,
-                    model.FamiliaNombre 
-                },
-                result
-            );
+            if (result!=null)
+            {
+                if (result.Dni == "NoSolicitud") {
+                    return BadRequest("El grupo familiar no acepta solicitudes");
+                }
+
+                return Ok(result);
+                /*return CreatedAtAction(
+                    "GetById",
+                    new
+                    {
+                        model.Dni,
+                        model.FamiliaNombre
+                    },
+                    result
+                );*/
+            }
+
+            return NotFound("El grupo familiar no existe");
         }
     }
 }

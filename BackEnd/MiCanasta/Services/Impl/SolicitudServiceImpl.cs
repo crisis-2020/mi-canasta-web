@@ -43,16 +43,34 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         public SolicitudDto Create(SolicitudCreateDto model)
         { 
-            var familia = _context.Familias.Single(x => x.Nombre == model.FamiliaNombre);
-            var entry = new Solicitud
-            {
-                FamiliaId = familia.FamiliaId,
-                Dni = model.Dni,
-            };
 
-            _context.Add(entry);
-            _context.SaveChanges();
-            return _mapper.Map<SolicitudDto>(entry);
+            // Si no existe la familia
+            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre)==null)
+            {
+                return null;
+            }
+
+            else
+            {
+                var familia = _context.Familias.Single(x => x.Nombre == model.FamiliaNombre);
+
+                if (familia.AceptaSolicitudes == false) {
+                    var sol = new SolicitudDto { 
+                    Dni = "NoSolicitud",
+                    FamiliaNombre = "NoSolicitud"
+                    };
+                    return sol;
+                }
+
+                var entry = new Solicitud
+                {
+                    FamiliaId = familia.FamiliaId,
+                    Dni = model.Dni,
+                };
+                _context.Add(entry);
+                _context.SaveChanges();
+                return _mapper.Map<SolicitudDto>(entry);
+            }
         }
     }
 }
