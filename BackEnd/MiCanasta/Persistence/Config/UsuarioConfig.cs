@@ -12,7 +12,6 @@ namespace MiCanasta.MiCanasta.Persistence.Config
         public UsuarioConfig(EntityTypeBuilder<Usuario> entityBuilder)
         {
             entityBuilder.HasKey(x => x.Dni);
-
         }
     }
 }
