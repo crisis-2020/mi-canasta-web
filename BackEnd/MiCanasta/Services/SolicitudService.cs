@@ -12,6 +12,7 @@ namespace MiCanasta.MiCanasta.Services
         public List<SolicitudDto> GetAll();
         SolicitudDto GetById(string dni, string familiaNombre);
         public SolicitudDto Create(SolicitudCreateDto model);
+        bool AceptaSolicitudes(SolicitudCreateDto model);
     }
 
 }
