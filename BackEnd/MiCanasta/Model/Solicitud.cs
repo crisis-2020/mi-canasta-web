@@ -7,6 +7,7 @@ namespace MiCanasta.MiCanasta.Model
 {
     public class Solicitud
     {
+        
         public int FamiliaId { get; set; }
         public Familia Familia { get; set; }
         public string Dni { get; set; }

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace MiCanasta.MiCanasta.Model
 {
     public class Familia
     {
+        [Required]
         public int FamiliaId { get; set; }
+        [Required]
         public string Nombre { get; set; }
         public bool AceptaSolicitudes { get; set; }
         public int Cantidad { get; set; }

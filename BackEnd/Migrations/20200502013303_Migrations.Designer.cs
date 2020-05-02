@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiCanasta.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200428033603_Correcciones1")]
-    partial class Correcciones1
+    [Migration("20200502013303_Migrations")]
+    partial class Migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,7 @@ namespace MiCanasta.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("FamiliaId");
@@ -68,9 +69,6 @@ namespace MiCanasta.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Dni")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaCompra")
@@ -219,11 +217,8 @@ namespace MiCanasta.Migrations
                     b.Property<string>("Direccion")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("HoraApertura")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("HoraCierre")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Horario")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Latitud")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
