@@ -18,10 +18,9 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             _solicitudService = SolicitudService;
         }
-        
 
         [HttpPost]
-        public ActionResult Create(SolicitudCreateDto model)
+        public ActionResult Post(SolicitudCreateDto model)
         {
             var result = _solicitudService.Create(model);
 
