@@ -21,8 +21,15 @@ export default {
   font-family: 'Montserrat', sans-serif;
   outline: none;
 }
-#app {
+*[color-rojo]{
+  color: #F76A8C;
+}
+*[color-verde]{
+  color: #CCF0E1;
+}
 
+*[color-amarillo]{
+  color : #F8FAB8;
 }
 
 .input-shared-container{
@@ -47,4 +54,9 @@ export default {
     padding: 16px;
     border-radius: 4px;
 }
+
+
+
+
+
 </style>
