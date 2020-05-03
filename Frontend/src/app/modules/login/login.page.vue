@@ -1,9 +1,13 @@
 <template>
+<div>
+
+<router-view></router-view>
   <div>
     <h2>Soy el login</h2>
     <p>{{asd}}</p>
     <ComponenteLogin></ComponenteLogin>
   </div>
+</div>
 </template>
 
 <script>

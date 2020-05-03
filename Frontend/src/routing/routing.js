@@ -2,6 +2,7 @@ import Router from "vue-router";
 import Vue from 'vue';
 import LayoutPage from "../app/layout/components/layout/LayoutPage.vue";
 import LoginPage from "../app/modules/login/login.page.vue"
+import SharedPageComponent from "../app/modules/shared-componentes/shared-components.page.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -16,8 +17,17 @@ export default new Router({
                     path: '/login',
                     name: "LoginPage",
                     component: LoginPage
-                }
+                },
+
             ]
+        },
+        {
+
+            path: '/componentes',
+            name: "SharedPageComponent",
+            component: SharedPageComponent
+
         }
+
     ]
 })
