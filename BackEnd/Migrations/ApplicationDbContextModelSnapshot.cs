@@ -68,9 +68,6 @@ namespace MiCanasta.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int>("Dni")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime(6)");
 
@@ -217,11 +214,8 @@ namespace MiCanasta.Migrations
                     b.Property<string>("Direccion")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("HoraApertura")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("HoraCierre")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Horario")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Latitud")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
