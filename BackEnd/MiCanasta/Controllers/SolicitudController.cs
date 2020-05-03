@@ -43,6 +43,19 @@ namespace MiCanasta.MiCanasta.Controllers
 
 
 
+        [HttpPost]
+        public ActionResult Post(SolicitudCreateDto model)
+        {
+            var result = _solicitudService.Create(model);
+
+            if (result!=null)
+            {
+                if (_solicitudService.AceptaSolicitudes(model) == false) {
+                    return BadRequest("El grupo familiar no acepta solicitudes");
+                }
+                return Ok(result);
+            }
+            return NotFound("El grupo familiar no existe");
         }
     }
 }

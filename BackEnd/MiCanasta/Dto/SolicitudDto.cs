@@ -1,32 +1,33 @@
 ﻿using MiCanasta.Dto;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Dto
 {
     public class SolicitudDto
-    {
-        public int FamiliaId { get; set; }
-        public FamiliaDto Familia { get; set; }
+    {   
+        [Required]
+        public string FamiliaNombre { get; set; }
+        [Required]
         public string Dni { get; set; }
-        public UsuarioDto Usuario { get; set; }
 
     }
 
     public class SolicitudCreateDto
     {
-        public int FamiliaId { get; set; }
-        public FamiliaDto Familia { get; set; }
+        [Required]
+        public string FamiliaNombre { get; set; }
+        [Required]
         public string Dni { get; set; }
-        public UsuarioDto Usuario { get; set; }
     }
 
     public class SolicitudUpdateDto
     {
-        public int FamiliaId { get; set; }
-        public string Dni { get; set; }
+        [Required]
+        public string FamiliaNombre { get; set; }
     }
 
     public class NombreFamiliaDto

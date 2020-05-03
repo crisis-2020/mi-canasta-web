@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
-    public class SolicitudServiceImpl : SolicitudService
+    public class SolicitudServiceImpl: SolicitudService
     {
 
         private readonly ApplicationDbContext _context;
@@ -26,7 +26,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public List<SolicitudDto> GetAll()
         {
             return _mapper.Map<List<SolicitudDto>>(
-                             _context.Solicitudes.Include(x => x.Familia)
+                             _context.Solicitudes.Include(x=>x.Familia)
                                             .OrderBy(x => x.Dni)
                                           .AsQueryable()
                                           .ToList());
@@ -36,30 +36,28 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
 
             return _mapper.Map<SolicitudDto>(
-                 _context.Solicitudes.Include(x => x.Familia)
+                 _context.Solicitudes.Include(x=>x.Familia)
                                     .Single(x => (x.Dni == dni && x.Familia.Nombre == familiaNombre))
-            );
+            ) ;
         }
 
-        public bool AceptaSolicitudes(SolicitudCreateDto model)
-        {
-            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.Familia.Nombre).AceptaSolicitudes == true)
+        public bool AceptaSolicitudes(SolicitudCreateDto model) {
+            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre).AceptaSolicitudes == true)
                 return true;
             return false;
         }
 
         public SolicitudDto Create(SolicitudCreateDto model)
         {
-
             // Si no existe la familia
-            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.Familia.Nombre) == null)
+            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) == null) 
             {
                 return null;
             }
 
             else
             {
-                var familia = _context.Familias.Single(x => x.Nombre == model.Familia.Nombre);
+                var familia = _context.Familias.Single(x => x.Nombre == model.FamiliaNombre);
 
                 var entry = new Solicitud
                 {
