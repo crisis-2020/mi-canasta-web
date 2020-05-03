@@ -1,15 +1,7 @@
 ﻿using MiCanasta.Dto;
-using MiCanasta.MiCanasta.Model;
 using MiCanasta.MiCanasta.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Validations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -18,7 +10,7 @@ namespace MiCanasta.MiCanasta.Controllers
     public class UsuarioController : ControllerBase
     {
         private UsuarioService _usuarioService;
-        
+
         public UsuarioController(UsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
@@ -38,9 +30,14 @@ namespace MiCanasta.MiCanasta.Controllers
         /// <param Contrasena="12345678"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<UsuarioAccesoDto> ValidarIngreso( [FromBody] UsuarioLoginDto UsuarioLogin)
+        public ActionResult<UsuarioAccesoDto> ValidarIngreso([FromBody] UsuarioLoginDto UsuarioLogin)
         {
-            return _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
+            UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
+            if (usuario.Dni == null)
+            {
+                return NotFound(usuario);
+            }
+            return Ok(usuario);
         }
     }
 }

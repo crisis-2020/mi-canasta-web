@@ -2,22 +2,18 @@
 using MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 namespace MiCanasta.MiCanasta.Services.Impl
 {
-    public class UsuarioServiceImpl: UsuarioService
+    public class UsuarioServiceImpl : UsuarioService
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        
+
         public UsuarioServiceImpl(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
@@ -33,7 +29,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             IRestResponse Response = Client.Execute(Request);
             if (Response.StatusCode == HttpStatusCode.OK)
             {
-               String UsuarioString= Response.Content;
+                String UsuarioString = Response.Content;
                 Usuario = JsonConvert.DeserializeObject<UsuarioReniecDto>(UsuarioString);
             }
             return Usuario;
@@ -46,7 +42,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 Nombre = model.Nombre1 + " " + model.Nombre2,
                 ApellidoPaterno = model.ApellidoPaterno,
                 ApellidoMaterno = model.ApellidoMaterno,
-                Contrasena = " ",
+                Contrasena = model.Dni,
                 Correo = " "
             };
             _context.Add(Nuevo);
@@ -58,11 +54,11 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             try
             {
-                return _mapper.Map<UsuarioDto>( _context.Usuarios.Single(x => x.Dni == Dni) );
+                return _mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == Dni));
             }
             catch (Exception e)
             {
-                return new UsuarioDto ();
+                return new UsuarioDto();
             }
         }
 
@@ -75,11 +71,11 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 var result2 = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(result2);
             }
-            else if (Contrasena == resultValidacion.Contrasena )
+            else if (Contrasena == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
-            return new UsuarioAccesoDto();   
+            return new UsuarioAccesoDto();
         }
     }
 }
