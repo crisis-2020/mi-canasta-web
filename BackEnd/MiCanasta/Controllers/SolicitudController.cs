@@ -25,7 +25,7 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             try
             {
-                var result = _solicitudService.ObtenerNombreFamilia("71191");
+                var result = _solicitudService.ObtenerNombreFamilia("");//Insertar Dni
                 if (result != null)
                 {
                     return Ok(result);

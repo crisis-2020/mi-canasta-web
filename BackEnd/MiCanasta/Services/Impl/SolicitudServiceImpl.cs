@@ -61,7 +61,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 var familia = _context.Familias.Single(x => x.Nombre == model.Familia.Nombre);
 
-                var entry = new SolicitudFamilia
+                var entry = new Solicitud
                 {
                     FamiliaId = familia.FamiliaId,
                     Dni = model.Dni,
