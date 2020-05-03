@@ -36,7 +36,7 @@ namespace MiCanasta
                 .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=root;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
-
+            services.AddTransient<UsuarioService, UsuarioServiceImpl>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
