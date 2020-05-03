@@ -13,7 +13,7 @@ namespace MiCanasta.BackEnd.ConfigMapper
     {
         public AutoMapperConfig()
         {
-            CreateMap<Familia, FamiliaDto>();
+            CreateMap<Familia, FamiliaCreateDto>();
         }
     }
 }

@@ -29,8 +29,10 @@ namespace MiCanasta.Migrations
                     FamiliaId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nombre = table.Column<string>(nullable: false),
+                    Dni = table.Column<string>(nullable: true),
                     AceptaSolicitudes = table.Column<bool>(nullable: false),
-                    Cantidad = table.Column<int>(nullable: false)
+                    Cantidad = table.Column<int>(nullable: false),
+                    CrearGrupoFamiliar = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

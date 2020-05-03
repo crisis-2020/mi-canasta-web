@@ -1,10 +1,7 @@
-using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using MiCanasta.Persistence;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -19,22 +16,16 @@ namespace MiCanasta.MiCanasta.Controllers
             _familiaService = FamiliaService;
         }
 
-
         [HttpPost]
-        public ActionResult Post(FamiliaCreateDto model)
+        public ActionResult Create(FamiliaCreateDto model)
         {
             var result = _familiaService.Create(model);
 
             if (result == null)
             {
-                if (_familiaService.CrearGrupoFamiliar(model) == false)
-                {
-                    return BadRequest("El grupo familiar ya existe");
-                }
-                
+               return BadRequest("El grupo familiar ya existe :( ");
             }
-            return Ok("Grupo familiar creado");
+            return Ok("Se ha creado el grupo familiar :) ");
         }
-
     }
 }

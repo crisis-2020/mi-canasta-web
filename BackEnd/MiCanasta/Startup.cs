@@ -27,7 +27,7 @@ namespace MiCanasta
         {
             services.AddControllers();
                       services.AddDbContextPool<ApplicationDbContext>(options => options
-                .UseMySql("Server=localhost;Database=micanastaweb;User=root;Password=adminadmin;", mySqlOptions => mySqlOptions
+                .UseMySql("Server=localhost;Database=micanastaw;User=root;Password=adminadmin;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
 

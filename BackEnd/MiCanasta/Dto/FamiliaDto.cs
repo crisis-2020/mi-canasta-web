@@ -14,7 +14,7 @@ namespace MiCanasta.MiCanasta
         public string FamiliaNombre { get; set; }
         public bool AceptaSolicitudes { get; set; }
         public int Cantidad { get; set; }
-        public List<FamiliaDto> Solicitudes { get; set; }
+        public List<FamiliaCreateDto> Solicitudes { get; set; }
         public List<UsuarioFamiliaDto> UsuarioFamilias { get; set; }
         public List<HistorialDto> Historiales { get; set; }
     }

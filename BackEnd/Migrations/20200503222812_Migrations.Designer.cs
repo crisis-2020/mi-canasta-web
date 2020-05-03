@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiCanasta.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200502013303_Migrations")]
+    [Migration("20200503222812_Migrations")]
     partial class Migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,12 @@ namespace MiCanasta.Migrations
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
+
+                    b.Property<bool>("CrearGrupoFamiliar")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Dni")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

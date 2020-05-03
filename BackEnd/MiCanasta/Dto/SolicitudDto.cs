@@ -9,7 +9,7 @@ namespace MiCanasta.MiCanasta.Dto
     public class SolicitudDto
     {
         public int FamiliaId { get; set; }
-        public FamiliaDto Familia { get; set; }
+        public FamiliaCreateDto Familia { get; set; }
         public string Dni { get; set; }
         public UsuarioDto Usuario { get; set; }
 
@@ -18,7 +18,7 @@ namespace MiCanasta.MiCanasta.Dto
     public class SolicitudCreateDto
     {
         public int FamiliaId { get; set; }
-        public FamiliaDto Familia { get; set; }
+        public FamiliaCreateDto Familia { get; set; }
         public string Dni { get; set; }
         public UsuarioDto Usuario { get; set; }
     }

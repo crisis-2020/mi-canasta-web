@@ -10,9 +10,6 @@ namespace MiCanasta.MiCanasta.Services
 {
     public interface FamiliaService 
     {
-        public FamiliaDto Create(FamiliaCreateDto model);
-        bool CrearGrupoFamiliar(FamiliaCreateDto model);
-        //public RolUsuario AsignarRolUsuario(RolUsuario model);
-        //public UsuarioFamilia 
+        public FamiliaCreateDto Create(FamiliaCreateDto model);
     }        
 }
