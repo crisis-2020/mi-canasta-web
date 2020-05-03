@@ -31,6 +31,7 @@ namespace MiCanasta
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             services.AddDbContextPool<ApplicationDbContext>(options => options
                 .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=root;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
@@ -45,6 +46,7 @@ namespace MiCanasta
             });
 
             services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<SolicitudService, SolicitudServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

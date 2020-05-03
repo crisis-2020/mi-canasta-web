@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MiCanasta.Dto;
+using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,7 @@ namespace MiCanasta.BackEnd.ConfigMapper
             CreateMap<UsuarioReniecDto, UsuarioAccesoDto>();
             CreateMap<UsuarioDto, UsuarioAccesoDto>();
 
+            CreateMap<Solicitud, SolicitudDto>();
         }
     }
 }
