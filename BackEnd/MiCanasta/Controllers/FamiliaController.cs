@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MiCanasta.MiCanasta.Controllers
 {
     [ApiController]
-    [Route("Familias")]
+    [Route("familias")]
     public class FamiliaController: ControllerBase
     {
         private readonly FamiliaService _familiaService;
@@ -19,31 +19,22 @@ namespace MiCanasta.MiCanasta.Controllers
             _familiaService = FamiliaService;
         }
 
-        [HttpGet]
-        public ActionResult<List<FamiliaDto>> GetAll()
-        {
-            return _familiaService.GetAll();
-        }
-
-        [HttpGet("{dni}/{familiaNombre}")]
-        public ActionResult<FamiliaDto> GetById(string dni, string familiaNombre)
-        {
-            return _familiaService.GetById(dni, familiaNombre);
-        }
 
         [HttpPost]
-        public ActionResult Create(FamiliaCreateDto model)
+        public ActionResult Post(FamiliaCreateDto model)
         {
             var result = _familiaService.Create(model);
 
-            return CreatedAtAction(
-                "GetById",
-                new {
-                    model.Dni,
-                    model.FamiliaNombre 
-                },
-                result
-            );
+            if (result == null)
+            {
+                if (_familiaService.CrearGrupoFamiliar(model) == false)
+                {
+                    return BadRequest("El grupo familiar ya existe");
+                }
+                
+            }
+            return Ok("Grupo familiar creado");
         }
+
     }
 }
