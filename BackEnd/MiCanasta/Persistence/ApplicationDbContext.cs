@@ -22,7 +22,7 @@ namespace MiCanasta.Persistence
         public DbSet<Producto> Productos { get; set; }
         public DbSet<RolPerfil> RolPerfiles { get; set; }
         public DbSet<RolUsuario> RolUsuarios { get; set; }
-        public DbSet<Solicitud> Solicitudes { get; set; }
+        public DbSet<SolicitudFamilia> Solicitudes { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Tienda> Tiendas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
@@ -41,7 +41,7 @@ namespace MiCanasta.Persistence
             new ProductoConfig(builder.Entity<Producto>());
             new RolPerfilConfig(builder.Entity<RolPerfil>());
             new RolUsuarioConfig(builder.Entity<RolUsuario>());
-            new SolicitudConfig(builder.Entity<Solicitud>());
+            new SolicitudConfig(builder.Entity<SolicitudFamilia>());
             new StockConfig(builder.Entity<Stock>());
             new TiendaConfig(builder.Entity<Tienda>());
             new UsuarioConfig(builder.Entity<Usuario>());

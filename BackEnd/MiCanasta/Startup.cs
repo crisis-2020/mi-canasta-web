@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MiCanasta.MiCanasta.Services;
+using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;//MiCanasta.MiCanasta.Services.Impl
 
 namespace MiCanasta
 {
@@ -30,9 +32,11 @@ namespace MiCanasta
         {
             services.AddControllers();
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=root;", mySqlOptions => mySqlOptions
+                .UseMySql("Server=localhost;Database=micanastaweb;User=root;Password=1930063057198aL;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
+
+            services.AddTransient  <SolicitudService,SolicitudServiceImpl> ();
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

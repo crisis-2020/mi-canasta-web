@@ -9,7 +9,7 @@ namespace MiCanasta.MiCanasta.Persistence.Config
 {
     public class SolicitudConfig
     {
-        public SolicitudConfig(EntityTypeBuilder<Solicitud> entityBuilder)
+        public SolicitudConfig(EntityTypeBuilder<SolicitudFamilia> entityBuilder)
         {
             entityBuilder.HasKey(x => new
             {
