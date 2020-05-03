@@ -29,4 +29,12 @@ namespace MiCanasta.MiCanasta.Dto
         [Required]
         public string FamiliaNombre { get; set; }
     }
+
+    public class NombreFamiliaDto
+    {
+
+        public string Dni { get; set; }
+        public string NombreFamilia { get; set; }
+    }
+    
 }

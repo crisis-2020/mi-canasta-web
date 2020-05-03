@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Controllers
@@ -18,6 +19,29 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             _solicitudService = SolicitudService;
         }
+
+        [HttpGet]
+        public ActionResult Get()
+        {
+            try
+            {
+                var result = _solicitudService.ObtenerNombreFamilia("");//Insertar Dni
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                return NotFound("La solicitud No Existe");
+
+            }
+            catch(Exception ex)
+            {
+                return this.StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+
+            }
+
+
+
+
 
         [HttpPost]
         public ActionResult Post(SolicitudCreateDto model)

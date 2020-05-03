@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Model
 {
-    public class Solicitud
+    public class SolicitudFamilia
     {
         [Required]
         public int FamiliaId { get; set; }
