@@ -1,8 +1,11 @@
 ﻿using MiCanasta.Micanasta.Dto;
+using MiCanasta.MiCanasta;
 using MiCanasta.MiCanasta.Controllers;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.MiCanasta.Services;
+using MiCanasta.MiCanasta.Util;
 using Microsoft.AspNetCore.Mvc;
+
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -44,17 +47,18 @@ namespace MiCanasta_Test
             var _controller = new UsuarioController(_service.Object);
             //
             UsuarioLoginDto UsuarioWrongLogin = new UsuarioLoginDto { Dni = "12345671", Contrasena = "12345672" };
-            UsuarioAccesoDto UsuarioResponseAssert = new UsuarioAccesoDto { Dni = "NotFound" };
-            UsuarioAccesoDto UsuarioResponse = new UsuarioAccesoDto();
+            var UsuarioResponse = new UsuarioAccesoDto();
             //
             _service.Setup(x => x.ValidateLogin(UsuarioWrongLogin.Dni, UsuarioWrongLogin.Contrasena)).Returns(UsuarioResponse);
+            
             ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
-            Assert.IsType<UsuarioAccesoDto>(UsuarioResponseAssert);
+            Assert.IsType<ExceptionDto>(ConstanteException.UsuarioLoginIncorrectoException);
         }
 
         /// <summary>
-        /// 
+        /// Se ingresa un usuario inválido
+        /// retorna mensaje no existe
         /// </summary>
         [Fact]
         public void PostValidarIngreso_WhenCalled_ReturnedNotExist()
@@ -63,13 +67,12 @@ namespace MiCanasta_Test
             var _controller = new UsuarioController(_service.Object);
             //
             UsuarioLoginDto UsuarioWrongLogin = new UsuarioLoginDto { Dni = "12345678", Contrasena = "12345671" };
-            UsuarioAccesoDto UsuarioResponseAssert = new UsuarioAccesoDto { Dni = "NotExist" };
             UsuarioAccesoDto UsuarioResponse = new UsuarioAccesoDto();
             //
             _service.Setup(x => x.ValidateLogin(UsuarioWrongLogin.Dni, UsuarioWrongLogin.Contrasena)).Returns(UsuarioResponse);
             ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
-            Assert.IsType<UsuarioAccesoDto>(UsuarioResponseAssert);
+            Assert.IsType<ExceptionDto>(ConstanteException.UsuarioLoginInexistenteException);
         }
     }
 }

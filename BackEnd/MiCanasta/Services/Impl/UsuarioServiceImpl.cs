@@ -56,7 +56,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             else
             {
-                return new UsuarioDto() { Dni="NotFound"};
+                return new UsuarioDto() { Dni="NotExist"};
             }
         }
         public UsuarioDto GetById(String Dni)
