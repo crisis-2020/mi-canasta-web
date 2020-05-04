@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.Extensions.Logging;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;//MiCanasta.MiCanasta.Services.Impl
 
 namespace MiCanasta
 {
@@ -26,11 +28,20 @@ namespace MiCanasta
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
                       services.AddDbContextPool<ApplicationDbContext>(options => options
                 .UseMySql("Server=localhost;Database=micanastaw;User=root;Password=adminadmin;", mySqlOptions => mySqlOptions
+
+
+            services.AddDbContextPool<ApplicationDbContext>(options => options
+                .UseMySql("Server=localhost;Database=micanastaweb;User=root;Password=root;", mySqlOptions => mySqlOptions
+
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
 
+            services.AddTransient  <SolicitudService,SolicitudServiceImpl> ();
+
+            services.AddTransient<UsuarioService, UsuarioServiceImpl>();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
@@ -40,7 +51,11 @@ namespace MiCanasta
             });
 
             services.AddAutoMapper(typeof(Startup));
+
             services.AddTransient<FamiliaService, FamiliaServiceImpl>();
+
+            services.AddTransient<SolicitudService, SolicitudServiceImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
