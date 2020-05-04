@@ -522,3 +522,7 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/csharp,visualstudio,visualstudiocode
 
 .vs
+
+# Carpetas autogeneradas
+obj
+Migrations
