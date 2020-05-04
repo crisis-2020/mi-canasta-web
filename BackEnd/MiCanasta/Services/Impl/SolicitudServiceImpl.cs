@@ -77,8 +77,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public SolicitudBusquedaDto ObtenerNombreFamilia(String Dni)
         {
 
-            var solicitud = _context.Solicitudes.Single(x => x.Dni == Dni);
-
+            var solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
+            if (solicitud == null) return null;
+            
             var familia = _context.Familias.Single(x => x.FamiliaId == solicitud.FamiliaId);
 
             var entry = new SolicitudFamiliaDni
