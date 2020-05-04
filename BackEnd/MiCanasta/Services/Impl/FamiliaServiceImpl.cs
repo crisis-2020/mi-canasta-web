@@ -1,6 +1,7 @@
 using AutoMapper;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace MiCanasta.MiCanasta.Services.Impl
@@ -37,6 +38,21 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 return null;
             }
+        }
+
+        public FamiliaDto GetByFamiliaNombre(string familiaNombre) {
+
+            var familia = _context.Familias
+                .Include(x => x.UsuarioFamilias)
+                .ThenInclude(x => x.Usuario)
+                .ThenInclude(x => x.RolUsuarios)
+                .ThenInclude(x => x.RolPerfil)
+                .ThenInclude(x => x.Perfil)
+                .SingleOrDefault(x => x.Nombre == familiaNombre);
+            var result = _mapper.Map<FamiliaDto>(familia);
+            result.Nombre = familiaNombre;
+            return result;
+
         }
     }
 }

@@ -10,6 +10,7 @@ namespace MiCanasta.MiCanasta.Services
 {
     public interface FamiliaService 
     {
+        public FamiliaDto GetByFamiliaNombre(string familiaNombre);
         public FamiliaCreateDto Create(FamiliaCreateDto model);
     }        
 }

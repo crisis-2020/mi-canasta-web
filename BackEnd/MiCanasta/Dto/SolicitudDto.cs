@@ -10,13 +10,11 @@ namespace MiCanasta.MiCanasta.Dto
     public class SolicitudDto
 
     {
-
         [Required]
         public string FamiliaNombre { get; set; }
 
         [Required]
         public string Dni { get; set; }
-
     }
 
     public class SolicitudCreateDto

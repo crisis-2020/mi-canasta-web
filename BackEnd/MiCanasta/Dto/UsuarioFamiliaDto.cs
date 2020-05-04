@@ -8,10 +8,9 @@ namespace MiCanasta.MiCanasta.Dto
 {
     public class UsuarioFamiliaDto
     {
+        public int FamiliaId { get; set; }
         public string Dni { get; set; }
         public UsuarioDto Usuario { get; set; }
-        public int FamiliaId { get; set; }
-        public FamiliaCreateDto Familia { get; set; }
     }
     public class UsuarioFamiliaCreateDto
     {
