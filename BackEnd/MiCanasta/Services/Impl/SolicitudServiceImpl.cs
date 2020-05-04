@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -75,7 +74,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
 
 
-        public NombreFamiliaDto ObtenerNombreFamilia(String Dni)
+        public SolicitudBusquedaDto ObtenerNombreFamilia(String Dni)
         {
 
             var solicitud = _context.Solicitudes.Single(x => x.Dni == Dni);
@@ -88,7 +87,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 Dni = Dni,
             };
 
-            return _mapper.Map<NombreFamiliaDto>(entry);
+            return _mapper.Map<SolicitudBusquedaDto>(entry);
 
 
         }

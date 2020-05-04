@@ -1,11 +1,8 @@
 ﻿using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
+using MiCanasta.MiCanasta.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -20,26 +17,23 @@ namespace MiCanasta.MiCanasta.Controllers
             _solicitudService = SolicitudService;
         }
 
-        [HttpGet]
-        public ActionResult Get()
+        [HttpGet("{id}")]
+        public ActionResult GetById(String id)
         {
             try
             {
-                var result = _solicitudService.ObtenerNombreFamilia("");//Insertar Dni
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                return NotFound("La solicitud No Existe");
+                var result = _solicitudService.ObtenerNombreFamilia(id);
 
+                return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return this.StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+
+                return NotFound(ConstanteException.SocitudesInexistentesException);
 
             }
 
-
+        }
 
 
 
@@ -48,9 +42,10 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             var result = _solicitudService.Create(model);
 
-            if (result!=null)
+            if (result != null)
             {
-                if (_solicitudService.AceptaSolicitudes(model) == false) {
+                if (_solicitudService.AceptaSolicitudes(model) == false)
+                {
                     return BadRequest("El grupo familiar no acepta solicitudes");
                 }
                 return Ok(result);

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MiCanasta.MiCanasta.Model
 {
-    public class SolicitudFamilia
+    public class Solicitud
     {
         [Required]
         public int FamiliaId { get; set; }
