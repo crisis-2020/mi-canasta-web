@@ -46,7 +46,14 @@ namespace MiCanasta.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
+                    b.Property<bool>("CrearGrupoFamiliar")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Dni")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("FamiliaId");

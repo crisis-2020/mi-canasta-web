@@ -1,18 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using MiCanasta.MiCanasta.Services;
 using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;//MiCanasta.MiCanasta.Services.Impl
 
@@ -32,8 +29,13 @@ namespace MiCanasta
         {
             services.AddControllers();
 
+                      services.AddDbContextPool<ApplicationDbContext>(options => options
+                .UseMySql("Server=localhost;Database=micanastaw;User=root;Password=adminadmin;", mySqlOptions => mySqlOptions
+
+
             services.AddDbContextPool<ApplicationDbContext>(options => options
                 .UseMySql("Server=localhost;Database=micanastaweb;User=root;Password=root;", mySqlOptions => mySqlOptions
+
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
 
@@ -49,7 +51,11 @@ namespace MiCanasta
             });
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<FamiliaService, FamiliaServiceImpl>();
+
             services.AddTransient<SolicitudService, SolicitudServiceImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,5 +81,6 @@ namespace MiCanasta
             });
 
         }
+
     }
 }

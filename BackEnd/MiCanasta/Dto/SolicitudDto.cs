@@ -8,19 +8,29 @@ using System.Threading.Tasks;
 namespace MiCanasta.MiCanasta.Dto
 {
     public class SolicitudDto
+
+    {
+        public int FamiliaId { get; set; }
+        public FamiliaCreateDto Familia { get; set; }
+
     {   
         [Required]
         public string FamiliaNombre { get; set; }
         [Required]
+
         public string Dni { get; set; }
 
     }
 
     public class SolicitudCreateDto
     {
+
+        public int FamiliaId { get; set; }
+        public FamiliaCreateDto Familia { get; set; }
         [Required]
         public string FamiliaNombre { get; set; }
         [Required]
+
         public string Dni { get; set; }
     }
 

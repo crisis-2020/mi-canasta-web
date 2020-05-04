@@ -1,6 +1,22 @@
 {
   "format": 1,
   "restore": {
+
+    "/Users/mac/Documents/GitHub/MiCanasta/BackEnd/MiCanasta.csproj": {}
+  },
+  "projects": {
+    "/Users/mac/Documents/GitHub/MiCanasta/BackEnd/MiCanasta.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/mac/Documents/GitHub/MiCanasta/BackEnd/MiCanasta.csproj",
+        "projectName": "MiCanasta",
+        "projectPath": "/Users/mac/Documents/GitHub/MiCanasta/BackEnd/MiCanasta.csproj",
+        "packagesPath": "/Users/mac/.nuget/packages/",
+        "outputPath": "/Users/mac/Documents/GitHub/MiCanasta/BackEnd/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/mac/.config/NuGet/NuGet.Config"
+
     "D:\\MiCanastaProject\\mi-canasta-web\\BackEnd\\MiCanasta.csproj": {}
   },
   "projects": {
@@ -16,12 +32,12 @@
         "configFilePaths": [
           "C:\\Users\\ablav\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -46,6 +62,19 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -57,6 +86,7 @@
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
               "version": "[3.1.2, )"
+
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -64,6 +94,11 @@
               "target": "Package",
               "version": "[3.1.3, )"
             },
+
+            "NuGet.Packaging": {
+              "target": "Package",
+              "version": "[5.5.1, )"
+
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.2, )"
@@ -71,6 +106,7 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -82,7 +118,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.3.3, )"
+              "version": "[5.4.1, )"
             }
           },
           "imports": [
@@ -103,7 +139,11 @@
               "privateAssets": "all"
             }
           },
+
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.200/RuntimeIdentifierGraph.json"
+
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+
         }
       }
     }
