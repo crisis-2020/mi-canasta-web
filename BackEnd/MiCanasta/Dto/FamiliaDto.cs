@@ -11,12 +11,15 @@ namespace MiCanasta.MiCanasta
     {
         [Required]
         public int FamiliaId { get; set; }
-        public string FamiliaNombre { get; set; }
+        [Required]
+        public string Nombre { get; set; }
+        public string Dni { get; set; }
         public bool AceptaSolicitudes { get; set; }
         public int Cantidad { get; set; }
-        public List<FamiliaCreateDto> Solicitudes { get; set; }
+        public List<SolicitudDto> Solicitudes { get; set; }
         public List<UsuarioFamiliaDto> UsuarioFamilias { get; set; }
         public List<HistorialDto> Historiales { get; set; }
+        public bool CrearGrupoFamiliar { get; set; }
     }
 
     public class FamiliaCreateDto

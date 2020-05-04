@@ -27,5 +27,12 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             return Ok("Se ha creado el grupo familiar :) ");
         }
+        
+        [HttpGet("{nombreFamilia}/usuarios")]
+        public ActionResult GetUsuariosByNombreFamilia(string nombreFamilia)
+        {
+            var result = _familiaService.GetByFamiliaNombre(nombreFamilia);
+            return Ok(result);
+        }
     }
 }

@@ -13,12 +13,18 @@ namespace MiCanasta.BackEnd.ConfigMapper
         public AutoMapperConfig()
         {
             CreateMap<Familia, FamiliaCreateDto>();
+            CreateMap<Familia, FamiliaDto>();
             CreateMap<Producto, ProductoDto>();
-            CreateMap<SolicitudFamiliaDni , SolicitudBusquedaDto>();
+            CreateMap<Perfil, PerfilDto>();
             CreateMap<Usuario, UsuarioDto>();
             CreateMap<UsuarioReniecDto, UsuarioAccesoDto>();
             CreateMap<UsuarioDto, UsuarioAccesoDto>();
+            CreateMap<UsuarioFamilia, UsuarioFamiliaDto>();
+            CreateMap<Historial, HistorialDto>();
+            CreateMap<RolUsuario, RolUsuarioDto>();
+            CreateMap<RolPerfil, RolPerfilDto>();
             CreateMap<Solicitud, SolicitudDto>();
+            CreateMap<SolicitudFamiliaDni, SolicitudBusquedaDto>();
         }
 
     }
