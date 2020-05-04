@@ -1,4 +1,4 @@
-﻿using MiCanasta.Dto;
+﻿using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -33,7 +33,7 @@ namespace MiCanasta.MiCanasta.Controllers
         public ActionResult<UsuarioAccesoDto> ValidarIngreso([FromBody] UsuarioLoginDto UsuarioLogin)
         {
             UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
-            if (usuario.Dni == null)
+            if (usuario.Dni == "NotFound")
             {
                 return NotFound(usuario);
             }

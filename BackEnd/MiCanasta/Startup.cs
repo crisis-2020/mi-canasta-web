@@ -33,7 +33,7 @@ namespace MiCanasta
             services.AddControllers();
 
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=root;", mySqlOptions => mySqlOptions
+                .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=9C3aXT]o89%68sIwic;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
             services.AddTransient<UsuarioService, UsuarioServiceImpl>();

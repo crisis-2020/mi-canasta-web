@@ -1,4 +1,4 @@
-﻿using MiCanasta.MiCanasta.Dto;
+﻿using MiCanasta.Micanasta.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
