@@ -6,7 +6,6 @@ using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
 using System.Linq;
 using System.Net;
 namespace MiCanasta.MiCanasta.Services.Impl
@@ -58,7 +57,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 return _mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == Dni));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new UsuarioDto();
             }

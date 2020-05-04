@@ -25,6 +25,7 @@ namespace MiCanasta.MiCanasta
         public string FamiliaNombre { get; set; }
         [Required]
         public string Dni { get; set; }
+        public bool AceptaSolicitudes { get; set; }
     }
 
     public class FamiliaUpdateDto

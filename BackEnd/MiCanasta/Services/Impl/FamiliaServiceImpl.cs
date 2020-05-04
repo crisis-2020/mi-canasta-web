@@ -27,6 +27,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 {
                     Nombre = model.FamiliaNombre,
                     Dni = model.Dni,
+                    AceptaSolicitudes = true,
                 };
                 _context.Add(entry);
                 _context.SaveChanges();
