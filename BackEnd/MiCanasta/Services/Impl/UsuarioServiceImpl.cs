@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 ﻿using AutoMapper;
 using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Model;

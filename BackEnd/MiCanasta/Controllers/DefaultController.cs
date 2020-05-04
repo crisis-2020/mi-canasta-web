@@ -14,7 +14,7 @@ namespace MiCanasta.Controllers
         [HttpGet]
         public string Index()
         {
-            return "Running...";
+            return "mi-canasta";
         }
     }
 }

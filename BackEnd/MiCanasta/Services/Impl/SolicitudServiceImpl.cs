@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -70,9 +69,34 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     _context.Add(entry);
                     _context.SaveChanges();
                 }
-
                 return _mapper.Map<SolicitudDto>(entry);
             }
+        }
+
+
+        public SolicitudBusquedaDto ObtenerNombreFamilia(String Dni)
+        {
+
+            var solicitud = _context.Solicitudes.Single(x => x.Dni == Dni);
+
+            var familia = _context.Familias.Single(x => x.FamiliaId == solicitud.FamiliaId);
+
+            var entry = new SolicitudFamiliaDni
+            {
+                NombreFamilia = familia.Nombre,
+                Dni = Dni,
+            };
+
+            return _mapper.Map<SolicitudBusquedaDto>(entry);
+
+
+        }
+        public class SolicitudFamiliaDni
+        {
+
+            public string NombreFamilia { get; set; }
+            public string Dni { get; set; }
+
         }
     }
 }

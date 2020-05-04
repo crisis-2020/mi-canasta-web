@@ -1,10 +1,8 @@
 ﻿using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
+using MiCanasta.MiCanasta.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -19,14 +17,35 @@ namespace MiCanasta.MiCanasta.Controllers
             _solicitudService = SolicitudService;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetById(String id)
+        {
+            try
+            {
+                var result = _solicitudService.ObtenerNombreFamilia(id);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return NotFound(ConstanteException.SocitudesInexistentesException);
+
+            }
+
+        }
+
+
+
         [HttpPost]
         public ActionResult Post(SolicitudCreateDto model)
         {
             var result = _solicitudService.Create(model);
 
-            if (result!=null)
+            if (result != null)
             {
-                if (_solicitudService.AceptaSolicitudes(model) == false) {
+                if (_solicitudService.AceptaSolicitudes(model) == false)
+                {
                     return BadRequest("El grupo familiar no acepta solicitudes");
                 }
                 return Ok(result);

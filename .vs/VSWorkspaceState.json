@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BackEnd",
+    "\\BackEnd\\MiCanasta",
+    "\\BackEnd\\MiCanasta\\Controllers",
+    "\\BackEnd\\MiCanasta\\Dto",
+    "\\BackEnd\\MiCanasta\\Model",
+    "\\BackEnd\\MiCanasta\\Persistence",
+    "\\BackEnd\\MiCanasta\\Properties",
+    "\\BackEnd\\MiCanasta\\Services",
+    "\\BackEnd\\MiCanasta\\Services\\Impl"
+  ],
+  "SelectedNode": "\\BackEnd\\MiCanasta\\Services\\SolicitudService.cs",
+  "PreviewInSolutionExplorer": false
+}
