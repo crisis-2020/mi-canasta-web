@@ -27,6 +27,14 @@ namespace MiCanasta
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddDbContextPool<ApplicationDbContext>(options => options
                 .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
                     .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
@@ -63,6 +71,8 @@ namespace MiCanasta
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
