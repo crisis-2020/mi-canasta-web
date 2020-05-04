@@ -35,8 +35,12 @@ namespace MiCanasta.MiCanasta.Controllers
             UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
             if (usuario.Dni == "NotFound")
             {
+                return Unauthorized(usuario);
+            }else if (usuario.Dni == "NotExist")
+            {
                 return NotFound(usuario);
             }
+
             return Ok(usuario);
         }
     }
