@@ -14,7 +14,7 @@ namespace MiCanasta.Controllers
         [HttpGet]
         public string Index()
         {
-            return "Angel";
+            return "mi-canasta";
         }
     }
 }

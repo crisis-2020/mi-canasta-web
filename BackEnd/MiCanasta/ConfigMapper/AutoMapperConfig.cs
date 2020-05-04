@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MiCanasta.MiCanasta;
 
 using static MiCanasta.MiCanasta.Services.Impl.SolicitudServiceImpl;
+using MiCanasta.Dto;
 
 namespace MiCanasta.BackEnd.ConfigMapper
 {
@@ -17,7 +14,7 @@ namespace MiCanasta.BackEnd.ConfigMapper
         {
             CreateMap<Familia, FamiliaCreateDto>();
             CreateMap<Producto, ProductoDto>();
-            CreateMap<SolicitudFamiliaDni , NombreFamiliaDto>();
+            CreateMap<SolicitudFamiliaDni , SolicitudBusquedaDto>();
             CreateMap<Usuario, UsuarioDto>();
             CreateMap<UsuarioReniecDto, UsuarioAccesoDto>();
             CreateMap<UsuarioDto, UsuarioAccesoDto>();
