@@ -1,4 +1,5 @@
 ﻿using MiCanasta.Dto;
+using MiCanasta.Micanasta.Dto;
 using System;
 
 namespace MiCanasta.MiCanasta.Services

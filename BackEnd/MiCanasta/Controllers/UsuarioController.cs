@@ -1,6 +1,7 @@
-﻿using MiCanasta.Dto;
+﻿using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
+using MiCanasta.MiCanasta.Util;
 using System;
 
 namespace MiCanasta.MiCanasta.Controllers
@@ -10,6 +11,7 @@ namespace MiCanasta.MiCanasta.Controllers
     public class UsuarioController : ControllerBase
     {
         private UsuarioService _usuarioService;
+
 
         public UsuarioController(UsuarioService usuarioService)
         {
@@ -33,10 +35,14 @@ namespace MiCanasta.MiCanasta.Controllers
         public ActionResult<UsuarioAccesoDto> ValidarIngreso([FromBody] UsuarioLoginDto UsuarioLogin)
         {
             UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
-            if (usuario.Dni == null)
+            if (usuario.Dni == "NotFound")
             {
-                return NotFound(usuario);
+                return Unauthorized(ConstanteException.UsuarioLoginIncorrectoException);
+            }else if (usuario.Dni == "NotExist")
+            {
+                return NotFound(ConstanteException.UsuarioLoginInexistenteException);
             }
+
             return Ok(usuario);
         }
     }

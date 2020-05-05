@@ -16,5 +16,17 @@ namespace MiCanasta.MiCanasta.Util
             Exception = "SocitudInexistenteException",
             Message = "No cuenta con ninguna solicitud enviada"
         };
+
+        public static ExceptionDto UsuarioLoginIncorrectoException = new ExceptionDto()
+        {
+            Exception = "UsuarioLoginIncorrectoException",
+            Message = "El usuario ingresado no corresponde a la contraseña brindada"
+        };
+
+        public static ExceptionDto UsuarioLoginInexistenteException = new ExceptionDto()
+        {
+            Exception = "UsuarioLoginInexistenteException",
+            Message = "El usuario ingresado no se encuentra registrado en la institución de identidad"
+        };
     }
 }

@@ -19,19 +19,13 @@ namespace MiCanasta.MiCanasta.Controllers
 
         [HttpGet("{id}")]
         public ActionResult GetById(String id)
-        {
-            
-            
-                var result = _solicitudService.ObtenerNombreFamilia(id);
+        {                        
+              var result = _solicitudService.ObtenerNombreFamilia(id); 
 
-                if (result != null) return Ok(result);
-              
+              if (result != null) return Ok(result);
 
-                return NotFound(ConstanteException.SocitudesInexistentesException);
-
-            
-
-        }
+              return NotFound(ConstanteException.SocitudesInexistentesException);
+         }
 
 
 
