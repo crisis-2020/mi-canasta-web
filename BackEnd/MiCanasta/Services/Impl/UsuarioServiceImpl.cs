@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 ﻿using AutoMapper;
-using MiCanasta.Dto;
+using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
 using Newtonsoft.Json;
@@ -15,7 +15,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-
+        
         public UsuarioServiceImpl(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
@@ -38,19 +38,26 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
         public UsuarioDto Create(UsuarioReniecDto model)
         {
-            var Nuevo = new Usuario
-            {
-                Dni = model.Dni,
-                Nombre = model.Nombre1 + " " + model.Nombre2,
-                ApellidoPaterno = model.ApellidoPaterno,
-                ApellidoMaterno = model.ApellidoMaterno,
-                Contrasena = model.Dni,
-                Correo = " "
-            };
-            _context.Add(Nuevo);
-            _context.SaveChanges();
+            if (model !=null) {
+                var Nuevo = new Usuario
+                {
+                    Dni = model.Dni,
+                    Nombre = model.Nombre1 + " " + model.Nombre2,
+                    ApellidoPaterno = model.ApellidoPaterno,
+                    ApellidoMaterno = model.ApellidoMaterno,
+                    Contrasena = model.Dni,
+                    Correo = " "
+                };
+                _context.Add(Nuevo);
+                _context.SaveChanges();
 
-            return _mapper.Map<UsuarioDto>(Nuevo);
+                return _mapper.Map<UsuarioDto>(Nuevo);
+
+            }
+            else
+            {
+                return new UsuarioDto() { Dni="NotExist"};
+            }
         }
         public UsuarioDto GetById(String Dni)
         {
@@ -77,7 +84,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
-            return new UsuarioAccesoDto();
+            return new UsuarioAccesoDto { Dni="NotFound"};
         }
     }
 }

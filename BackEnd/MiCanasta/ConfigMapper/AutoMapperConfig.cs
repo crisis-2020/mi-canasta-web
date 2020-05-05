@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.MiCanasta;
