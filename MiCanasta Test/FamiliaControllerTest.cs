@@ -1,16 +1,15 @@
 
 using GenFu;
 using MiCanasta.Dto;
+using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta;
 using MiCanasta.MiCanasta.Controllers;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace MiCanasta_Test
@@ -56,7 +55,7 @@ namespace MiCanasta_Test
 
 			FamiliaDto modelDto = new FamiliaDto
 			{
-				FamiliaNombre = "RiverdaleFam77"
+				Nombre = "RiverdaleFam77"
 			};
 
 			_service.Setup(x => x.Create(modelCreateDto)).Returns(modelCreateDto);
