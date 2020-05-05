@@ -26,7 +26,7 @@ namespace MiCanasta.MiCanasta.Controllers
 
                 return Ok(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return NotFound(ConstanteException.SocitudesInexistentesException);
