@@ -1,6 +1,6 @@
 <template>
   <button 
-
+    v-bind:disabled="disable || false"
   v-on:click="cb()"
   class="btn-shared-component"
   :class="[
@@ -21,7 +21,7 @@ import LoadingButtonShared from "../loading/loading-button.component.vue";
 export default {
     name: "ButtonShared",
     components: {LoadingButtonShared},
-    props: [ 'text', 'type','bgColor','loading'],
+    props: [ 'text', 'type','bgColor','loading','disable'],
     methods: {
         cb: function(){
            this.$emit('Event')
