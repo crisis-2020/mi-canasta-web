@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using MiCanasta.MiCanasta.Services;
 using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace MiCanasta
@@ -32,12 +27,24 @@ namespace MiCanasta
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                .UseMySql("Server=localhost;Database=mi-canasta;User=root;Password=root;", mySqlOptions => mySqlOptions
-                    .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
+                    .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
+                        .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
+
+            services.AddTransient<SolicitudService, SolicitudServiceImpl>();
+
             services.AddTransient<UsuarioService, UsuarioServiceImpl>();
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Title = "Mi Canasta",
@@ -46,7 +53,11 @@ namespace MiCanasta
             });
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<FamiliaService, FamiliaServiceImpl>();
+
             services.AddTransient<SolicitudService, SolicitudServiceImpl>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,16 +72,20 @@ namespace MiCanasta
 
             app.UseAuthorization();
 
+            app.UseCors("CorsPolicy");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mi Canasta");
             });
 
         }
+
     }
 }

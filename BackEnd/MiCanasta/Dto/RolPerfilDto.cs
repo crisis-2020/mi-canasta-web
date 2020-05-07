@@ -12,7 +12,7 @@ namespace MiCanasta.Dto
 
         public int PerfilId { get; set; }
         public PerfilDto Perfil { get; set; }
-        public List<RolUsuarioDto> RolUsuarios { get; set; }
+        
     }
 
     public class RolPerfilCreateDto

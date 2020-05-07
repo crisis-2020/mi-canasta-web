@@ -1,4 +1,5 @@
 ﻿using MiCanasta.Dto;
+using MiCanasta.Micanasta.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,9 @@ namespace MiCanasta.MiCanasta.Dto
 {
     public class UsuarioFamiliaDto
     {
+        public int FamiliaId { get; set; }
         public string Dni { get; set; }
         public UsuarioDto Usuario { get; set; }
-        public int FamiliaId { get; set; }
-        public FamiliaDto Familia { get; set; }
     }
     public class UsuarioFamiliaCreateDto
     {

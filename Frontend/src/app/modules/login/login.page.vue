@@ -12,12 +12,8 @@
       </div>
 
       <div class="input-shared-container margin">
-        <label class="label-shared-component">Contraseña</label>
-        <input
-          class="input-shared-component"
-          type="password"
-          v-model="contraseña"
-        />
+        <label class="label-shared-component">contrasena</label>
+        <input class="input-shared-component" type="password" v-model="contrasena" />
       </div>
 
       <ButtonShared
@@ -30,13 +26,14 @@
       />
     </div>
 
-      <ErrorModalShared
+    <ErrorModalShared
       @Event="closeModal"
       v-if="isShowModalError"
-      :title="'Hubo un error'"
+      :title="'Error'"
       :description="
-        'Las crendenciales no son correctas'
-      "/>
+        'El DNI o password ingresado es incorrecto'
+      "
+    />
   </div>
 </template>
 
@@ -44,6 +41,7 @@
 import ButtonShared from "../../shared/button/button.component.vue";
 import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
 import AuthService from "../../core/services/auth.service";
+import Usuario from "../../core/model/usuario.model";
 export default {
   name: "LoginPage",
   components: { ButtonShared, ErrorModalShared },
@@ -51,31 +49,31 @@ export default {
   data: function() {
     return {
       dni: "",
-      contraseña: "",
+      contrasena: "",
       loadingButton: false,
-      isShowModalError: false,
+      isShowModalError: false
     };
   },
   methods: {
     async autentication() {
       this.$data.loadingButton = true;
       try {
-        const respuesta = await AuthService.autenticacion(this.$data.dni);
+        const usuario = new Usuario(this.$data.dni, this.$data.contrasena);
+        const respuesta = await AuthService.autenticacion(usuario);
         console.log(respuesta);
         this.$data.loadingButton = false;
-        this.$router.push("/home")
-
+        this.$router.push("/home");
       } catch (error) {
         console.log(error);
-        this.$data.isShowModalError =  true
+        this.$data.isShowModalError = true;
         this.$data.loadingButton = false;
       }
     },
 
-    closeModal(){
-      this.$data.isShowModalError =  false;
+    closeModal() {
+      this.$data.isShowModalError = false;
     }
-  },
+  }
 };
 </script>
 

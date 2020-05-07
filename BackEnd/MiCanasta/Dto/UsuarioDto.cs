@@ -1,7 +1,8 @@
-﻿using System;
+﻿using MiCanasta.Dto;
+using System;
 using System.Collections.Generic;
 
-namespace MiCanasta.Dto
+namespace MiCanasta.Micanasta.Dto
 {
 
     public class UsuarioDto
