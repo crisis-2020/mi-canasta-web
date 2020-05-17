@@ -54,7 +54,14 @@ export default {
     padding: 16px;
     border-radius: 4px;
 }
-
+button:disabled{
+  opacity: .3;
+  cursor: not-allowed;
+}
+button{
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
 
 
 
