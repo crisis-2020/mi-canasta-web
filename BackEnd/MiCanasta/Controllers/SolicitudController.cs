@@ -3,6 +3,7 @@ using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
 using MiCanasta.MiCanasta.Util;
 using System;
+using MiCanasta.MiCanasta.Exceptions;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -32,17 +33,18 @@ namespace MiCanasta.MiCanasta.Controllers
         [HttpPost]
         public ActionResult Post(SolicitudCreateDto model)
         {
-            var result = _solicitudService.Create(model);
-
-            if (result != null)
+            try
             {
-                if (_solicitudService.AceptaSolicitudes(model) == false)
-                {
-                    return BadRequest("El grupo familiar no acepta solicitudes");
-                }
-                return Ok(result);
+                return Ok(_solicitudService.Create(model));
             }
-            return NotFound("El grupo familiar no existe");
+            catch (FamilyNotFoundException FamilyNotFoundException)
+            {
+                return BadRequest(FamilyNotFoundException.ExceptionDto);
+            }
+            catch (FamilyNotAceptedSolicitudeException FamilyNotAceptedSolicitudeException)
+            {
+                return BadRequest(FamilyNotAceptedSolicitudeException.ExceptionDto);
+            }
         }
     }
 }
