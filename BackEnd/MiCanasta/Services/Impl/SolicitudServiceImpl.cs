@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MiCanasta.MiCanasta.Dto;
+using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +11,7 @@ using System.Linq;
 namespace MiCanasta.MiCanasta.Services.Impl
 {
     public class SolicitudServiceImpl: SolicitudService
-    {
-
+    {   
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
@@ -41,37 +41,37 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
 
         public bool AceptaSolicitudes(SolicitudCreateDto model) {
-            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre).AceptaSolicitudes == true)
+            if (_context.Familias.Single(x => x.Nombre == model.FamiliaNombre).AceptaSolicitudes == true)
                 return true;
-            return false;
+            else return false;
         }
 
         public SolicitudDto Create(SolicitudCreateDto model)
         {
-            // Si no existe la familia
-            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) == null) 
-            {
-                return null;
-            }
+            Solicitud entry = null;
+
+            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) == null) throw new FamilyNotFoundException();
 
             else
             {
-                var familia = _context.Familias.Single(x => x.Nombre == model.FamiliaNombre);
-
-                var entry = new Solicitud
+                if (AceptaSolicitudes(model) == false) throw new FamilyNotAceptedSolicitudeException();
+                else
                 {
-                    FamiliaId = familia.FamiliaId,
-                    Dni = model.Dni,
-                };
+                    var familia = _context.Familias.Single(x => x.Nombre == model.FamiliaNombre);
 
-                if (AceptaSolicitudes(model) == true)
-                {
+                    entry = new Solicitud
+                    {
+                        FamiliaId = familia.FamiliaId,
+                        Dni = model.Dni,
+                    };
+
                     _context.Add(entry);
                     _context.SaveChanges();
                 }
-                return _mapper.Map<SolicitudDto>(entry);
             }
+            return _mapper.Map<SolicitudDto>(entry);
         }
+            
 
 
         public SolicitudBusquedaDto ObtenerNombreFamilia(String Dni)
@@ -94,7 +94,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
         public class SolicitudFamiliaDni
         {
-
             public string NombreFamilia { get; set; }
             public string Dni { get; set; }
 
