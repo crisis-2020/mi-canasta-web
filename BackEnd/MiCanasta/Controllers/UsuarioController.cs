@@ -38,12 +38,19 @@ namespace MiCanasta.MiCanasta.Controllers
             if (usuario.Dni == "NotFound")
             {
                 return Unauthorized(ConstanteException.UsuarioLoginIncorrectoException);
-            }else if (usuario.Dni == "NotExist")
+            } else if (usuario.Dni == "NotExist")
             {
                 return NotFound(ConstanteException.UsuarioLoginInexistenteException);
             }
 
             return Ok(usuario);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Remove(String id)
+        {
+            _usuarioService.Remove(id);
+            return Ok();
         }
     }
 }

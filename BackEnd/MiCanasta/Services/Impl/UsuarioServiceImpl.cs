@@ -85,5 +85,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             return new UsuarioAccesoDto { Dni="NotFound"};
         }
+
+        public UsuarioDto Remove(string Dni) {
+            Usuario usuario = new Usuario { Dni = Dni };
+            _context.Remove(usuario);
+            _context.SaveChanges();
+            return _mapper.Map<UsuarioDto>(usuario);
+        }
     }
 }
