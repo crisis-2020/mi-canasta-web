@@ -3,6 +3,8 @@ using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
 using MiCanasta.MiCanasta.Util;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
+using MiCanasta.MiCanasta.Exceptions;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -34,16 +36,19 @@ namespace MiCanasta.MiCanasta.Controllers
         [HttpPost]
         public ActionResult<UsuarioAccesoDto> ValidarIngreso([FromBody] UsuarioLoginDto UsuarioLogin)
         {
-            UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
-            if (usuario.Dni == "NotFound")
+            try
             {
-                return Unauthorized(ConstanteException.UsuarioLoginIncorrectoException);
-            }else if (usuario.Dni == "NotExist")
-            {
-                return NotFound(ConstanteException.UsuarioLoginInexistenteException);
+                UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
+                return Ok(usuario);
             }
-
-            return Ok(usuario);
+            catch(UserLoginIncorrectException UserIncorrect)
+            {
+                return BadRequest(UserIncorrect.ExceptionDto);
+            }
+            catch(UserLoginNotFoundException UserNotFound)
+            {
+                return BadRequest(UserNotFound.ExceptionDto);
+            }
         }
     }
 }
