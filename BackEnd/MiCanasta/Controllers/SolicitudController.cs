@@ -35,7 +35,7 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             try
             {
-                return Ok(_solicitudService.Create(model));
+                return Created("Created", _solicitudService.Create(model));
             }
             catch (FamilyNotFoundException FamilyNotFoundException)
             {
