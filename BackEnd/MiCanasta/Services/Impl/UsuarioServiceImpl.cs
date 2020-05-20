@@ -87,23 +87,5 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             return new UsuarioAccesoDto { Dni="NotFound"};
         }
-
-        public UsuarioDto Remove(string AdminDni, string UserDni) {
-            UsuarioDto usuarioDto = null;
-            var RolUsuarioUser = _context.RolUsuarios.Single(x => x.Dni == UserDni);
-            var RolUsuarioAdmin = _context.RolUsuarios.Single(x => x.Dni == AdminDni);
-
-            if (RolUsuarioAdmin.RolPerfilId != 1) throw new UserNotAdminException();
-            else
-            {
-                if (RolUsuarioUser.RolPerfilId == 1) throw new UserToDeleteIsAdminException();
-                else {
-                    usuarioDto = GetById(UserDni);
-                    _context.Remove(new Usuario { Dni = UserDni });
-                    _context.SaveChanges();
-                }
-            }
-            return usuarioDto;
-        }
     }
 }
