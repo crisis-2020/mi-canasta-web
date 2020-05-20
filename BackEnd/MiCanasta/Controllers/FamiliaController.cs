@@ -11,12 +11,12 @@ namespace MiCanasta.MiCanasta.Controllers
     public class FamiliaController: ControllerBase
     {
         private readonly FamiliaService _familiaService;
-        private readonly UsuarioService _usuarioService;
+        private readonly UsuarioFamiliaService _usuarioFamiliaService;
 
-        public FamiliaController(FamiliaService FamiliaService, UsuarioService UsuarioService)
+        public FamiliaController(FamiliaService FamiliaService, UsuarioFamiliaService UsuarioFamiliaService)
         {
             _familiaService = FamiliaService;
-            _usuarioService = UsuarioService;
+            _usuarioFamiliaService = UsuarioFamiliaService;
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             try
             {
-                return Ok(_usuarioService.Remove(AdminId, Dni));
+                return Ok(_usuarioFamiliaService.Remove(AdminId, Dni));
             }
             catch (UserNotAdminException UserNotAdminException)
             {
