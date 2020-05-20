@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using RestSharp;
 using System.Linq;
 using System.Net;
+using MiCanasta.MiCanasta.Exceptions;
+
 namespace MiCanasta.MiCanasta.Services.Impl
 {
     public class UsuarioServiceImpl : UsuarioService
@@ -86,11 +88,22 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return new UsuarioAccesoDto { Dni="NotFound"};
         }
 
-        public UsuarioDto Remove(string Dni) {
-            Usuario usuario = new Usuario { Dni = Dni };
-            _context.Remove(usuario);
-            _context.SaveChanges();
-            return _mapper.Map<UsuarioDto>(usuario);
+        public UsuarioDto Remove(string AdminDni, string UserDni) {
+            UsuarioDto usuarioDto = null;
+            var RolUsuarioUser = _context.RolUsuarios.Single(x => x.Dni == UserDni);
+            var RolUsuarioAdmin = _context.RolUsuarios.Single(x => x.Dni == AdminDni);
+
+            if (RolUsuarioAdmin.RolPerfilId != 1) throw new UserNotAdminException();
+            else
+            {
+                if (RolUsuarioUser.RolPerfilId == 1) throw new UserToDeleteIsAdminException();
+                else {
+                    usuarioDto = GetById(UserDni);
+                    _context.Remove(new Usuario { Dni = UserDni });
+                    _context.SaveChanges();
+                }
+            }
+            return usuarioDto;
         }
     }
 }

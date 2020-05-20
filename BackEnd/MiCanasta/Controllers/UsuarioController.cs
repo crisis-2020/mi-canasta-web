@@ -45,12 +45,5 @@ namespace MiCanasta.MiCanasta.Controllers
 
             return Ok(usuario);
         }
-
-        [HttpDelete("{id}")]
-        public ActionResult Remove(String id)
-        {
-            _usuarioService.Remove(id);
-            return Ok();
-        }
     }
 }
