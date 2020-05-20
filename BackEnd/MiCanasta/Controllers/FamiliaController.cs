@@ -11,10 +11,12 @@ namespace MiCanasta.MiCanasta.Controllers
     public class FamiliaController: ControllerBase
     {
         private readonly FamiliaService _familiaService;
+        private readonly UsuarioService _usuarioService;
 
-        public FamiliaController(FamiliaService FamiliaService)
+        public FamiliaController(FamiliaService FamiliaService, UsuarioService UsuarioService)
         {
             _familiaService = FamiliaService;
+            _usuarioService = UsuarioService;
         }
 
         [HttpPost]
@@ -38,6 +40,23 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             catch (FamilyNotFoundException) {
                 return NoContent();
+            }
+        }
+
+        [HttpDelete("{nombreFamilia}/usuarios/{Dni}")]
+        public ActionResult Remove(string AdminId, string Dni)
+        {
+            try
+            {
+                return Ok(_usuarioService.Remove(AdminId, Dni));
+            }
+            catch (UserNotAdminException UserNotAdminException)
+            {
+                return BadRequest(UserNotAdminException.ExceptionDto);
+            }
+            catch (UserToDeleteIsAdminException UserToDeleteIsAdminException)
+            {
+                return BadRequest(UserToDeleteIsAdminException.ExceptionDto);
             }
         }
     }
