@@ -57,7 +57,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             else
             {
-                return new UsuarioDto() { Dni="NotExist"};
+                throw new UserLoginNotFoundException();
             }
         }
         public UsuarioDto GetById(String Dni)
@@ -78,14 +78,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
             if (resultValidacion.Dni == null)
             {
                 var resultReniec = ValidarIdentidad(Dni);
-                var result2 = Create(resultReniec);
-                return _mapper.Map<UsuarioAccesoDto>(result2);
+                var resultData = Create(resultReniec);
+                return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
             else if (Contrasena == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
-            return new UsuarioAccesoDto { Dni="NotFound"};
+            throw new UserLoginIncorrectException();
         }
 
         public UsuarioDto Remove(string AdminDni, string UserDni) {

@@ -1,9 +1,9 @@
 ﻿using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta;
 using MiCanasta.MiCanasta.Controllers;
+using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.MiCanasta.Services;
-using MiCanasta.MiCanasta.Util;
 using Microsoft.AspNetCore.Mvc;
 
 using Moq;
@@ -53,7 +53,7 @@ namespace MiCanasta_Test
             
             ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
-            Assert.IsType<ExceptionDto>(ConstanteException.UsuarioLoginIncorrectoException);
+            Assert.IsType<ExceptionDto>(new UserLoginIncorrectException().ExceptionDto);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace MiCanasta_Test
             _service.Setup(x => x.ValidateLogin(UsuarioWrongLogin.Dni, UsuarioWrongLogin.Contrasena)).Returns(UsuarioResponse);
             ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
-            Assert.IsType<ExceptionDto>(ConstanteException.UsuarioLoginInexistenteException);
+            Assert.IsType<ExceptionDto>(new UserLoginNotFoundException().ExceptionDto);
         }
     }
 }
