@@ -2,6 +2,7 @@ using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
 using MiCanasta.Persistence;
 using System.Linq;
+using MiCanasta.MiCanasta.Exceptions;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -31,8 +32,13 @@ namespace MiCanasta.MiCanasta.Controllers
         [HttpGet("{nombreFamilia}/usuarios")]
         public ActionResult GetUsuariosByNombreFamilia(string nombreFamilia)
         {
-            var result = _familiaService.GetByFamiliaNombre(nombreFamilia);
-            return Ok(result);
+            try
+            {
+                return Ok(_familiaService.GetByFamiliaNombre(nombreFamilia));
+            }
+            catch (FamilyNotFoundException) {
+                return NoContent();
+            }
         }
     }
 }

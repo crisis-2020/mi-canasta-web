@@ -1,4 +1,5 @@
 using AutoMapper;
+using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         public FamiliaDto GetByFamiliaNombre(string familiaNombre) {
 
+            FamiliaDto result = null;
             var familia = _context.Familias
                 .Include(x => x.UsuarioFamilias)
                 .ThenInclude(x => x.Usuario)
@@ -49,8 +51,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 .ThenInclude(x => x.RolPerfil)
                 .ThenInclude(x => x.Perfil)
                 .SingleOrDefault(x => x.Nombre == familiaNombre);
-            var result = _mapper.Map<FamiliaDto>(familia);
-            result.Nombre = familiaNombre;
+
+            if (familia == null) throw new FamilyNotFoundException();
+            else {
+                result = _mapper.Map<FamiliaDto>(familia);
+                result.Nombre = familiaNombre;
+            }
             return result;
 
         }
