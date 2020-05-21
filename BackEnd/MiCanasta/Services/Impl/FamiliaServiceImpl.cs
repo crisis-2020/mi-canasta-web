@@ -1,4 +1,5 @@
 using AutoMapper;
+using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
@@ -60,5 +61,31 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return result;
 
         }
+
+        public Familia DesactivarSolicitudes(string nombreFamilia, string Dni)
+        {
+            Familia nombreFam;
+            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia && x.Dni == Dni);
+
+            if (nombreFam == null) throw new FamilyNotFoundException();
+
+            else
+            {
+                Familia familia = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
+                var solicitudes = _context.Familias.Single(x => x.Nombre == nombreFamilia && x.Dni == Dni);
+                nombreFam = new Familia
+                {
+                    Nombre = nombreFam.Nombre,
+                    AceptaSolicitudes = false,
+                };
+
+                _context.Add(nombreFam);
+                _context.Remove(solicitudes);
+                _context.SaveChanges();
+                
+            }
+            return _mapper.Map<Familia>(nombreFam);
+        }
+
     }
 }

@@ -59,5 +59,20 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest(UserToDeleteIsAdminException.ExceptionDto);
             }
         }
+
+        [HttpPut("/familias/{nombreFamilia}")]
+        public ActionResult DesactivarSolicitudes(string nombreFamilia, string Dni)
+        {
+            try
+            {
+                _familiaService.DesactivarSolicitudes(nombreFamilia, Dni);
+            }
+            catch (FamilyNotFoundException FamilyNotFoundException)
+            {
+                return BadRequest(FamilyNotFoundException.ExceptionDto);
+            }
+            return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
+        }
+
     }
 }
