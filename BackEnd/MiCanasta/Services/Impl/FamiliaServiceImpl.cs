@@ -60,5 +60,26 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return result;
 
         }
+
+        public Familia DesactivarSolicitudes(string nombreFamilia, string dni)
+        {
+            Familia nombreFam;
+            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
+
+            if (nombreFam == null) throw new FamilyNotFoundException();
+
+            else
+            {
+                //Familia familia = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
+                Familia familia = new Familia
+                {
+                    Nombre = nombreFam.Nombre,
+                    Dni = nombreFam.Dni,
+                    AceptaSolicitudes = false,
+                };
+            }
+            return _mapper.Map<Familia>(nombreFam);
+        }
+
     }
 }

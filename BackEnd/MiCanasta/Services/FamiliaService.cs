@@ -12,5 +12,6 @@ namespace MiCanasta.MiCanasta.Services
     {
         public FamiliaDto GetByFamiliaNombre(string familiaNombre);
         public FamiliaCreateDto Create(FamiliaCreateDto model);
+        public Familia DesactivarSolicitudes(string nombreFamilia, string dni);
     }        
 }
