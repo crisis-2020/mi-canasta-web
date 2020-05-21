@@ -19,17 +19,20 @@ namespace MiCanasta.MiCanasta.Controllers
             _usuarioFamiliaService = UsuarioFamiliaService;
         }
 
-        [HttpPost]
+      [HttpPost]
         public ActionResult Create(FamiliaCreateDto model)
         {
-            var result = _familiaService.Create(model);
-
-            if (result == null)
+            try
             {
-               return BadRequest("El grupo familiar ya existe :( ");
+                return Created("Se ha creado el grupo familiar", _familiaService.Create(model));
+
             }
-            return Ok("Se ha creado el grupo familiar :) ");
+            catch (ExistingFamilyException ExistingFamilyException)
+            {
+                return BadRequest(ExistingFamilyException.ExceptionDto);
+            }
         }
+
         
         [HttpGet("{nombreFamilia}/usuarios")]
         public ActionResult GetUsuariosByNombreFamilia(string nombreFamilia)
@@ -59,7 +62,7 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest(UserToDeleteIsAdminException.ExceptionDto);
             }
         }
-
+        
         [HttpPut("/familias/{nombreFamilia}")]
         public ActionResult DesactivarSolicitudes(string nombreFamilia, string Dni)
         {
@@ -73,6 +76,5 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
-
     }
-}
+}        
