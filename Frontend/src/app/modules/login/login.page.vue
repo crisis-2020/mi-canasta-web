@@ -8,12 +8,12 @@
     <div class="login-container__form-container">
       <div class="input-shared-container margin">
         <label class="label-shared-component">Dni</label>
-        <input class="input-shared-component" type="text" v-model="dni" />
+        <input class="input-shared-component" type="text" v-model="dni" maxlength="8" />
       </div>
 
       <div class="input-shared-container margin">
         <label class="label-shared-component">contrasena</label>
-        <input class="input-shared-component" type="password" v-model="contrasena" />
+        <input class="input-shared-component" type="password" v-model="contrasena" maxlength="50" />
       </div>
 
       <ButtonShared
@@ -22,6 +22,7 @@
         :type="'large'"
         :bgColor="'red'"
         :loading="loadingButton"
+        :disabled="loadingButton"
         @Event="autentication"
       />
     </div>
@@ -29,10 +30,8 @@
     <ErrorModalShared
       @Event="closeModal"
       v-if="isShowModalError"
-      :title="'Error'"
-      :description="
-        'El DNI o password ingresado es incorrecto'
-      "
+      :title="error.title"
+      :description="error.description"
     />
   </div>
 </template>
@@ -42,6 +41,7 @@ import ButtonShared from "../../shared/button/button.component.vue";
 import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
 import AuthService from "../../core/services/auth.service";
 import Usuario from "../../core/model/usuario.model";
+import ValidacionService from "../../core/services/validacion.service";
 export default {
   name: "LoginPage",
   components: { ButtonShared, ErrorModalShared },
@@ -51,7 +51,8 @@ export default {
       dni: "",
       contrasena: "",
       loadingButton: false,
-      isShowModalError: false
+      isShowModalError: false,
+      error: { title: "Error" }
     };
   },
   methods: {
@@ -59,12 +60,33 @@ export default {
       this.$data.loadingButton = true;
       try {
         const usuario = new Usuario(this.$data.dni, this.$data.contrasena);
-        const respuesta = await AuthService.autenticacion(usuario);
-        console.log(respuesta);
+
+        if (!ValidacionService.validarDni(usuario.dni)) {
+          throw "FormatDniException";
+        } else if (!ValidacionService.validarContrasena(usuario.contrasena)) {
+          throw "FormatContrasenaException";
+        }
+
+        await AuthService.autenticacion(usuario);
+
         this.$data.loadingButton = false;
         this.$router.push("/home");
       } catch (error) {
-        console.log(error);
+        if (
+          error instanceof Object &&
+          (error.response.data.exception == "UserLoginNotFoundException" ||
+            error.response.data.exception == "UserLoginIncorrectException")
+        ) {
+          this.error.description =
+            "El usuario o contraseña ingresado es incorrecto";
+        } else if (error == "FormatDniException") {
+          this.error.description =
+            "El DNI ingresado debe contener 8 caracteres y ser solo números";
+        } else if (error == "FormatContrasenaException") {
+          this.error.description =
+            "La contraseña ingresada no debe estar vacía, tener mas de 50 caracteres o contener espacios en blanco";
+        }
+
         this.$data.isShowModalError = true;
         this.$data.loadingButton = false;
       }

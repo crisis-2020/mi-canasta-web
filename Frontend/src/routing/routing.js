@@ -1,44 +1,41 @@
 import Router from "vue-router";
-import Vue from 'vue';
+import Vue from "vue";
 import LayoutPage from "../app/layout/components/layout/LayoutPage.vue";
 import LayoutLogin from "../app/layout/components/layout/LayoutLogin.vue";
 import LoginPage from "../app/modules/login/login.page.vue"
 import HomePage from "../app/modules/home/home.page.vue";
 import SharedPageComponent from "../app/modules/shared-componentes/shared-components.page.vue"
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-    mode: "history",
-    routes: [
+  mode: "history",
+  routes: [
+    {
+      path: "/",
+      redirect: "/login",
+    },
+    {
+      path: "/login",
+      name: "LayoutLogin",
+      component: LayoutLogin,
+      children: [
         {
-            path: '/',
-            name: "LayoutPage",
-            component: LayoutPage,
-            children: [
-
-                { path: '/home', name: 'HomePage', component: HomePage }
-            ]
-
+          path: "/",
+          name: "LoginPage",
+          component: LoginPage,
         },
-        {
-            path: '/login',
-            name: 'LayoutLogin',
-            component: LayoutLogin,
-            children: [
-                {
-                    path: '/',
-                    name: 'LoginPage',
-                    component: LoginPage
-                }
-            ]
-        },
-        {
-
-            path: '/componentes',
-            name: "SharedPageComponent",
-            component: SharedPageComponent
-
-        }
-
-    ]
-})
+      ],
+    },
+    {
+      path: "/home",
+      name: "LayoutPage",
+      component: LayoutPage,
+      children: [{ path: "/home", name: "HomePage", component: HomePage }],
+    },
+    {
+      path: "/componentes",
+      name: "SharedPageComponent",
+      component: SharedPageComponent,
+    },
+  ],
+});
