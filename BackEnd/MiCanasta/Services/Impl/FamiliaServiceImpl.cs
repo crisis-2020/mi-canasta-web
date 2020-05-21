@@ -22,23 +22,23 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         public FamiliaCreateDto Create(FamiliaCreateDto model)
         {
-            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) == null)
-            {
+            Familia entry = new Familia();
+            if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) != null) throw new ExistingFamilyException();
 
-                var entry = new Familia
+            else
+            {
+                entry = new Familia
                 {
                     Nombre = model.FamiliaNombre,
                     Dni = model.Dni,
                     AceptaSolicitudes = true,
                 };
+               
                 _context.Add(entry);
                 _context.SaveChanges();
-                return _mapper.Map<FamiliaCreateDto>(entry);
+
             }
-            else // grupo familiar ya existe
-            {
-                return null;
-            }
+            return _mapper.Map<FamiliaCreateDto>(model);
         }
 
         public FamiliaDto GetByFamiliaNombre(string familiaNombre) {
