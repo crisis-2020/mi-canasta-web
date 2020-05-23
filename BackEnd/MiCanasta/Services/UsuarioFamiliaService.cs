@@ -10,5 +10,6 @@ namespace MiCanasta.MiCanasta.Services
     public interface UsuarioFamiliaService
     {
         public UsuarioFamiliaDto Remove(string AdminDni, string UserDni);
+        public UsuarioFamiliaDto RemoveMyself(string NombreFamilia, string Dni);
     }
 }
