@@ -57,7 +57,6 @@ namespace MiCanasta
             services.AddTransient<FamiliaService, FamiliaServiceImpl>();
 
             services.AddTransient<SolicitudService, SolicitudServiceImpl>();
-            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
