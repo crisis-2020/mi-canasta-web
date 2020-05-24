@@ -10,5 +10,7 @@ namespace MiCanasta.MiCanasta.Services
     public interface UsuarioFamiliaService
     {
         public UsuarioFamiliaDto Remove(string AdminDni, string UserDni);
+        bool AgregarUsuarioSolicitudFamilia(SolicitudUsuarioDto solicitud);
+        bool AceptaSolicitudUsuario(SolicitudUsuarioDto solicitud);
     }
 }

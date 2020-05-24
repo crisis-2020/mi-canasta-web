@@ -14,8 +14,7 @@ namespace MiCanasta.MiCanasta.Services
         public SolicitudDto Create(SolicitudCreateDto model);
         bool AceptaSolicitudes(SolicitudCreateDto model);
         SolicitudBusquedaDto ObtenerNombreFamilia(String FamiliaId);
-
-
+        bool BorrarSolicitud(SolicitudUsuarioDto solicitud);
 
     }
 

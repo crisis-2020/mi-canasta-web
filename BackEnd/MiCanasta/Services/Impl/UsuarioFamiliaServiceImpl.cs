@@ -49,5 +49,33 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             return usuarioFamiliaDto;
         }
+        public bool AgregarUsuarioSolicitudFamilia (SolicitudUsuarioDto solicitud)
+        {
+            try
+            {
+                UsuarioFamilia usuario = _mapper.Map<UsuarioFamilia>(solicitud);
+                _context.UsuarioFamilias.Add(usuario);
+                _context.SaveChanges();
+                return true;
+            }catch(Exception exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AceptaSolicitudUsuario(SolicitudUsuarioDto solicitud)
+        {
+            SolicitudService service = null;
+            UsuarioFamiliaServiceImpl usuarioFamiliaServiceImpl = null;
+            if (service.BorrarSolicitud(solicitud))
+            {
+                if (usuarioFamiliaServiceImpl.AgregarUsuarioSolicitudFamilia(solicitud))
+                {
+                    return true;
+                }
+            }
+            throw new SolicitudeTroubleException();
+
+        }
     }
 }

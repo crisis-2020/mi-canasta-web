@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using MiCanasta.MiCanasta.Model;
 using MiCanasta.MiCanasta.Services;
 using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
@@ -36,13 +37,15 @@ namespace MiCanasta
             });
 
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                    .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
+                    .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=9C3aXT]o89%68sIwic;", mySqlOptions => mySqlOptions
                         .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
 
             services.AddTransient<SolicitudService, SolicitudServiceImpl>();
 
             services.AddTransient<UsuarioService, UsuarioServiceImpl>();
+            services.AddTransient<FamiliaService, FamiliaServiceImpl>();
+            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -54,10 +57,6 @@ namespace MiCanasta
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<FamiliaService, FamiliaServiceImpl>();
-
-            services.AddTransient<SolicitudService, SolicitudServiceImpl>();
-            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

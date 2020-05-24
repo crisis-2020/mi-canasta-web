@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace MiCanasta.MiCanasta.Dto
 {
     public class SolicitudDto
-
     {
         [Required]
         public string FamiliaNombre { get; set; }
@@ -38,5 +37,9 @@ namespace MiCanasta.MiCanasta.Dto
         public string Dni { get; set; }
         public string NombreFamilia { get; set; }
     }
-
+   public class SolicitudUsuarioDto 
+    { 
+        public string Dni { get; set; }
+        public int FamiliaId { get; set; } 
+    }
 }

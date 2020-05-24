@@ -16,4 +16,8 @@
     <PackageReference Include="RestSharp" Version="106.10.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
