@@ -28,6 +28,11 @@ namespace MiCanasta
         {
             services.AddControllers();
 
+            services.AddTransient<SolicitudService, SolicitudServiceImpl>();
+
+            services.AddTransient<UsuarioService, UsuarioServiceImpl>();
+            services.AddTransient<FamiliaService, FamiliaServiceImpl>();
+            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -41,11 +46,6 @@ namespace MiCanasta
                         .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
 
-            services.AddTransient<SolicitudService, SolicitudServiceImpl>();
-
-            services.AddTransient<UsuarioService, UsuarioServiceImpl>();
-            services.AddTransient<FamiliaService, FamiliaServiceImpl>();
-            services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

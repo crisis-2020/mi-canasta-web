@@ -65,9 +65,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         public bool AceptaSolicitudUsuario(SolicitudUsuarioDto solicitud)
         {
-            SolicitudService service = null;
+            SolicitudService solicitudService = null;
             UsuarioFamiliaServiceImpl usuarioFamiliaServiceImpl = null;
-            if (service.BorrarSolicitud(solicitud))
+            if (solicitudService.BorrarSolicitud(solicitud))
             {
                 if (usuarioFamiliaServiceImpl.AgregarUsuarioSolicitudFamilia(solicitud))
                 {
