@@ -91,11 +91,25 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<SolicitudBusquedaDto>(entry);
 
         }
-        public class SolicitudFamiliaDni
+
+        public class SolicitudFamiliaDni //Arreglar en un próximo fix
         {
             public string NombreFamilia { get; set; }
             public string Dni { get; set; }
 
+        }
+
+        public void CancelarSolicitud (String Dni)
+        {
+            var solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
+            if (solicitud == null) throw new SolicitudeNotFoundException();
+
+            else
+            {
+                _context.Remove(solicitud);
+            }
+
+            _context.SaveChanges();
         }
 
         public bool BorrarSolicitud(SolicitudUsuarioDto solicitudDto)
