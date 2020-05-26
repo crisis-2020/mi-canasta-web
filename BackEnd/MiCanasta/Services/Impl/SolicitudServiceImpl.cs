@@ -81,7 +81,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             if (solicitud == null) return null;
             
             var familia = _context.Familias.Single(x => x.FamiliaId == solicitud.FamiliaId);
-
+            
             var entry = new SolicitudFamiliaDni
             {
                 NombreFamilia = familia.Nombre,
@@ -89,7 +89,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
             };
 
             return _mapper.Map<SolicitudBusquedaDto>(entry);
-
 
         }
 
@@ -112,6 +111,22 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
             _context.SaveChanges();
         }
+
+        public bool BorrarSolicitud(SolicitudUsuarioDto solicitudDto)
+        {
+            try
+            {
+                Solicitud solicitud = _mapper.Map<Solicitud>(solicitudDto);
+                _context.Solicitudes.Remove(solicitud);
+                _context.SaveChanges();
+                return true;
+            }catch (Exception exception)
+            {
+                return false;
+            }
+        }
+
+        
 
     }
 }
