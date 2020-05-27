@@ -32,6 +32,5 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest(solicitudeTrouble.ExceptionDto);
             }
         }
-
     }
 }

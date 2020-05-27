@@ -9,6 +9,7 @@ using RestSharp;
 using System.Linq;
 using System.Net;
 using MiCanasta.MiCanasta.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -86,6 +87,44 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
             throw new UserLoginIncorrectException();
+        }
+
+        bool CorreoValido(string email) {
+            if (email != null)
+            {
+                String expresion;
+                expresion = "\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+                if (Regex.IsMatch(email, expresion))
+                {
+                    if (Regex.Replace(email, expresion, String.Empty).Length == 0)
+                        return true;
+                    else return false;
+                }
+                else return false;
+            }
+            else return true;
+        }
+
+        public UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto) {
+            var entry = _context.Usuarios.Single(x => x.Dni == Dni);
+            if (CorreoValido(UsuarioUpdateDto.Correo) == false) {
+                throw new EmailWrongFormatException();
+            }
+            if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
+                throw new NewPasswordNotMatchException();
+            }
+            if (UsuarioUpdateDto.Contrasena != entry.Contrasena)
+            {
+                throw new ActualPasswordNotMatchException();
+            }
+            if (UsuarioUpdateDto.Contrasena != null)
+            {
+                if (UsuarioUpdateDto.Correo != null) entry.Correo = UsuarioUpdateDto.Correo;
+                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = UsuarioUpdateDto.NuevaContrasena;
+            }
+
+            _context.SaveChanges();
+            return UsuarioUpdateDto;
         }
     }
 }
