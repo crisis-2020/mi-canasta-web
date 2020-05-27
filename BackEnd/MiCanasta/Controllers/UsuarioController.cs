@@ -13,8 +13,6 @@ namespace MiCanasta.MiCanasta.Controllers
     public class UsuarioController : ControllerBase
     {
         private UsuarioService _usuarioService;
-
-
         public UsuarioController(UsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
@@ -50,5 +48,25 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest(UserNotFound.ExceptionDto);
             }
         }
+
+        [HttpPut("{Dni}")]
+        public ActionResult Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto) {
+            try
+            {
+                return Ok(_usuarioService.Update(Dni, UsuarioUpdateDto));
+            }
+            catch (NewPasswordNotMatchException NewPasswordNotMatch) {
+                return BadRequest(NewPasswordNotMatch.ExceptionDto);
+            }
+            catch (ActualPasswordNotMatchException ActualPasswordNotMatch)
+            {
+                return BadRequest(ActualPasswordNotMatch.ExceptionDto);
+            }
+            catch (EmailWrongFormatException EmailWrongFormat)
+            {
+                return BadRequest(EmailWrongFormat.ExceptionDto);
+            }
+        }
+
     }
 }

@@ -1,6 +1,9 @@
 ﻿using MiCanasta.Dto;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace MiCanasta.Micanasta.Dto
 {
@@ -49,8 +52,9 @@ namespace MiCanasta.Micanasta.Dto
 
     public class UsuarioUpdateDto
     {
-        public string Contrasena { get; set; }
         public string Correo { get; set; }
-        public List<RolUsuarioDto> RolUsuarios { get; set; }
+        public string Contrasena { get; set; }
+        public string NuevaContrasena { get; set; }
+        public string RepetirContrasena { get; set; }
     }
 }

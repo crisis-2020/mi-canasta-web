@@ -10,6 +10,6 @@ namespace MiCanasta.MiCanasta.Services
         UsuarioDto GetById(String Dni);
         UsuarioDto Create(UsuarioReniecDto model);
         UsuarioAccesoDto ValidateLogin(String Dni, String Contrasena);
-
+        UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto);
     }
 }
