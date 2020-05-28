@@ -63,7 +63,7 @@ export default {
       try {
         const res = await FamiliaService.crearFamilia({
           aceptaSolicitudes: true,
-          dni: "70634087",
+          dni: localStorage.getItem("dni"),
           familiaNombre: this.$data.grupoFamiliar,
         });
 
