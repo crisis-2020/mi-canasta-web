@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 *{
   padding: 0;
@@ -21,6 +22,8 @@ export default {
   font-family: 'Montserrat', sans-serif;
   outline: none;
 }
+
+
 *[color-rojo]{
   color: #F76A8C;
 }
@@ -62,7 +65,29 @@ button{
   cursor: pointer;
   transition: all .2s ease-in-out;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #dedede; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #d1d1d1; 
+}
+.ant-switch-checked{
+  background: #F76A8C !important;
+}
 
 
 

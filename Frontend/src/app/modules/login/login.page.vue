@@ -6,13 +6,13 @@
       <p>Administra tus recursos</p>
     </div>
     <div class="login-container__form-container">
-      <div class="input-shared-container margin">
+      <div class="input-shared-container">
         <label class="label-shared-component">Dni</label>
         <input class="input-shared-component" type="text" v-model="dni" maxlength="8" />
       </div>
 
-      <div class="input-shared-container margin">
-        <label class="label-shared-component">contrasena</label>
+      <div class="input-shared-container">
+        <label class="label-shared-component">Contraseña</label>
         <input class="input-shared-component" type="password" v-model="contrasena" maxlength="50" />
       </div>
 
@@ -66,7 +66,7 @@ export default {
         } else if (!ValidacionService.validarContrasena(usuario.contrasena)) {
           throw "FormatContrasenaException";
         }
-
+        localStorage.setItem("dni",this.$data.dni);
         await AuthService.autenticacion(usuario);
 
         this.$data.loadingButton = false;
@@ -117,6 +117,7 @@ export default {
 }
 .login-container__header h1 {
   font-size: 24px;
+  font-weight: 700;
   margin: 16px 0 8px 0;
 }
 .login-container__header p {
@@ -133,5 +134,8 @@ export default {
 
 .login-container__button {
   margin-top: 24px;
+}
+.input-shared-container{
+  margin-bottom: 24px;
 }
 </style>
