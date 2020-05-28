@@ -14,8 +14,10 @@ namespace MiCanasta.BackEnd.ConfigMapper
     {
         public AutoMapperConfig()
         {
+            CreateMap<Categoria, CategoriaDto>();
             CreateMap<Familia, FamiliaCreateDto>();
             CreateMap<Familia, FamiliaDto>();
+            CreateMap<Limite, LimiteDto>();
             CreateMap<Producto, ProductoDto>();
             CreateMap<Perfil, PerfilDto>();
             CreateMap<Usuario, UsuarioDto>();

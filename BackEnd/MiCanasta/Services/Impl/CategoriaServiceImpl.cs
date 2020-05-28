@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MiCanasta.MiCanasta.Dto;
 using MiCanasta.Persistence;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
             _mapper = mapper;
         }
 
+        public CategoriaDto GetById(int Id)
+        {
+            return _mapper.Map<CategoriaDto>(_context.Categorias.Single(x => x.CategoriaId == Id));
+        }
+
+        public LimiteDto GetLimiteById(int Id)
+        {
+            return _mapper.Map<LimiteDto>(_context.Limites.Single(x => x.CategoriaId == Id));
+        }
     }
 }
