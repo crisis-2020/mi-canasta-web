@@ -96,6 +96,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             Familia familia = _context.Familias.Single(x => x.Nombre == NombreFamilia);
             return _context.UsuarioFamilias.Count(x => x.FamiliaId == familia.FamiliaId);
         }
+
         public bool UnicoAdmin(Familia Familia)
         {
             var familia = _context.Familias
@@ -109,7 +110,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
             int AdminCount = 0;
             foreach (UsuarioFamilia usuarioFamilia in Familia.UsuarioFamilias)
             {
-                Debug.WriteLine("UsuarioFamilia: "+usuarioFamilia.Dni);
                 foreach (RolUsuario rolUsuario in usuarioFamilia.Usuario.RolUsuarios)
                 {
                    
@@ -195,6 +195,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 }
             }
             return usuarioFamiliaDto;
+        }
+
+        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin) {
+
+            List<HistorialDto> Historiales =
+                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x=>x.FechaCompra).AsQueryable().ToList());
+            return Historiales;
         }
     }
 }
