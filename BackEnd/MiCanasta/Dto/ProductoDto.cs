@@ -9,7 +9,6 @@ namespace MiCanasta.MiCanasta.Dto
     {
         public int ProductoId { get; set; }
         public int CategoriaId { get; set; }
-        public CategoriaDto Categoria { get; set; }
         public string Descripcion { get; set; }
         public int CantidadUnit { get; set; }
         public List<HistorialDto> Historiales { get; set; }
@@ -19,7 +18,6 @@ namespace MiCanasta.MiCanasta.Dto
     public class ProductoCreateDto
     {
         public int CategoriaId { get; set; }
-        public CategoriaDto Categoria { get; set; }
         public string Descripcion { get; set; }
         public int CantidadUnit { get; set; }
 

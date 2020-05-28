@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MiCanasta.MiCanasta.Dto;
 using MiCanasta.Persistence;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             _context = context;
             _mapper = mapper;
+        }
+
+        public ProductoDto GetById(int Id) {
+            return _mapper.Map<ProductoDto>(_context.Productos.Single(x => x.ProductoId == Id));
         }
     }
 }
