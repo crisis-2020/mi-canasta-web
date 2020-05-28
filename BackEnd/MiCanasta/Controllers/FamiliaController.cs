@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using MiCanasta.Persistence;
 using System.Linq;
 using MiCanasta.MiCanasta.Exceptions;
+using System;
+using MiCanasta.MiCanasta.Model;
+using System.Diagnostics;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -11,14 +14,12 @@ namespace MiCanasta.MiCanasta.Controllers
     public class FamiliaController: ControllerBase
     {
         private readonly FamiliaService _familiaService;
-
         public FamiliaController(FamiliaService FamiliaService)
         {
             _familiaService = FamiliaService;
-
         }
 
-      [HttpPost]
+        [HttpPost]
         public ActionResult Create(FamiliaCreateDto model)
         {
             try
@@ -32,7 +33,6 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        
         [HttpGet("{nombreFamilia}/usuarios")]
         public ActionResult GetUsuariosByNombreFamilia(string nombreFamilia)
         {
@@ -43,6 +43,11 @@ namespace MiCanasta.MiCanasta.Controllers
             catch (FamilyNotFoundException) {
                 return NoContent();
             }
+        }
+
+        [HttpGet("{NombreFamilia}/historiales")]
+        public ActionResult GetHistoriales(string NombreFamilia, DateTime FechaInicio, DateTime FechaFinal) {
+            return Ok(_familiaService.GetHistorial(NombreFamilia, FechaInicio, FechaFinal));
         }
 
         [HttpDelete("{NombreFamilia}/usuarios/{Dni}")]

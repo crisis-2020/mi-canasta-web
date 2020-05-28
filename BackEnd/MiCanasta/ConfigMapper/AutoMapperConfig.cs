@@ -6,6 +6,7 @@ using MiCanasta.MiCanasta;
 
 using static MiCanasta.MiCanasta.Services.Impl.SolicitudServiceImpl;
 using MiCanasta.Dto;
+using System.Collections.Generic;
 
 namespace MiCanasta.BackEnd.ConfigMapper
 {
