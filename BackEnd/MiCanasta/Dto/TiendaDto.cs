@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace MiCanasta.MiCanasta.Dto
         public string Latitud { get; set; }
         public string Longitud { get; set; }
         public string Horario { get; set; }
+        public int Limite { get; set; }
         public List<UsuarioTiendaDto> UsuarioTiendas { get; set; }
         public List<StockDto> Stocks { get; set; }
         public List<HistorialDto> Historiales { get; set; }
