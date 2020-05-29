@@ -13,6 +13,7 @@ namespace MiCanasta.MiCanasta.Model
         public string Latitud { get; set; }
         public string Longitud { get; set; }
         public string Horario { get; set; }
+        public int Limite { get; set; }
         public List<UsuarioTienda> UsuarioTiendas { get; set; }
         public List<Stock> Stocks { get; set; }
         public List<Historial> Historiales { get; set; }

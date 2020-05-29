@@ -29,10 +29,11 @@ namespace MiCanasta
             services.AddControllers();
 
             services.AddTransient<SolicitudService, SolicitudServiceImpl>();
-
             services.AddTransient<UsuarioService, UsuarioServiceImpl>();
             services.AddTransient<FamiliaService, FamiliaServiceImpl>();
             services.AddTransient<UsuarioFamiliaService, UsuarioFamiliaServiceImpl>();
+            services.AddTransient<TiendaService, TiendaServiceImpl>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
