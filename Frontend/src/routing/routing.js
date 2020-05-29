@@ -4,6 +4,8 @@ import LayoutPage from "../app/layout/components/layout/LayoutPage.vue";
 import LayoutLogin from "../app/layout/components/layout/LayoutLogin.vue";
 import LoginPage from "../app/modules/login/login.page.vue"
 import HomePage from "../app/modules/home/home.page.vue";
+import HomeFamilyPage from "../app/modules/home-family/home-family.page.vue";
+import DealersPage from "../app/modules/home-dealers/home-dealers.page.vue";
 import SharedPageComponent from "../app/modules/shared-componentes/shared-components.page.vue"
 Vue.use(Router);
 
@@ -30,7 +32,11 @@ export default new Router({
       path: "/home",
       name: "LayoutPage",
       component: LayoutPage,
-      children: [{ path: "/home", name: "HomePage", component: HomePage }],
+      children: [
+        { path: "/home", name: "HomePage", component: HomePage },
+        { path: "family", name: "FamilyPage", component: HomeFamilyPage },
+        { path: "dealers", name: "DealersPage", component: DealersPage }
+      ],
     },
     {
       path: "/componentes",
