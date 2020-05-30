@@ -53,7 +53,13 @@ namespace MiCanasta.MiCanasta.Controllers
         [HttpDelete("{NombreFamilia}/usuarios/{Dni}")]
         public ActionResult Remove(string NombreFamilia, string Dni)
         {
-            return Ok(_familiaService.Remove(Dni));
+            try
+            {
+                return Ok(_familiaService.Remove(Dni));
+            }
+            catch (Exception) {
+                return BadRequest();
+            }
         }
         
         [HttpPut("/familias/{nombreFamilia}")]

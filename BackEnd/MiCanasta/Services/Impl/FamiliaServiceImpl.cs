@@ -94,18 +94,17 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public UsuarioFamiliaDto Remove(string UserDni)
         {
             UsuarioFamiliaDto usuarioFamiliaDto = null;
-            var RolUsuarioUser = _context.RolUsuarios.Single(x => x.Dni == UserDni && x.RolPerfilId == 1);
+            // Valida que solo que borren los roles del grupo familiar y no de distribuidora
+            RolUsuario RolUsuarioUser = _context.RolUsuarios.SingleOrDefault(x => x.Dni == UserDni && x.RolPerfil.PerfilId == 1);
 
-            var usuarioFamilia = _context.UsuarioFamilias.Include(x =>x.Usuario).Single(x=> x.Dni == UserDni);
+            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x=> x.Dni == UserDni);
 
             usuarioFamiliaDto = _mapper.Map<UsuarioFamiliaDto>(usuarioFamilia);
 
             var entityUsuarioFamilia = _context.UsuarioFamilias.Attach(usuarioFamilia);
             entityUsuarioFamilia.State = EntityState.Deleted;
-
             var entityRolUsuario = _context.RolUsuarios.Attach(RolUsuarioUser);
             entityRolUsuario.State = EntityState.Deleted;
-
             _context.SaveChanges();
 
             return usuarioFamiliaDto;
