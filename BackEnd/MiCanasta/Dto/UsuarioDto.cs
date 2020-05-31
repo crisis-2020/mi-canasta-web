@@ -1,4 +1,5 @@
 ﻿using MiCanasta.Dto;
+using MiCanasta.MiCanasta.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,6 +31,7 @@ namespace MiCanasta.Micanasta.Dto
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
     }
+
     public class UsuarioReniecDto
     {
         public string Dni { get; set; }
@@ -56,5 +58,14 @@ namespace MiCanasta.Micanasta.Dto
         public string Contrasena { get; set; }
         public string NuevaContrasena { get; set; }
         public string RepetirContrasena { get; set; }
+    }
+
+    public class UsuarioDataDto
+    {
+        public UsuarioAccesoDto usuario { get; set; }
+        public Familia familia { get; set; }
+        public Tienda tienda { get; set; }
+        public List<RolUsuario> rolUsuario { get; set; }
+
     }
 }

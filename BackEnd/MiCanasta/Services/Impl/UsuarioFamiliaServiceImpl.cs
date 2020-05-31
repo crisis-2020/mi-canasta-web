@@ -77,5 +77,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
             throw new SolicitudeTroubleException();
 
         }
+
     }
 }
