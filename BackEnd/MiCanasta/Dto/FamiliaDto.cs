@@ -38,4 +38,12 @@ namespace MiCanasta.MiCanasta
         public bool AceptaSolicitudes { get; set; }
         public int Cantidad { get; set; }
     }
+
+    public class FamiliaDataDto
+    {
+        public int FamiliaId { get; set; }
+        public string Nombre { get; set; }
+        public bool AceptaSolicitudes { get; set; }
+        public int Cantidad { get; set; }
+    }
 }
