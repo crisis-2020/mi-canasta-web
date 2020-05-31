@@ -10,5 +10,6 @@ namespace MiCanasta.MiCanasta.Services
     {
         TiendaDto getById(int id);
         List<StockDto> GetStocksById(int IdTienda);
+        StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto);
     }
 }
