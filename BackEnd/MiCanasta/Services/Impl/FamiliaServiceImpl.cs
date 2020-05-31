@@ -1,4 +1,5 @@
 using AutoMapper;
+using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Model;
@@ -46,24 +47,25 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<FamiliaCreateDto>(model);
         }
 
-        public FamiliaDto GetByFamiliaNombre(string familiaNombre) {
+        public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre) {
 
-            FamiliaDto result = null;
-            var familia = _context.Familias
-                .Include(x => x.UsuarioFamilias)
-                .ThenInclude(x => x.Usuario)
-                .ThenInclude(x => x.RolUsuarios)
-                .ThenInclude(x => x.RolPerfil)
-                .ThenInclude(x => x.Perfil)
-                .SingleOrDefault(x => x.Nombre == familiaNombre);
+            List<UsuarioDto> result = new List<UsuarioDto>();
 
-            if (familia == null) throw new FamilyNotFoundException();
-            else {
-                result = _mapper.Map<FamiliaDto>(familia);
-                result.Nombre = familiaNombre;
+            if (_context.Familias
+                .SingleOrDefault(x => x.Nombre == familiaNombre) == null)
+            {
+                throw new FamilyNotFoundException();
+            }
+            else
+            {
+                List<UsuarioFamilia> UsuariosFamilia = _context.UsuarioFamilias.Where(x => x.Familia.Nombre == familiaNombre).AsQueryable().ToList();
+
+                foreach (UsuarioFamilia usuarioFamilia in UsuariosFamilia)
+                {
+                    result.Add(_mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == usuarioFamilia.Dni)));
+                }
             }
             return result;
-
         }
 
         public Familia DesactivarSolicitudes(string nombreFamilia, string Dni)

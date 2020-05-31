@@ -1,3 +1,4 @@
+using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace MiCanasta.MiCanasta.Services
 {
     public interface FamiliaService 
     {
-        public FamiliaDto GetByFamiliaNombre(string familiaNombre);
+        public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre);
         public FamiliaCreateDto Create(FamiliaCreateDto model);
         public Familia DesactivarSolicitudes(string nombreFamilia, string Dni);
         public UsuarioFamiliaDto Remove(string UserDni);

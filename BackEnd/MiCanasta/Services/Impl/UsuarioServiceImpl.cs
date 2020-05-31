@@ -89,6 +89,25 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             throw new UserLoginIncorrectException();
         }
+        public UsuarioDataDto GetDatosUsuario(String Dni, String Contrasena)
+        {
+            UsuarioAccesoDto usuario = ValidateLogin(Dni, Contrasena);
+            Familia familia; Tienda tienda; List<RolUsuario> rolesUsuario;
+            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
+            if (usuarioFamilia != null)
+            {
+                familia = _context.Familias.Single(x => x.FamiliaId == usuarioFamilia.FamiliaId);
+            } else familia = null;
+            UsuarioTienda usuarioTienda = _context.UsuarioTiendas.SingleOrDefault(x => x.Dni == Dni);
+            if (usuarioTienda != null)
+            {
+                tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
+            } else tienda = null;
+            rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).AsQueryable().ToList();
+            return new UsuarioDataDto() { usuario = usuario, familia = familia, tienda = tienda, rolUsuario = rolesUsuario };
+
+
+        }
 
         bool CorreoValido(string email) {
             if (email != null)
@@ -127,6 +146,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             _context.SaveChanges();
             return UsuarioUpdateDto;
         }
+
 
         public TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto)
         {

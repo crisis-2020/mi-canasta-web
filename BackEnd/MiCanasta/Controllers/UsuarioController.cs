@@ -33,12 +33,13 @@ namespace MiCanasta.MiCanasta.Controllers
         /// <param Contrasena="12345678"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult<UsuarioAccesoDto> ValidarIngreso([FromBody] UsuarioLoginDto UsuarioLogin)
+        public ActionResult<UsuarioDataDto> ValidarIngreso([FromBody] UsuarioLoginDto UsuarioLogin)
         {
             try
             {
-                UsuarioAccesoDto usuario = _usuarioService.ValidateLogin(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
-                return Ok(usuario);
+                UsuarioDataDto usuarioData = _usuarioService.GetDatosUsuario(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
+               
+                return Ok(usuarioData);
             }
             catch(UserLoginIncorrectException UserIncorrect)
             {
