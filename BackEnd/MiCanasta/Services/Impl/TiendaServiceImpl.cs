@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MiCanasta.MiCanasta.Dto;
+using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public TiendaDto getById(int id)
         {
             return _mapper.Map<TiendaDto>(_context.Tiendas.Single(x => x.TiendaId == id));
+        }
+
+        public List<StockDto> GetStocksById(int IdTienda)
+        {
+            List<Stock> Stocks = _context.Stocks.Where(x=>x.TiendaId==IdTienda).AsQueryable().ToList();
+            return _mapper.Map<List<StockDto>>(Stocks);
         }
     }
 }
