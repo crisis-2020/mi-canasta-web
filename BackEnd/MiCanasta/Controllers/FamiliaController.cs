@@ -6,6 +6,7 @@ using MiCanasta.MiCanasta.Exceptions;
 using System;
 using MiCanasta.MiCanasta.Model;
 using System.Diagnostics;
+using MiCanasta.Dto;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -75,5 +76,20 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
+
+        [HttpPut("nombreFamilia/usuarios/{dni}")]
+        public ActionResult EditarRol(string Dni)
+        {
+            try
+            {
+                _familiaService.EditarRol(Dni);
+                return Ok("El rol fue modificado");
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }        

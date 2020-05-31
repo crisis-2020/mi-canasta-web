@@ -1,4 +1,5 @@
 using AutoMapper;
+using MiCanasta.Dto;
 using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Exceptions;
@@ -29,6 +30,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public FamiliaCreateDto Create(FamiliaCreateDto model)
         {
             Familia entry = new Familia();
+            RolUsuario entry3 = new RolUsuario();
+
             if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) != null) throw new ExistingFamilyException();
 
             else
@@ -39,15 +42,23 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     Dni = model.Dni,
                     AceptaSolicitudes = true,
                 };
-               
+
+                entry3 = new RolUsuario
+                {
+                    Dni = model.Dni,
+                    RolPerfilId = 1,
+                };
+
                 _context.Add(entry);
+                _context.Add(entry3);
                 _context.SaveChanges();
 
             }
             return _mapper.Map<FamiliaCreateDto>(model);
         }
 
-        public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre) {
+        public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre)
+        {
 
             List<UsuarioDto> result = new List<UsuarioDto>();
 
@@ -88,7 +99,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 _context.Add(nombreFam);
                 _context.Remove(solicitudes);
                 _context.SaveChanges();
-                
+
             }
             return _mapper.Map<Familia>(nombreFam);
         }
@@ -99,7 +110,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             // Valida que solo que borren los roles del grupo familiar y no de distribuidora
             RolUsuario RolUsuarioUser = _context.RolUsuarios.SingleOrDefault(x => x.Dni == UserDni && x.RolPerfil.PerfilId == 1);
 
-            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x=> x.Dni == UserDni);
+            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == UserDni);
 
             usuarioFamiliaDto = _mapper.Map<UsuarioFamiliaDto>(usuarioFamilia);
 
@@ -112,11 +123,62 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return usuarioFamiliaDto;
         }
 
-        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin) {
+        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin)
+        {
 
             List<HistorialDto> Historiales =
-                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x=>x.FechaCompra).AsQueryable().ToList());
+                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
             return Historiales;
         }
+
+        public RolUsuarioCreateDto asignarRolUsuario(RolUsuarioCreateDto model)
+        {
+            RolUsuario entry = new RolUsuario();
+            entry = new RolUsuario
+            {
+                Dni = model.Dni,
+                RolPerfilId = 1,
+            };
+
+            _context.Add(entry);
+            _context.SaveChanges();
+            return _mapper.Map<RolUsuarioCreateDto>(model);
+        }
+
+        public RolUsuario EditarRol(string Dni)
+        {
+            RolUsuario rolUsuarioFam = new RolUsuario();
+             _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1);
+
+            if (rolUsuarioFam == null) throw new UserNotFoundException();
+
+            if (rolUsuarioFam == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+            {
+                RolUsuario entry3 = new RolUsuario();
+                entry3 = new RolUsuario
+                {
+                    Dni = Dni,
+                    RolPerfilId = 1,
+                };
+                _context.Update(entry3);
+                _context.SaveChanges();
+            } else
+                {
+                    if (rolUsuarioFam == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+                    {
+                        RolUsuario entry3 = new RolUsuario();
+                        entry3 = new RolUsuario
+                        {
+                            Dni = Dni,
+                            RolPerfilId = 1,
+                        };
+                        _context.Update(entry3);
+                        _context.SaveChanges();
+                    }
+                }
+            return _mapper.Map<RolUsuario>(rolUsuarioFam);
+        }
+
     }
+
 }
