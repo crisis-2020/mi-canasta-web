@@ -2,6 +2,7 @@
 using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace MiCanasta.MiCanasta.Controllers
             }catch(UserAddedShopIncorrectException user)
             {
                 return BadRequest( user.ExceptionDto);
+            }catch(UserAddedShopExceedLimitException exceed)
+            {
+                return BadRequest(exceed.ExceptionDto);
             }
         }
 

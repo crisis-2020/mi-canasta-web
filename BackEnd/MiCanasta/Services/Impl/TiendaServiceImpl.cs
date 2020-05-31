@@ -34,16 +34,22 @@ namespace MiCanasta.MiCanasta.Services.Impl
             UsuarioTienda NewUsuarioTienda = null;
            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
             if (usuario!= null){
-
-                NewUsuarioTienda = new UsuarioTienda()
-                {
-                    Dni = Dni,
-                    TiendaId = TiendaId };
+                int cantidadUsuarios = _context.UsuarioTiendas.Where(x => x.TiendaId == TiendaId).Count();
                 Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == TiendaId);
+                if (cantidadUsuarios + 1 <= tienda.Limite)
+                {
+                    NewUsuarioTienda = new UsuarioTienda()
+                    {
+                        Dni = Dni,
+                        TiendaId = TiendaId
+                    };
 
-                _context.Add(NewUsuarioTienda);
-                _context.SaveChanges();
-                return new TiendaUsuarioDto() { Dni = Dni, TiendaId = TiendaId,Descripcion = tienda.Descripcion};
+                    _context.Add(NewUsuarioTienda);
+                    _context.SaveChanges();
+                    return new TiendaUsuarioDto() { Dni = Dni, TiendaId = TiendaId, Descripcion = tienda.Descripcion };
+                }
+                else
+                    throw new UserAddedShopExceedLimitException();
             }
             throw new UserAddedShopIncorrectException();
         }
