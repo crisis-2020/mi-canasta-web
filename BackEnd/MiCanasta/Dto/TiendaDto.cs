@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCanasta.MiCanasta.Model;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -38,5 +39,13 @@ namespace MiCanasta.MiCanasta.Dto
             public List<UsuarioTiendaDto> UsuarioTiendas { get; set; }
             public List<StockDto> Stocks { get; set; }
         }
+        
+        
+    }
+    public class TiendaUsuarioDto
+    {
+        public string Descripcion { get; set; }
+        public int TiendaId { get; set; }
+        public string Dni { get; set; }
     }
 }
