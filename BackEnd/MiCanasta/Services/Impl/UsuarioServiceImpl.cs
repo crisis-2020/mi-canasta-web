@@ -92,12 +92,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             UsuarioAccesoDto usuario = ValidateLogin(Dni, Contrasena);
             Familia familia; Tienda tienda; List<RolUsuario> rolesUsuario;
-            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.Single(x => x.Dni == Dni);
+            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioFamilia != null)
             {
                 familia = _context.Familias.Single(x => x.FamiliaId == usuarioFamilia.FamiliaId);
             } else familia = null;
-            UsuarioTienda usuarioTienda = _context.UsuarioTiendas.Single(x => x.Dni == Dni);
+            UsuarioTienda usuarioTienda = _context.UsuarioTiendas.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioTienda != null)
             {
                 tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
