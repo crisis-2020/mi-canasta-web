@@ -20,7 +20,6 @@ namespace MiCanasta.MiCanasta.Controllers
             _tiendaService = TiendaService;
         }
 
-
         [HttpGet("{id}")]
         public ActionResult GetById(int id) {
             return Ok(_tiendaService.getById(id));
@@ -38,5 +37,26 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
+        [HttpGet("{IdTienda}/stocks")]
+        public ActionResult GetStocksById(int IdTienda) {
+            try
+            {
+                return Ok(_tiendaService.GetStocksById(IdTienda));
+            }
+            catch (Exception) {
+                return NoContent();
+            }
+        }
+
+        [HttpPut("{IdTienda}/productos/{IdProducto}/stocks")]
+        public ActionResult UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto) {
+            try
+            {
+                return Ok(_tiendaService.UpdateStock(IdTienda, IdProducto, StockUpdateDto));
+            }
+            catch (Exception) {
+                return BadRequest();
+            }
+        }
     }
 }

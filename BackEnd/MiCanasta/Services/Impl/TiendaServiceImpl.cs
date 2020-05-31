@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Services.Impl
@@ -47,5 +48,18 @@ namespace MiCanasta.MiCanasta.Services.Impl
             throw new UserAddedShopIncorrectException();
         }
 
+
+        public List<StockDto> GetStocksById(int IdTienda)
+        {
+            List<Stock> Stocks = _context.Stocks.Where(x=>x.TiendaId==IdTienda).AsQueryable().ToList();
+            return _mapper.Map<List<StockDto>>(Stocks);
+        }
+
+        public StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto) {
+            Stock Stock = _context.Stocks.Single(x => x.ProductoId == IdProducto && x.TiendaId == IdTienda);
+            Stock.Cantidad = StockUpdateDto.Cantidad;
+            _context.SaveChanges();
+            return _mapper.Map<StockDto>(Stock);
+        }
     }
 }
