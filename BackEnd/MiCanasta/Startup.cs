@@ -46,7 +46,7 @@ namespace MiCanasta
             });
 
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                    .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=9C3aXT]o89%68sIwic;", mySqlOptions => mySqlOptions
+                    .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
                         .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
             ));
 
