@@ -1,5 +1,6 @@
 ﻿using MiCanasta.Dto;
 using MiCanasta.Micanasta.Dto;
+using MiCanasta.MiCanasta.Dto;
 using System;
 
 namespace MiCanasta.MiCanasta.Services
@@ -11,5 +12,6 @@ namespace MiCanasta.MiCanasta.Services
         UsuarioDto Create(UsuarioReniecDto model);
         UsuarioAccesoDto ValidateLogin(String Dni, String Contrasena);
         UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto);
+        TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto);
     }
 }

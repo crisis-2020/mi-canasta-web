@@ -5,6 +5,7 @@ using MiCanasta.MiCanasta.Util;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using MiCanasta.MiCanasta.Exceptions;
+using MiCanasta.MiCanasta.Dto;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -65,6 +66,17 @@ namespace MiCanasta.MiCanasta.Controllers
             catch (EmailWrongFormatException EmailWrongFormat)
             {
                 return BadRequest(EmailWrongFormat.ExceptionDto);
+            }
+        }
+
+        [HttpPut("{Dni}/tiendas/{IdTienda}")]
+        public ActionResult UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto ) {
+            try
+            {
+                return Ok(_usuarioService.UpdateTienda(Dni, IdTienda, TiendaUpdateDto));
+            }
+            catch (ActualPasswordNotMatchException e) {
+                return BadRequest(e.ExceptionDto); 
             }
         }
 

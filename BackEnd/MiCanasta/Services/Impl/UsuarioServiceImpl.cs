@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using MiCanasta.MiCanasta.Exceptions;
 using System.Text.RegularExpressions;
+using MiCanasta.MiCanasta.Dto;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -125,6 +126,31 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
             _context.SaveChanges();
             return UsuarioUpdateDto;
+        }
+
+        public TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto)
+        {
+            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
+            Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == IdTienda);
+
+            if (usuario.Contrasena != TiendaUpdateDto.Contrasena)
+            {
+                throw new ActualPasswordNotMatchException();
+            }
+            else {
+                if (TiendaUpdateDto.Descripcion != null)
+                    tienda.Descripcion = TiendaUpdateDto.Descripcion;
+                if (TiendaUpdateDto.Direccion != null)
+                    tienda.Direccion = TiendaUpdateDto.Direccion;
+                if (TiendaUpdateDto.Longitud != null)
+                    tienda.Longitud = TiendaUpdateDto.Longitud;
+                if (TiendaUpdateDto.Latitud != null)
+                    tienda.Latitud = TiendaUpdateDto.Latitud;
+                if (TiendaUpdateDto.Horario != null)
+                    tienda.Horario = TiendaUpdateDto.Horario;
+                _context.SaveChanges();
+            }
+            return _mapper.Map<TiendaDto>(tienda);
         }
     }
 }
