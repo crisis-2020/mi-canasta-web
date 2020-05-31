@@ -51,33 +51,14 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpDelete("{NombreFamilia}/usuarios/{Dni}")]
-        public ActionResult Remove(string NombreFamilia, string AdminId, string Dni)
+        public ActionResult Remove(string NombreFamilia, string Dni)
         {
-            if (AdminId == Dni)
+            try
             {
-                try
-                {
-                    return Ok(_familiaService.RemoveMyself(NombreFamilia, Dni));
-                }
-                catch (UserOnlyAdminException UserOnlyAdminException)
-                {
-                    return BadRequest(UserOnlyAdminException.ExceptionDto);
-                }
+                return Ok(_familiaService.Remove(Dni));
             }
-            else
-            {
-                try
-                {
-                    return Ok(_familiaService.Remove(AdminId, Dni));
-                }
-                catch (UserNotAdminException UserNotAdminException)
-                {
-                    return BadRequest(UserNotAdminException.ExceptionDto);
-                }
-                catch (UserToDeleteIsAdminException UserToDeleteIsAdminException)
-                {
-                    return BadRequest(UserToDeleteIsAdminException.ExceptionDto);
-                }
+            catch (Exception) {
+                return BadRequest();
             }
         }
         
