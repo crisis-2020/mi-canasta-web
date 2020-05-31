@@ -46,4 +46,15 @@ namespace MiCanasta.MiCanasta.Dto
         public int TiendaId { get; set; }
         public string Dni { get; set; }
     }
+
+    public class TiendaDataDto
+    {
+        public int TiendaId { get; set; }
+        public string Descripcion { get; set; }
+        public string Direccion { get; set; }
+        public string Latitud { get; set; }
+        public string Longitud { get; set; }
+        public string Horario { get; set; }
+    }
 }
+
