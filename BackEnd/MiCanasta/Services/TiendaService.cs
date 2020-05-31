@@ -9,5 +9,6 @@ namespace MiCanasta.MiCanasta.Services
     public interface TiendaService
     {
         TiendaDto getById(int id);
+        List<StockDto> GetStocksById(int IdTienda);
     }
 }
