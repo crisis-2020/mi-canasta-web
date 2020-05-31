@@ -1,4 +1,5 @@
-﻿using MiCanasta.MiCanasta.Services;
+﻿using MiCanasta.MiCanasta.Dto;
+using MiCanasta.MiCanasta.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,17 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             catch (Exception) {
                 return NoContent();
+            }
+        }
+
+        [HttpPut("{IdTienda}/productos/{IdProducto}/stocks")]
+        public ActionResult UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto) {
+            try
+            {
+                return Ok(_tiendaService.UpdateStock(IdTienda, IdProducto, StockUpdateDto));
+            }
+            catch (Exception) {
+                return BadRequest();
             }
         }
     }

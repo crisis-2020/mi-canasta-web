@@ -21,8 +21,6 @@ namespace MiCanasta.MiCanasta.Dto
 
     public class StockUpdateDto
     {
-        public int ProductoId { get; set; }
-        public int TiendaId { get; set; }
         public int Cantidad { get; set; }
     }
 }
