@@ -4,6 +4,7 @@ using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 }
             }
             return result;
+        }
+        public FamiliaDataDto GetById(int FamiliaId)
+        {
+            Familia familia = _context.Familias.SingleOrDefault(x => x.FamiliaId == FamiliaId);
+            if (familia != null)
+            return _mapper.Map<FamiliaDataDto>(familia);
+            throw new FamilyNotFoundException();
         }
 
         public Familia DesactivarSolicitudes(string nombreFamilia, string Dni)
