@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MiCanasta.Dto;
 using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Exceptions;
@@ -72,10 +73,15 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
 
 
-        public List<UsuarioDto> GetByTiendaId(int id)
+        public List<ListarUsuarioTiendaDto> GetByTiendaId(int id)
         {
 
-            List<UsuarioDto> result = new List<UsuarioDto>();
+        
+            List<ListarUsuarioTiendaDto> result = new List<ListarUsuarioTiendaDto>();
+            List<UsuarioDto> usuario = new List<UsuarioDto>();
+           
+            
+
             //var tienda = _context.Tiendas.Single(x => x.TiendaId == id);
 
             if (result == null) { throw new TiendaNotFoundException(); }
@@ -86,8 +92,32 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
                 foreach (UsuarioTienda usuarioTienda in UsuariosTienda)
                 {
-                    result.Add(_mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == usuarioTienda.Dni)));
+                    
+                   usuario.Add(_mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == usuarioTienda.Dni)));
+                   
+
                 }
+
+                foreach (UsuarioDto usuarioAux in usuario)
+                {
+                    var rolUsario =_context.RolUsuarios.Single(x => x.Dni == usuarioAux.Dni );
+
+                    var entry = new ListarUsuarioTiendaDto
+                    {
+                        Nombre = usuarioAux.Nombre,
+                        ApellidoPaterno = usuarioAux.ApellidoPaterno,
+                        Descripcion = _context.RolPerfiles.Single(x=>x.RolPerfilId == rolUsario.RolPerfilId).Descripcion,
+                        RolPerfilId = rolUsario.RolPerfilId,
+                        Dni = usuarioAux.Dni,
+                    };
+
+
+                    result.Add(entry);
+
+                    rolUsario = null;
+                    usuario = null;
+                }
+               
             }
             return result;
         }

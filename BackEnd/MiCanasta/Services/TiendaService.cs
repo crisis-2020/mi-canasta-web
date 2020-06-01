@@ -16,6 +16,6 @@ namespace MiCanasta.MiCanasta.Services
         List<StockDto> GetStocksById(int IdTienda);
         StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto);
 
-        public List<UsuarioDto> GetByTiendaId(int id);
+        public List<ListarUsuarioTiendaDto> GetByTiendaId(int id);
     }
 }
