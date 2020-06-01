@@ -19,5 +19,6 @@ namespace MiCanasta.MiCanasta.Services
         public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime Inicio, DateTime Fin);
         public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni);
 
+        public FamiliaDataDto GetById(int FamiliaId);
     }        
 }

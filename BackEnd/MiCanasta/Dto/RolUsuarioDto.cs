@@ -26,4 +26,9 @@ namespace MiCanasta.Dto
         public int RolPerfilId { get; set; }
         public RolPerfilDto RolPerfil { get; set; }
     }
+
+    public class RolUsuarioDataDto
+    {
+        public int RolPerfilId { get; set; }
+    }
 }
