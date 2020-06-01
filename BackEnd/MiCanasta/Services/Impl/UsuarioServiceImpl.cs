@@ -178,5 +178,15 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             return _mapper.Map<TiendaDto>(tienda);
         }
+
+        public UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni)
+        {
+            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
+            if (usuarioFamilia != null)
+            { 
+                UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia); 
+                return usuarioFamiliaGetDto;
+            }throw new UserFamilyNotFoundException();
+        }
     }
 }
