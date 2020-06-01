@@ -81,5 +81,16 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
+        [HttpGet("{Dni}/usuariosporfamilia")]
+        public ActionResult UpdateTienda (string Dni)
+        {
+            try
+            {
+                return Ok(_usuarioService.GetUsuarioFamilia(Dni));
+            }catch(UserFamilyNotFoundException UserNotFound)
+            {
+                return NotFound();
+            }
+        }
     }
 }
