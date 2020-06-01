@@ -77,12 +77,12 @@ namespace MiCanasta.MiCanasta.Controllers
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
 
-        [HttpPut("nombreFamilia/usuarios/{dni}")]
-        public ActionResult EditarRol(string Dni)
+        [HttpPut("nombreFamilia/usuarios/{Dni}")]
+        public ActionResult asignarRolUsuario(string Dni)
         {
             try
             {
-                _familiaService.EditarRol(Dni);
+                _familiaService.asignaRolUsuario(Dni);
                 return Ok("El rol fue modificado");
             }
             catch (Exception)

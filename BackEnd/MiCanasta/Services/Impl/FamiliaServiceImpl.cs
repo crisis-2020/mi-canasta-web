@@ -145,38 +145,57 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<RolUsuarioCreateDto>(model);
         }
 
-        public RolUsuario EditarRol(string Dni)
+        public RolUsuarioCreateDto asignaRolUsuario(string Dni)
         {
-            RolUsuario rolUsuarioFam = new RolUsuario();
-             _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1);
 
-            if (rolUsuarioFam == null) throw new UserNotFoundException();
 
-            if (rolUsuarioFam == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+            var rolUsuario = _context.RolUsuarios.Single(x => x.Dni == Dni);
+
+            if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1))
             {
-                RolUsuario entry3 = new RolUsuario();
-                entry3 = new RolUsuario
+                var entry = new RolUsuario
                 {
-                    Dni = Dni,
-                    RolPerfilId = 1,
+                    Dni = rolUsuario.Dni,
+                    RolPerfil = rolUsuario.RolPerfil,
+                    RolPerfilId = 2,
+                    Usuario = rolUsuario.Usuario,
                 };
-                _context.Update(entry3);
+
+                DeleteRolUsuario(rolUsuario);
+                AddRolUsuario(entry);
                 _context.SaveChanges();
-            } else
+
+            }
+            else
+            {
+                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
                 {
-                    if (rolUsuarioFam == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+                    var entry = new RolUsuario
                     {
-                        RolUsuario entry3 = new RolUsuario();
-                        entry3 = new RolUsuario
-                        {
-                            Dni = Dni,
-                            RolPerfilId = 1,
-                        };
-                        _context.Update(entry3);
-                        _context.SaveChanges();
-                    }
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 1,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    DeleteRolUsuario(rolUsuario);
+                    AddRolUsuario(entry);
+                    _context.SaveChanges();
                 }
-            return _mapper.Map<RolUsuario>(rolUsuarioFam);
+            }
+
+            return null;
+        }
+
+
+        void DeleteRolUsuario(RolUsuario rol)
+        {
+            _context.RolUsuarios.Remove(rol);
+
+        }
+        void AddRolUsuario(RolUsuario rol)
+        {
+            _context.RolUsuarios.Add(rol);
         }
 
     }
