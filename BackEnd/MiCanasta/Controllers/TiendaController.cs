@@ -62,5 +62,19 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("IdTienda/usuarios")]
+        public ActionResult GetUsuariosByTiendaId(int id)
+        {
+            try
+            {
+                return Ok(_tiendaService.GetByTiendaId(id));
+            }
+            catch (TiendaNotFoundException)
+            {
+                return NoContent();
+            }
+        }
+
     }
 }
