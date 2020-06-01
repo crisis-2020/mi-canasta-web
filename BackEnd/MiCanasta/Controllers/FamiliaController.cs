@@ -91,5 +91,17 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
+        [HttpGet("{FamiliaId}")]
+        public ActionResult GetFamilia(int FamiliaId)
+        {
+            try 
+            {
+                return Ok(_familiaService.GetById(FamiliaId));
+            }
+            catch (FamilyNotFoundException familyNotFound) 
+            {
+                return NoContent();
+            }
+        }
     }
 }        

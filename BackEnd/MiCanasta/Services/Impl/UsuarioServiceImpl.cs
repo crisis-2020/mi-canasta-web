@@ -11,6 +11,7 @@ using System.Net;
 using MiCanasta.MiCanasta.Exceptions;
 using System.Text.RegularExpressions;
 using MiCanasta.MiCanasta.Dto;
+using MiCanasta.Dto;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -92,19 +93,24 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public UsuarioDataDto GetDatosUsuario(String Dni, String Contrasena)
         {
             UsuarioAccesoDto usuario = ValidateLogin(Dni, Contrasena);
-            Familia familia; Tienda tienda; List<RolUsuario> rolesUsuario;
+            List<RolUsuario> rolesUsuario;
+            TiendaDataDto tiendaData;
+            FamiliaDataDto familiaData;
             UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioFamilia != null)
             {
-                familia = _context.Familias.Single(x => x.FamiliaId == usuarioFamilia.FamiliaId);
-            } else familia = null;
+                Familia familia = _context.Familias.Single(x => x.FamiliaId == usuarioFamilia.FamiliaId);
+                familiaData = _mapper.Map<FamiliaDataDto>(familia);
+            } else familiaData = null;
             UsuarioTienda usuarioTienda = _context.UsuarioTiendas.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioTienda != null)
             {
-                tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
-            } else tienda = null;
+                Tienda tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
+                tiendaData = _mapper.Map<TiendaDataDto>(tienda);
+            } else tiendaData = null;
             rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).AsQueryable().ToList();
-            return new UsuarioDataDto() { usuario = usuario, familia = familia, tienda = tienda, rolUsuario = rolesUsuario };
+            List<RolUsuarioDataDto> rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
+            return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, rolUsuario = rolesUsuarioData };
 
 
         }
@@ -171,6 +177,16 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 _context.SaveChanges();
             }
             return _mapper.Map<TiendaDto>(tienda);
+        }
+
+        public UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni)
+        {
+            UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
+            if (usuarioFamilia != null)
+            { 
+                UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia); 
+                return usuarioFamiliaGetDto;
+            }throw new UserFamilyNotFoundException();
         }
     }
 }

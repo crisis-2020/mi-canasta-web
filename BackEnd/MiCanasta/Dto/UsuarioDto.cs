@@ -1,4 +1,6 @@
 ﻿using MiCanasta.Dto;
+using MiCanasta.MiCanasta;
+using MiCanasta.MiCanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using System;
 using System.Collections.Generic;
@@ -63,9 +65,9 @@ namespace MiCanasta.Micanasta.Dto
     public class UsuarioDataDto
     {
         public UsuarioAccesoDto usuario { get; set; }
-        public Familia familia { get; set; }
-        public Tienda tienda { get; set; }
-        public List<RolUsuario> rolUsuario { get; set; }
+        public FamiliaDataDto familia { get; set; }
+        public TiendaDataDto tienda { get; set; }
+        public List<RolUsuarioDataDto> rolUsuario { get; set; }
 
     }
 }

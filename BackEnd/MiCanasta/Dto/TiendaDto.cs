@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCanasta.MiCanasta.Model;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -36,7 +37,24 @@ namespace MiCanasta.MiCanasta.Dto
         public string Latitud { get; set; }
         public string Longitud { get; set; }
         public string Horario { get; set; }
-        public string Contrasena { get; set; }
+        public string Contrasena { get; set; }  
+        
+    }
+    public class TiendaUsuarioDto
+    {
+        public string Descripcion { get; set; }
+        public int TiendaId { get; set; }
+        public string Dni { get; set; }
+    }
 
+    public class TiendaDataDto
+    {
+        public int TiendaId { get; set; }
+        public string Descripcion { get; set; }
+        public string Direccion { get; set; }
+        public string Latitud { get; set; }
+        public string Longitud { get; set; }
+        public string Horario { get; set; }
     }
 }
+
