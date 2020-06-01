@@ -17,7 +17,7 @@ namespace MiCanasta.MiCanasta.Services
         public Familia DesactivarSolicitudes(string nombreFamilia, string Dni);
         public UsuarioFamiliaDto Remove(string UserDni);
         public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime Inicio, DateTime Fin);
-        public RolUsuarioCreateDto asignaRolUsuario(string Dni);
+        public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni);
 
     }        
 }

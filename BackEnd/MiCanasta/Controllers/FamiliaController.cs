@@ -78,16 +78,16 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpPut("nombreFamilia/usuarios/{Dni}")]
-        public ActionResult asignarRolUsuario(string Dni)
+        public ActionResult asignarRolUsuario(string Dni, string AdminDni)
         {
             try
             {
-                _familiaService.asignaRolUsuario(Dni);
+                _familiaService.asignaRolUsuario(Dni, AdminDni);
                 return Ok("El rol fue modificado");
             }
-            catch (Exception)
+            catch (UserNotAdminException UserNotAdminException)
             {
-                return BadRequest();
+                return BadRequest(UserNotAdminException.ExceptionDto);
             }
         }
 

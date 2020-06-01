@@ -145,30 +145,34 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<RolUsuarioCreateDto>(model);
         }
 
-        public RolUsuarioCreateDto asignaRolUsuario(string Dni)
+        public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni)
         {
 
+            var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
 
-            var rolUsuario = _context.RolUsuarios.Single(x => x.Dni == Dni);
+            if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 1))
+                throw new UserNotAdminException();
 
-            if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1))
-            {
-                var entry = new RolUsuario
-                {
-                    Dni = rolUsuario.Dni,
-                    RolPerfil = rolUsuario.RolPerfil,
-                    RolPerfilId = 2,
-                    Usuario = rolUsuario.Usuario,
-                };
-
-                DeleteRolUsuario(rolUsuario);
-                AddRolUsuario(entry);
-                _context.SaveChanges();
-
-            }
             else
             {
-                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+                var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
+                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1))
+                {
+                    var entry = new RolUsuario
+                    {
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 2,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    DeleteRolUsuario(rolUsuario);
+                    AddRolUsuario(entry);
+                    _context.SaveChanges();
+
+                }
+
+                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
                 {
                     var entry = new RolUsuario
                     {
@@ -183,7 +187,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     _context.SaveChanges();
                 }
             }
-
+            
+             
             return null;
         }
 
