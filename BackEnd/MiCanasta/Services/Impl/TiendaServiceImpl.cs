@@ -79,12 +79,10 @@ namespace MiCanasta.MiCanasta.Services.Impl
         
             List<ListarUsuarioTiendaDto> result = new List<ListarUsuarioTiendaDto>();
             List<UsuarioDto> usuario = new List<UsuarioDto>();
-           
-            
 
-            //var tienda = _context.Tiendas.Single(x => x.TiendaId == id);
+            Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == id);
 
-            if (result == null) { throw new TiendaNotFoundException(); }
+            if (tienda == null) { throw new TiendaNotFoundException(); }
 
             else
             {
