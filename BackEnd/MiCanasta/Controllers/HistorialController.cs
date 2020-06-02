@@ -29,5 +29,28 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        public ActionResult GetHistoriales(int FamiliaId, string dni, DateTime FechaInicio, DateTime FechaFinal)
+        {
+            try
+            {
+                return Ok(_historialService.GetHistorial(FamiliaId, dni, FechaInicio, FechaFinal));
+            }
+            catch (Exception) {
+                return NoContent();
+            }
+        }
+
+        [HttpPut]
+        public ActionResult Update(HistorialUpdateDto HistorialUpdateDto) {
+            try
+            {
+                return Ok(_historialService.Update(HistorialUpdateDto));
+            }
+            catch (Exception) {
+                return BadRequest();
+            }
+        }
     }
 }
