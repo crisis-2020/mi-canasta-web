@@ -37,6 +37,9 @@ namespace MiCanasta.BackEnd.ConfigMapper
             CreateMap<Tienda, TiendaDataDto>();
             CreateMap<RolUsuario, RolUsuarioDataDto>();
             CreateMap<UsuarioFamilia, UsuarioFamiliaGetDto>();
+            CreateMap<Historial, HistorialDto>();
+            CreateMap<HistorialCreateDto, Historial>();
+            CreateMap<HistorialUpdateDto, Historial>();
         }
 
     }

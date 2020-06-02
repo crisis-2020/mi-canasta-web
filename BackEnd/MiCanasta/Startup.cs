@@ -35,6 +35,7 @@ namespace MiCanasta
             services.AddTransient<TiendaService, TiendaServiceImpl>();
             services.AddTransient<ProductoService, ProductoServiceImpl>();
             services.AddTransient<CategoriaService, CategoriaServiceImpl>();
+            services.AddTransient<HistorialService, HistorialServiceImpl>();
 
 
             services.AddCors(options =>
