@@ -120,7 +120,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 _context.Solicitudes.Remove(solicitud);
                 _context.SaveChanges();
                 return true;
-            }catch (Exception exception)
+            }catch (Exception)
             {
                 return false;
             }

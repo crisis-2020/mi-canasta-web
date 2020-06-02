@@ -31,4 +31,17 @@ namespace MiCanasta.MiCanasta.Dto
         public UsuarioUpdateDto Usuario { get; set; }
 
     }
+
+    public class ListarUsuarioTiendaDto
+    {
+        public string Dni { get; set; }
+        public string Nombre { get; set; }
+        public string ApellidoPaterno { get; set; }
+        public int RolPerfilId { get; set; }
+        public string Descripcion { get; set; }
+
+
+
+
+    }
 }
