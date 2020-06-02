@@ -70,6 +70,19 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
+        [HttpGet("IdTienda/usuarios")]
+        public ActionResult GetUsuariosByTiendaId(int id)
+        {
+            try
+            {
+                return Ok(_tiendaService.GetByTiendaId(id));
+            }
+            catch (TiendaNotFoundException)
+            {
+                return NoContent();
+            }
+        }
+
         [HttpGet("IdTienda/usuarios/{Dni}")]
         public ActionResult cambiardRolTienda(string Dni, string AdminDni)
         {

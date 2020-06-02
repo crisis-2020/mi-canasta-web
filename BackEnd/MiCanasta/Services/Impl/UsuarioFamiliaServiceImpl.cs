@@ -57,7 +57,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 _context.UsuarioFamilias.Add(usuario);
                 _context.SaveChanges();
                 return true;
-            }catch(Exception exception)
+            }catch(Exception)
             {
                 return false;
             }

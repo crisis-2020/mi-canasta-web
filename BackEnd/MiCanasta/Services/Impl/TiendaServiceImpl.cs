@@ -35,7 +35,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             UsuarioTienda NewUsuarioTienda = null;
             Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
-            if (usuario != null) {
+            if (usuario != null)
+            {
                 int cantidadUsuarios = _context.UsuarioTiendas.Where(x => x.TiendaId == TiendaId).Count();
                 Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == TiendaId);
                 if (cantidadUsuarios + 1 <= tienda.Limite)
@@ -63,12 +64,64 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<List<StockDto>>(Stocks);
         }
 
-        public StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto) {
+        public StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto)
+        {
             Stock Stock = _context.Stocks.Single(x => x.ProductoId == IdProducto && x.TiendaId == IdTienda);
             Stock.Cantidad = StockUpdateDto.Cantidad;
             _context.SaveChanges();
             return _mapper.Map<StockDto>(Stock);
         }
+
+
+        public List<ListarUsuarioTiendaDto> GetByTiendaId(int id)
+        {
+
+
+            List<ListarUsuarioTiendaDto> result = new List<ListarUsuarioTiendaDto>();
+            List<UsuarioDto> usuario = new List<UsuarioDto>();
+
+            Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == id);
+
+            if (tienda == null) { throw new TiendaNotFoundException(); }
+
+            else
+            {
+                List<UsuarioTienda> UsuariosTienda = _context.UsuarioTiendas.Where(x => x.Tienda.TiendaId == id).AsQueryable().ToList();
+
+                foreach (UsuarioTienda usuarioTienda in UsuariosTienda)
+                {
+
+                    usuario.Add(_mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == usuarioTienda.Dni)));
+
+
+                }
+
+                foreach (UsuarioDto usuarioAux in usuario)
+                {
+                    var rolUsario = _context.RolUsuarios.Single(x => x.Dni == usuarioAux.Dni);
+
+                    var entry = new ListarUsuarioTiendaDto
+                    {
+                        Nombre = usuarioAux.Nombre,
+                        ApellidoPaterno = usuarioAux.ApellidoPaterno,
+                        Descripcion = _context.RolPerfiles.Single(x => x.RolPerfilId == rolUsario.RolPerfilId).Descripcion,
+                        RolPerfilId = rolUsario.RolPerfilId,
+                        Dni = usuarioAux.Dni,
+                    };
+
+
+                    result.Add(entry);
+
+                    rolUsario = null;
+                    usuario = null;
+                }
+
+            }
+            return result;
+        }
+
+
+
         public List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni)
         {
 
@@ -82,67 +135,65 @@ namespace MiCanasta.MiCanasta.Services.Impl
             else
             {
                 var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
-                
-               
-                            if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 3))
-                            {
-                                var entry = new RolUsuario
-                                {
-                                    Dni = rolUsuario.Dni,
-                                    RolPerfil = rolUsuario.RolPerfil,
-                                    RolPerfilId = 4,
-                                    Usuario = rolUsuario.Usuario,
-                                };
-
-                                _context.RolUsuarios.Remove(rolUsuario);
-                                _context.RolUsuarios.Add(entry);
-                                _context.SaveChanges();
-
-                            }
-
-                            else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 4))
-                            {
-                                var entry = new RolUsuario
-                                {
-                                    Dni = rolUsuario.Dni,
-                                    RolPerfil = rolUsuario.RolPerfil,
-                                    RolPerfilId = 3,
-                                    Usuario = rolUsuario.Usuario,
-                                };
-
-                                _context.RolUsuarios.Remove(rolUsuario);
-                                _context.RolUsuarios.Add(entry);
-                                _context.SaveChanges();
-                            }
 
 
-
-                        }
-
-                List<RolPerfil> rolPerfiles = _context.RolPerfiles.AsQueryable().ToList();
-                
-
-                foreach (RolPerfil rolPerfil in rolPerfiles)
+                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 3))
                 {
-                    var entry = new RolPerfilCambioDto
+                    var entry = new RolUsuario
                     {
-                        RolPerfilId = rolPerfil.RolPerfilId,
-                        Descripcion = rolPerfil.Descripcion
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 4,
+                        Usuario = rolUsuario.Usuario,
                     };
 
+                    _context.RolUsuarios.Remove(rolUsuario);
+                    _context.RolUsuarios.Add(entry);
+                    _context.SaveChanges();
 
-                    result.Add(entry);
                 }
-            
+
+                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 4))
+                {
+                    var entry = new RolUsuario
+                    {
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 3,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    _context.RolUsuarios.Remove(rolUsuario);
+                    _context.RolUsuarios.Add(entry);
+                    _context.SaveChanges();
+                }
+
+
+
+            }
+
+            List<RolPerfil> rolPerfiles = _context.RolPerfiles.AsQueryable().ToList();
+
+
+            foreach (RolPerfil rolPerfil in rolPerfiles)
+            {
+                var entry = new RolPerfilCambioDto
+                {
+                    RolPerfilId = rolPerfil.RolPerfilId,
+                    Descripcion = rolPerfil.Descripcion
+                };
+
+
+                result.Add(entry);
+            }
+
             return result;
-           
+
 
         }
 
-       
 
-    
     }
 
-    
+
 }
