@@ -14,28 +14,34 @@ using Xunit;
 
 namespace MiCanasta_Test
 {
-    public class FamiliaControllerTest
-    {
+	public class FamiliaControllerTest
+	{
 
-    	//Flujo normal: Si el grupo familiar no existe, entonces crea uno.
+		//Flujo normal: Si el grupo familiar no existe, entonces crea uno.
 		[Fact]
-		public void Add_ValidObjectPassed_ReturnOk()
+		public void Add_ValidObjectPassed_ReturnCreated()
 		{
 			var _service = new Mock<FamiliaService>();
 			var _controller = new FamiliaController(_service.Object);
 
 			FamiliaCreateDto modelCreateDto = new FamiliaCreateDto
 			{
-				FamiliaNombre = "RiverdaleFam",
+				FamiliaNombre = "RiverdaleFam77",
 				Dni = "12345677",
 				AceptaSolicitudes = true
+			};
+
+			RolPerfilCreateDto rolPerfil = new RolPerfilCreateDto
+			{
+				PerfilId = 1,
+				Descripcion = "Administrador"
 			};
 
 			_service.Setup(x => x.Create(modelCreateDto)).Returns(modelCreateDto);
 
 			ActionResult result = _controller.Create(modelCreateDto);
 
-			//Assert.IsType<OkObjectResult>(result);
+			//Assert.IsType<CreatedAtActionResult>(result);
 		}
 
 		//Escenario alterno: Si el grupo familiar que se quiere crear ya existe.
@@ -67,7 +73,7 @@ namespace MiCanasta_Test
 		}
 
 
-        // Flujo normal: Obtener lista de miembros de grupo familiar
+		// Flujo normal: Obtener lista de miembros de grupo familiar
 		private IEnumerable<MiCanasta.MiCanasta.Model.Usuario> GetFakeDataUsuario()
 		{
 			var i = 1;
@@ -123,10 +129,10 @@ namespace MiCanasta_Test
 			Assert.IsType<OkObjectResult>(result);
 		}
 
-        //Flujo normal Obtener historial familia
-        [Fact]
-        public void Get_HistorialFamiliaTest()
-        {
+		//Flujo normal Obtener historial familia
+		[Fact]
+		public void Get_HistorialFamiliaTest()
+		{
 			var _service = new Mock<FamiliaService>();
 			var _controller = new FamiliaController(_service.Object);
 
@@ -149,7 +155,7 @@ namespace MiCanasta_Test
 
 			}
 
-            };
+			};
 
 			//var result = _controller.GetHistoriales("FamiliaPrueba", '2010-05-22 14:17', '2010-05-22 14:16');
 			// Assert
@@ -158,8 +164,8 @@ namespace MiCanasta_Test
 
 		//Flujo normal Eliminar UsuarioFamilia
 		[Fact]
-        public void Get_RemoveFamilia()
-        {
+		public void Get_RemoveFamilia()
+		{
 			var _service = new Mock<FamiliaService>();
 			var _controller = new FamiliaController(_service.Object);
 
@@ -243,7 +249,46 @@ namespace MiCanasta_Test
 			//Assert.IsType<BadRequestResult>(result);
 		}
 
+		//Flujo principal Obtener Familia por FamiliaID
+		[Fact]
+		public void Get_FamiliaTest()
+		{
+			var _service = new Mock<FamiliaService>();
+			var _controller = new FamiliaController(_service.Object);
+
+			// 
+			FamiliaDto familia = new FamiliaDto
+			{
+				Nombre = "RiverdaleFam77",
+                FamiliaId = 100
+			};
+
+			var result = _controller.GetFamilia(100);
+			//Assert
+			Assert.IsType<OkObjectResult>(result);
+
+		}
+
+		//Flujo alterno Obtener Familia por FamiliaID
+		[Fact]
+		public void Get_NotContentFamiliaTest()
+		{
+			var _service = new Mock<FamiliaService>();
+			var _controller = new FamiliaController(_service.Object);
+
+			// 
+			FamiliaDto familia = new FamiliaDto
+			{
+				Nombre = "RiverdaleFam11",
+				FamiliaId = 100
+			};
+
+			var result = _controller.GetFamilia(778);
+			//Assert
+			//Assert.IsType<NoContentResult>(result);
+
+		}
+
+
 	}
-
-
 }

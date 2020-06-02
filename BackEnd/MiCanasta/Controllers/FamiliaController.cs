@@ -75,6 +75,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
+
         [HttpGet("{FamiliaId}")]
         public ActionResult GetFamilia(int FamiliaId)
         {
