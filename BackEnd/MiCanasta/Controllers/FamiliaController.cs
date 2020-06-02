@@ -6,6 +6,7 @@ using MiCanasta.MiCanasta.Exceptions;
 using System;
 using MiCanasta.MiCanasta.Model;
 using System.Diagnostics;
+using MiCanasta.Dto;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -75,6 +76,21 @@ namespace MiCanasta.MiCanasta.Controllers
             }
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
+
+        [HttpPut("nombreFamilia/usuarios/{Dni}")]
+        public ActionResult asignarRolUsuario(string Dni, string AdminDni)
+        {
+            try
+            {
+                _familiaService.asignaRolUsuario(Dni, AdminDni);
+                return Ok("El rol fue modificado");
+            }
+            catch (UserNotAdminException UserNotAdminException)
+            {
+                return BadRequest(UserNotAdminException.ExceptionDto);
+            }
+        }
+
         [HttpGet("{FamiliaId}")]
         public ActionResult GetFamilia(int FamiliaId)
         {
