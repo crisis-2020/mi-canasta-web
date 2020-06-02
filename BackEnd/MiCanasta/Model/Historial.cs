@@ -14,6 +14,8 @@ namespace MiCanasta.MiCanasta.Model
         public int ProductoId { get; set; }
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
+        public string Dni { get; set; } 
+        public bool Confirmacion { get; set; } 
         public DateTime FechaCompra { get; set; }
     }
 }

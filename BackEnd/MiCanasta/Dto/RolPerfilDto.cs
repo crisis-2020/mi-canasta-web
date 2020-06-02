@@ -29,4 +29,10 @@ namespace MiCanasta.Dto
         public PerfilDto Perfil { get; set; }
         public List<RolUsuarioDto> RolUsuarios { get; set; }
     }
+
+    public class RolPerfilCambioDto
+    {
+        public int RolPerfilId { get; set; }
+        public string Descripcion { get; set; }
+    }
 }
