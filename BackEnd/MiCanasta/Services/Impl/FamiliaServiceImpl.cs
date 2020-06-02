@@ -68,6 +68,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             return result;
         }
+
         public FamiliaDataDto GetById(int FamiliaId)
         {
             Familia familia = _context.Familias.SingleOrDefault(x => x.FamiliaId == FamiliaId);
