@@ -1,4 +1,6 @@
-﻿using MiCanasta.MiCanasta.Dto;
+﻿using MiCanasta.Dto;
+using MiCanasta.MiCanasta.Dto;
+using MiCanasta.MiCanasta.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,7 @@ namespace MiCanasta.MiCanasta.Services
 
         List<StockDto> GetStocksById(int IdTienda);
         StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto);
+
+        List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni);
     }
 }

@@ -12,7 +12,7 @@ namespace MiCanasta.MiCanasta.Controllers
 {
     [ApiController]
     [Route("tiendas")]
-    public class TiendaController: ControllerBase
+    public class TiendaController : ControllerBase
     {
         private readonly TiendaService _tiendaService;
 
@@ -22,44 +22,66 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetById(int id) {
+        public ActionResult GetById(int id)
+        {
             return Ok(_tiendaService.getById(id));
         }
 
         [HttpPost("/{IdTienda}/usuario/{Dni}/usuariosportienda")]
-        public ActionResult PostNewUserInShop(int IdTienda,string Dni)
+        public ActionResult PostNewUserInShop(int IdTienda, string Dni)
         {
-            try 
+            try
             {
-                return Created("Created", _tiendaService.PostUsuarioInTienda(Dni, IdTienda));            
-            }catch(UserAddedShopIncorrectException user)
+                return Created("Created", _tiendaService.PostUsuarioInTienda(Dni, IdTienda));
+            }
+            catch (UserAddedShopIncorrectException user)
             {
-                return BadRequest( user.ExceptionDto);
-            }catch(UserAddedShopExceedLimitException exceed)
+                return BadRequest(user.ExceptionDto);
+            }
+            catch (UserAddedShopExceedLimitException exceed)
             {
                 return BadRequest(exceed.ExceptionDto);
             }
         }
 
         [HttpGet("{IdTienda}/stocks")]
-        public ActionResult GetStocksById(int IdTienda) {
+        public ActionResult GetStocksById(int IdTienda)
+        {
             try
             {
                 return Ok(_tiendaService.GetStocksById(IdTienda));
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 return NoContent();
             }
         }
 
         [HttpPut("{IdTienda}/productos/{IdProducto}/stocks")]
-        public ActionResult UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto) {
+        public ActionResult UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto)
+        {
             try
             {
                 return Ok(_tiendaService.UpdateStock(IdTienda, IdProducto, StockUpdateDto));
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 return BadRequest();
+            }
+        }
+
+        [HttpGet("IdTienda/usuarios/{Dni}")]
+        public ActionResult cambiardRolTienda(string Dni, string AdminDni)
+        {
+            try
+            {
+                
+                return Ok(_tiendaService.cambiarRolTienda(Dni, AdminDni));
+            }
+            catch (UserNotAdminException UserNotAdminException)
+            {
+                return BadRequest(UserNotAdminException.ExceptionDto);
+
             }
         }
     }
