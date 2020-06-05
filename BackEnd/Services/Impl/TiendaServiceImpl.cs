@@ -192,23 +192,46 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         }
 
-        public List<StockDto> GetTiendaDetalles(int IdTienda)
+        public TiendaDetallesDto GetTiendaDetalles(int IdTienda)
         {
             var tienda = _context.Tiendas.Single(x => x.TiendaId == IdTienda);
 
-            //List<StockDto> stock = _mapper.Map<List<StockDto>>(_context.Stocks.Where(x => x.TiendaId == IdTienda).AsQueryable().ToList());
+            List<StockDto> stock = _mapper.Map<List<StockDto>>(_context.Stocks.Where(x => x.TiendaId == IdTienda).AsQueryable().ToList());
 
-            List<StockDto> stock = GetStocksById(IdTienda);
+            List<StockProductoDto> stockPorNombre = new List<StockProductoDto>();
+            if (tienda == null) return null;
 
-            //if (stock.Count != 0)
-            //{
-             
 
-            //}
+            else
+            {
+                foreach (StockDto stockDto in stock)
+                {
+                    var entry = new StockProductoDto
+                    {
+                        Nombre = _context.Productos.Single(x => x.ProductoId == stockDto.ProductoId).Descripcion,
+                        Cantidad = stockDto.Cantidad,
+
+                    };
+
+                    stockPorNombre.Add(entry);
+                    entry = null;
+                }
+
+                var result = new TiendaDetallesDto
+                {
+
+                    Descripcion = tienda.Descripcion,
+                    Direccion = tienda.Direccion,
+                    Horario = tienda.Horario,
+                    Productos = stockPorNombre
+                };
+                return result;
+            }
+
+
+
+
             
-
-
-            return stock;
 
         }
     
