@@ -98,7 +98,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("IdTienda/Stock/{IdTienda}")]
+        [HttpGet("Tienda/{IdTienda}")]
         public ActionResult GetTiendaDetalles(int IdTienda)
         {
             try
