@@ -47,9 +47,9 @@ namespace MiCanasta
             });
 
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                    .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
-                        .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
-            ));
+                     .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=1930063057198aL;", mySqlOptions => mySqlOptions
+                         .ServerVersion(new Version(8, 0, 18), ServerType.MySql)
+             ));
 
             services.AddSwaggerGen(c =>
             {

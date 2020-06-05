@@ -23,4 +23,10 @@ namespace MiCanasta.MiCanasta.Dto
     {
         public int Cantidad { get; set; }
     }
+    public class StockProductoDto
+    {
+        public string Nombre { get; set; }
+
+        public int Cantidad { get; set; }
+    }
 }

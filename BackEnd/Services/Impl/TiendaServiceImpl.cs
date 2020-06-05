@@ -192,6 +192,26 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         }
 
+        public List<StockDto> GetTiendaDetalles(int IdTienda)
+        {
+            var tienda = _context.Tiendas.Single(x => x.TiendaId == IdTienda);
+
+            //List<StockDto> stock = _mapper.Map<List<StockDto>>(_context.Stocks.Where(x => x.TiendaId == IdTienda).AsQueryable().ToList());
+
+            List<StockDto> stock = GetStocksById(IdTienda);
+
+            //if (stock.Count != 0)
+            //{
+             
+
+            //}
+            
+
+
+            return stock;
+
+        }
+    
 
     }
 
