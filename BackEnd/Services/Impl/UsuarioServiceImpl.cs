@@ -108,7 +108,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 Tienda tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
                 tiendaData = _mapper.Map<TiendaDataDto>(tienda);
             } else tiendaData = null;
-            rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).AsQueryable().ToList();
+            rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
             List<RolUsuarioDataDto> rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
             return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, rolUsuario = rolesUsuarioData };
 

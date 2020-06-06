@@ -29,4 +29,12 @@ namespace MiCanasta.MiCanasta.Dto
 
         public int Cantidad { get; set; }
     }
+    public class StockRequestDto
+    {
+        public int ProductoId { get; set; }
+        public int TiendaId { get; set; }
+        public int Cantidad { get; set; }
+    }
+
+
 }
