@@ -30,33 +30,38 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         public FamiliaCreateDto Create(FamiliaCreateDto model)
         {
-            Familia entry = new Familia();
-            RolUsuario entry3 = new RolUsuario();
 
             if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) != null) throw new ExistingFamilyException();
 
             else
             {
-                entry = new Familia
+                var familia = new Familia
                 {
                     Nombre = model.FamiliaNombre,
                     Dni = model.Dni,
-                    AceptaSolicitudes = true,
+                    UsuarioFamilias = new List<UsuarioFamilia> {
+                    new UsuarioFamilia {
+                        Dni = model.Dni,   
+                        }
+                    }
                 };
 
-                entry3 = new RolUsuario
+                RolUsuario entry = new RolUsuario();
+                entry = new RolUsuario
                 {
                     Dni = model.Dni,
                     RolPerfilId = 1,
+
                 };
 
+                _context.Add(familia);
                 _context.Add(entry);
-                _context.Add(entry3);
                 _context.SaveChanges();
 
             }
             return _mapper.Map<FamiliaCreateDto>(model);
         }
+
 
         public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre)
         {
@@ -200,7 +205,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
              
             return null;
         }
-
 
         void DeleteRolUsuario(RolUsuario rol)
         {

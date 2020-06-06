@@ -98,7 +98,7 @@ namespace MiCanasta.MiCanasta.Controllers
             {
                 return Ok(_familiaService.GetById(FamiliaId));
             }
-            catch (FamilyNotFoundException familyNotFound) 
+            catch (Exception) 
             {
                 return NoContent();
             }
