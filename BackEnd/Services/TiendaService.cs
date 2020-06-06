@@ -20,5 +20,8 @@ namespace MiCanasta.MiCanasta.Services
 
         public List<ListarUsuarioTiendaDto> GetByTiendaId(int id);
         List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni);
+
+        TiendaDetallesDto GetTiendaDetalles(int IdTienda);
+
     }
 }
