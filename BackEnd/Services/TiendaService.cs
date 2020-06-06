@@ -23,5 +23,7 @@ namespace MiCanasta.MiCanasta.Services
 
 
         List<TiendaDataDto>GetTiendas();
+        TiendaDetallesDto GetTiendaDetalles(int IdTienda);
+
     }
 }

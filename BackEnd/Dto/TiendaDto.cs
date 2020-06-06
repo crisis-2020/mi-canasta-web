@@ -37,8 +37,8 @@ namespace MiCanasta.MiCanasta.Dto
         public string Latitud { get; set; }
         public string Longitud { get; set; }
         public string Horario { get; set; }
-        public string Contrasena { get; set; }  
-        
+        public string Contrasena { get; set; }
+
     }
     public class TiendaUsuarioDto
     {
@@ -55,6 +55,15 @@ namespace MiCanasta.MiCanasta.Dto
         public string Latitud { get; set; }
         public string Longitud { get; set; }
         public string Horario { get; set; }
+    }
+
+    public class TiendaDetallesDto
+    {
+        public string Descripcion { get; set; }
+        public string Direccion { get; set; }
+        public string Horario { get; set; }
+        public List<StockProductoDto> Productos { get; set; }
+
     }
 }
 

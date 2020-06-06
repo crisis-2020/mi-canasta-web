@@ -219,6 +219,49 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
 
         }
+        public TiendaDetallesDto GetTiendaDetalles(int IdTienda)
+        {
+            var tienda = _context.Tiendas.Single(x => x.TiendaId == IdTienda);
+
+            List<StockDto> stock = _mapper.Map<List<StockDto>>(_context.Stocks.Where(x => x.TiendaId == IdTienda).AsQueryable().ToList());
+
+            List<StockProductoDto> stockPorNombre = new List<StockProductoDto>();
+            if (tienda == null) return null;
+
+
+            else
+            {
+                foreach (StockDto stockDto in stock)
+                {
+                    var entry = new StockProductoDto
+                    {
+                        Nombre = _context.Productos.Single(x => x.ProductoId == stockDto.ProductoId).Descripcion,
+                        Cantidad = stockDto.Cantidad,
+
+                    };
+
+                    stockPorNombre.Add(entry);
+                    entry = null;
+                }
+
+                var result = new TiendaDetallesDto
+                {
+
+                    Descripcion = tienda.Descripcion,
+                    Direccion = tienda.Direccion,
+                    Horario = tienda.Horario,
+                    Productos = stockPorNombre
+                };
+                return result;
+            }
+
+
+
+
+            
+
+        }
+    
 
     }
 

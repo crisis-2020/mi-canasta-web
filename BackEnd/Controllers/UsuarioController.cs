@@ -87,7 +87,7 @@ namespace MiCanasta.MiCanasta.Controllers
             try
             {
                 return Ok(_usuarioService.GetUsuarioFamilia(Dni));
-            }catch(UserFamilyNotFoundException UserNotFound)
+            }catch(Exception)
             {
                 return NotFound();
             }
