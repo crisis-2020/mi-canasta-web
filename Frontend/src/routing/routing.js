@@ -37,7 +37,7 @@ export default new Router({
       component: LayoutPage,
       children: [
         { path: "/home", name: "HomePage", component: HomePage },
-        { path: "family", name: "FamilyPage", component: HomeFamilyPage },
+        { path: "family/:id", name: "FamilyPage", component: HomeFamilyPage },
         { path: "dealers", name: "DealersPage", component: DealersPage },
         { path: "requests-sent", name: "RequestsSentPage",component: RequestsSentPage },
         { path: "requests-received", name: "RequestReceived",component: RequestReceived },

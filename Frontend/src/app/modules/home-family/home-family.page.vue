@@ -20,6 +20,10 @@ import MembersCardShared from "../../shared/members/members.component.vue";
 export default {
   name: "HomeFamilyPage",
   components: {MembersCardShared},
+
+  mounted(){
+    console.log(this.$route.params.id);
+  },
   data: function() {
     return {
       mock: [
