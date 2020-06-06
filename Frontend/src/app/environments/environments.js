@@ -1,4 +1,4 @@
 export let environments = {
-    api : "http://localhost:50758",
+    api : "https://app-mi-canasta-web.herokuapp.com",
     apiProduction :  "link del url heroku"
 }

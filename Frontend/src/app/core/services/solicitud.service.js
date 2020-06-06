@@ -5,4 +5,8 @@ export default class SolicitudService {
         return await axios
             .post(`${environments.api}/solicitudes`, solicitudRequest)
     }
+    static async obtenerSolicitudes(dni) {
+        return await axios
+            .get(`${environments.api}/solicitudes/${dni}`)
+    }
 }

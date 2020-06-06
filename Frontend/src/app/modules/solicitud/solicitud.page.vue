@@ -16,7 +16,7 @@
                     :type="'large'"
                     :bgColor="'red'"
                     :loading="loading_button1"
-                    @Event="event"
+                    @Event="volverAInicio"
                 ></ButtonShared>
             </div>
         </div>
@@ -36,8 +36,11 @@
             }
         },
         methods: {
-            event() {
+            volverAInicio() {
                 this.$data.loading_button1 = true;
+                //this.$data.loading_button1 = false;
+                this.$router.push("/home");
+
             },
         }
     }
