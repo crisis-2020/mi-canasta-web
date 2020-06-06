@@ -109,6 +109,20 @@ namespace MiCanasta.MiCanasta.Controllers
             {
                 return NoContent();
             }
-        }   
+        }
+
+        [HttpGet("Tienda/")]
+        public ActionResult GetTiendas()
+        {
+            try
+            {
+                return Ok(_tiendaService.GetTiendas());
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
+        }
+
     }
 }
