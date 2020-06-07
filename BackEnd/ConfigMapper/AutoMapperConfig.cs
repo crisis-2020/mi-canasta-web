@@ -40,6 +40,8 @@ namespace MiCanasta.BackEnd.ConfigMapper
             CreateMap<Historial, HistorialDto>();
             CreateMap<HistorialCreateDto, Historial>();
             CreateMap<HistorialUpdateDto, Historial>();
+            CreateMap<Stock, StockRequestDto>();
+
         }
 
     }

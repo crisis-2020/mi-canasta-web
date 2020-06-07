@@ -8,12 +8,22 @@
     <div class="login-container__form-container">
       <div class="input-shared-container">
         <label class="label-shared-component">Dni</label>
-        <input class="input-shared-component" type="text" v-model="dni" maxlength="8" />
+        <input
+          class="input-shared-component"
+          type="text"
+          v-model="dni"
+          maxlength="8"
+        />
       </div>
 
       <div class="input-shared-container">
         <label class="label-shared-component">Contraseña</label>
-        <input class="input-shared-component" type="password" v-model="contrasena" maxlength="50" />
+        <input
+          class="input-shared-component"
+          type="password"
+          v-model="contrasena"
+          maxlength="50"
+        />
       </div>
 
       <ButtonShared
@@ -52,7 +62,7 @@ export default {
       contrasena: "",
       loadingButton: false,
       isShowModalError: false,
-      error: { title: "Error" }
+      error: { title: "Error" },
     };
   },
   methods: {
@@ -66,11 +76,16 @@ export default {
         } else if (!ValidacionService.validarContrasena(usuario.contrasena)) {
           throw "FormatContrasenaException";
         }
-        localStorage.setItem("dni",this.$data.dni);
-        await AuthService.autenticacion(usuario);
 
-        this.$data.loadingButton = false;
-        this.$router.push("/home");
+        localStorage.setItem("dni", this.$data.dni);
+        await AuthService.autenticacion(usuario).then((e) => {
+          this.$data.loadingButton = false;
+          if (e.data.familia != null) {
+            this.$router.push(`/home/family/${e.data.familia.familiaId}`);
+          } else {
+            this.$router.push("/home");
+          }
+        });
       } catch (error) {
         if (
           error instanceof Object &&
@@ -94,8 +109,8 @@ export default {
 
     closeModal() {
       this.$data.isShowModalError = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -135,7 +150,7 @@ export default {
 .login-container__button {
   margin-top: 24px;
 }
-.input-shared-container{
+.input-shared-container {
   margin-bottom: 24px;
 }
 </style>

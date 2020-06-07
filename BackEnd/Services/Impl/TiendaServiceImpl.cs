@@ -192,6 +192,76 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         }
 
+        public List<TiendaDataDto> GetTiendas()
+        {
+            var tiendas = _context.Tiendas.AsQueryable().ToList();
+            if (tiendas == null) return null;
+            else
+            {
+
+                List<TiendaDataDto> result = new List<TiendaDataDto>();
+                foreach (Tienda allTiendas in tiendas)
+                {
+                    var entry = new TiendaDataDto
+                    {
+                        Descripcion = allTiendas.Descripcion,
+                        Direccion = allTiendas.Direccion,
+                        Horario = allTiendas.Horario,
+                        Latitud = allTiendas.Latitud,
+                        Longitud = allTiendas.Longitud,
+                        TiendaId = allTiendas.TiendaId
+                    };
+                    result.Add(entry);
+                }
+
+
+                return result;
+            }
+
+        }
+        public TiendaDetallesDto GetTiendaDetalles(int IdTienda)
+        {
+            var tienda = _context.Tiendas.Single(x => x.TiendaId == IdTienda);
+
+            List<StockDto> stock = _mapper.Map<List<StockDto>>(_context.Stocks.Where(x => x.TiendaId == IdTienda).AsQueryable().ToList());
+
+            List<StockProductoDto> stockPorNombre = new List<StockProductoDto>();
+            if (tienda == null) return null;
+
+
+            else
+            {
+                foreach (StockDto stockDto in stock)
+                {
+                    var entry = new StockProductoDto
+                    {
+                        Nombre = _context.Productos.Single(x => x.ProductoId == stockDto.ProductoId).Descripcion,
+                        Cantidad = stockDto.Cantidad,
+
+                    };
+
+                    stockPorNombre.Add(entry);
+                    entry = null;
+                }
+
+                var result = new TiendaDetallesDto
+                {
+
+                    Descripcion = tienda.Descripcion,
+                    Direccion = tienda.Direccion,
+                    Horario = tienda.Horario,
+                    Productos = stockPorNombre
+                };
+                return result;
+            }
+
+
+
+
+            
+
+        }
+    
 
     }
 

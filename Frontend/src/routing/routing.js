@@ -8,6 +8,9 @@ import SolicitudPage from "../app/modules/solicitud/solicitud.page.vue";
 import HomeFamilyPage from "../app/modules/home-family/home-family.page.vue";
 import DealersPage from "../app/modules/home-dealers/home-dealers.page.vue";
 import SharedPageComponent from "../app/modules/shared-componentes/shared-components.page.vue"
+import RequestsSentPage from "../app/modules/request-sent/requests-sent.page.vue";
+import RequestReceived from "../app/modules/requests-received/requests-received.page.vue";
+import SalePage from "../app/modules/sale/sale.page.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -37,7 +40,11 @@ export default new Router({
         { path: "/home", name: "HomePage", component: HomePage },
         { path: "family", name: "FamilyPage", component: HomeFamilyPage },
         { path: "dealers", name: "DealersPage", component: DealersPage },
-        { path: "solicitudes", name: "SolicitudPage", component: SolicitudPage }
+        { path: "solicitudes", name: "SolicitudPage", component: SolicitudPage },
+        { path: "family/:id", name: "FamilyPage", component: HomeFamilyPage },
+        { path: "requests-sent", name: "RequestsSentPage",component: RequestsSentPage },
+        { path: "requests-received", name: "RequestReceived",component: RequestReceived },
+        { path: "sell", name: "SalePage", component: SalePage}
       ],
     },
     {

@@ -89,6 +89,13 @@ button{
   background: #F76A8C !important;
 }
 
-
-
+.ant-slider-track{
+  background-color: #F8DC88 !important;
+}
+.ant-slider-handle{
+      border: solid 2px #F8DC88 !important;
+}
+.ant-slider-dot-active{
+  border-color: #F8DC88 !important;
+}
 </style>
