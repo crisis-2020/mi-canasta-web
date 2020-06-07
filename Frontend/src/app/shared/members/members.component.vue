@@ -2,12 +2,14 @@
   <div class="member-container">
     <div class="member-container__information">
       <div class="member-container__roles">
-          <img v-if="person.roles.includes('Admin')" src="../../../assets/ic_crown.svg" alt="">
-          <img v-if="person.roles.includes('Comprador')" src="../../../assets/ic_shop-cart.svg" alt="">
+          <!-- <img v-if="person.roles.includes('Admin')" src="../../../assets/ic_crown.svg" alt="">
+          <img v-if="person.roles.includes('Comprador')" src="../../../assets/ic_shop-cart.svg" alt=""> -->
+          <img  src="../../../assets/ic_crown.svg" alt="">
+          <img  src="../../../assets/ic_shop-cart.svg" alt="">
 
       </div>
       <div class="member-container__personal">
-        <h2>{{ person.name }}</h2>
+        <h2>{{ person.nombre }}</h2>
         <p>{{ person.dni }}</p>
       </div>
       <div class="member-container__delete-btn">
@@ -29,7 +31,7 @@ export default {
   props: ['person'],
   data:function(){
     return{
-      data: [1,2,3,4,5,6,7]
+      data: ["Administrador", "Comprador"]
     }
   }
 };
