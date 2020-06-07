@@ -5,4 +5,13 @@ export default class FamiliaService {
         return await axios
             .post(`${environments.api}/familias`, familiaRequest)
     }
+
+
+    static async listarFamilia(id) {
+        return await axios.get(`${environments.api}/familias/${id}`);
+    }
+
+    static async listarMiembrosDeFamilia(nombreFamilia) {
+        return await axios.get(`${environments.api}/familias/${nombreFamilia}/usuarios`);
+    }
 }

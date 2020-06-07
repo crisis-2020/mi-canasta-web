@@ -1,9 +1,9 @@
 <template>
   <a-select
     mode="multiple"
-    :size="'size'"
+    :size="'large'"
     placeholder="Please select"
-    :default-value="[]"
+    :default-value="['Administrador']"
     style="width: 100%"
     @change="handleChange"
   >
