@@ -18,7 +18,7 @@ namespace MiCanasta.MiCanasta
         public int Cantidad { get; set; }
         public List<SolicitudDto> Solicitudes { get; set; }
         public List<UsuarioFamiliaDto> UsuarioFamilias { get; set; }
-        public List<HistorialDto> Historiales { get; set; }
+        public List<CompraDto> Compras { get; set; }
         public bool CrearGrupoFamiliar { get; set; }
     }
 

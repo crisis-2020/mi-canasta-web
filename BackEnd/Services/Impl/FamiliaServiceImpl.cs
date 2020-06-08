@@ -137,12 +137,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return usuarioFamiliaDto;
         }
 
-        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin)
+        public List<CompraDto> GetCompra(string FamiliaNombre, DateTime inicio, DateTime fin)
         {
 
-            List<HistorialDto> Historiales =
-                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
-            return Historiales;
+            List<CompraDto> Compras =
+                _mapper.Map<List<CompraDto>>(_context.Compras.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
+            return Compras;
         }
 
         public RolUsuarioCreateDto asignarRolUsuario(RolUsuarioCreateDto model)
