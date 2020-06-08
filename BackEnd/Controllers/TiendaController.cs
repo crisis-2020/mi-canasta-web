@@ -70,7 +70,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("IdTienda/usuarios")]
+        [HttpGet("{IdTienda}/usuarios")]
         public ActionResult GetUsuariosByTiendaId(int id)
         {
             try
@@ -87,7 +87,7 @@ namespace MiCanasta.MiCanasta.Controllers
         public ActionResult cambiardRolTienda(string Dni, string AdminDni)
         {
             try
-            {
+            {   
                 
                 return Ok(_tiendaService.cambiarRolTienda(Dni, AdminDni));
             }
@@ -98,7 +98,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("Tienda/{IdTienda}")]
+        [HttpGet("{IdTienda}")]
         public ActionResult GetTiendaDetalles(int IdTienda)
         {
             try
