@@ -19,7 +19,7 @@ namespace MiCanasta.MiCanasta.Services
         StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto);
 
         public List<ListarUsuarioTiendaDto> GetByTiendaId(int id);
-        List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni);
+        List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni,bool CambiarRol);
 
 
         List<TiendaDataDto>GetTiendas();

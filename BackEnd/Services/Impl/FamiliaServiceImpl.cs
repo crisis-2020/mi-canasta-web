@@ -93,10 +93,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             throw new FamilyNotFoundException();
         }
 
-        public Familia DesactivarSolicitudes(string nombreFamilia, bool aceptaSolicitudes)
+        public Familia DesactivarSolicitudes(FamiliaInfoSinListasDto familiaDto)
         {
+            var nombreFamilia = familiaDto.Nombre;
+            var aceptaSolicitudes = familiaDto.AceptaSolicitudes;
             Familia nombreFam;
-            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia );
+            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
 
             if (nombreFam == null) throw new FamilyNotFoundException();
 

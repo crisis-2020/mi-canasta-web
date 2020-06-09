@@ -83,13 +83,13 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("IdTienda/usuarios/{Dni}")]
-        public ActionResult cambiardRolTienda(string Dni, string AdminDni)
+        [HttpGet("/RolesPorPerfil")]
+        public ActionResult cambiardRolTienda(string Dni, string AdminDni, bool CambiarRol)
         {
             try
             {   
                 
-                return Ok(_tiendaService.cambiarRolTienda(Dni, AdminDni));
+                return Ok(_tiendaService.cambiarRolTienda(Dni, AdminDni,CambiarRol));
             }
             catch (UserNotAdminException UserNotAdminException)
             {
@@ -111,7 +111,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("Tienda/")]
+        [HttpGet("")]
         public ActionResult GetTiendas()
         {
             try

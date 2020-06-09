@@ -64,11 +64,11 @@ namespace MiCanasta.MiCanasta.Controllers
         }
         
         [HttpPut("/{IdFamilia}")]
-        public ActionResult DesactivarSolicitudes(string nombreFamilia, bool aceptaSolicitudes)
+        public ActionResult DesactivarSolicitudes(FamiliaInfoSinListasDto familiaDto)
         {
             try
             {
-                _familiaService.DesactivarSolicitudes(nombreFamilia, aceptaSolicitudes);
+                _familiaService.DesactivarSolicitudes(familiaDto);
             }
             catch (FamilyNotFoundException FamilyNotFoundException)
             {
