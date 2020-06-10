@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 namespace MiCanasta.MiCanasta.Controllers
 {
     [ApiController]
-    [Route("historiales")]
-    public class HistorialController: ControllerBase
+    [Route("compras")]
+    public class CompraController: ControllerBase
     {
-        private readonly HistorialService _historialService;
-        public HistorialController(HistorialService HistorialService)
+        private readonly CompraService _compraService;
+        public CompraController(CompraService CompraService)
         {
-            _historialService = HistorialService;
+            _compraService = CompraService;
         }
 
         [HttpPost]
-        public ActionResult Create(HistorialCreateDto model)
+        public ActionResult Create(CompraCreateDto model)
         {
             try
             {
-                return Created("", _historialService.Create(model));
+                return Created("", _compraService.Create(model));
             }
             catch (Exception) {
                 return BadRequest();
@@ -31,11 +31,11 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetHistoriales(int FamiliaId, string dni, DateTime FechaInicio, DateTime FechaFinal)
+        public ActionResult GetCompras(int FamiliaId, string dni, DateTime FechaInicio, DateTime FechaFinal)
         {
             try
             {
-                return Ok(_historialService.GetHistorial(FamiliaId, dni, FechaInicio, FechaFinal));
+                return Ok(_compraService.GetCompra(FamiliaId, dni, FechaInicio, FechaFinal));
             }
             catch (Exception) {
                 return NoContent();
@@ -43,10 +43,10 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(HistorialUpdateDto HistorialUpdateDto) {
+        public ActionResult Update(CompraUpdateDto CompraUpdateDto) {
             try
             {
-                return Ok(_historialService.Update(HistorialUpdateDto));
+                return Ok(_compraService.Update(CompraUpdateDto));
             }
             catch (Exception) {
                 return BadRequest();

@@ -46,9 +46,9 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("{NombreFamilia}/historiales")]
-        public ActionResult GetHistoriales(string NombreFamilia, DateTime FechaInicio, DateTime FechaFinal) {
-                return Ok(_familiaService.GetHistorial(NombreFamilia, FechaInicio, FechaFinal));
+        [HttpGet("{NombreFamilia}/compras")]
+        public ActionResult GetCompras(string NombreFamilia, DateTime FechaInicio, DateTime FechaFinal) {
+                return Ok(_familiaService.GetCompra(NombreFamilia, FechaInicio, FechaFinal));
         }
 
         [HttpDelete("{NombreFamilia}/usuarios/{Dni}")]
