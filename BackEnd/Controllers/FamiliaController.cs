@@ -64,17 +64,17 @@ namespace MiCanasta.MiCanasta.Controllers
         }
         
         [HttpPut("/{IdFamilia}")]
-        public ActionResult DesactivarSolicitudes(FamiliaInfoSinListasDto familiaDto)
+        public ActionResult DesactivarSolicitudes(int IdFamilia, FamiliaInfoSinListasDto familiaDto)
         {
             try
             {
-                _familiaService.DesactivarSolicitudes(familiaDto);
+                _familiaService.DesactivarSolicitudes(IdFamilia,familiaDto);
             }
             catch (FamilyNotFoundException FamilyNotFoundException)
             {
                 return BadRequest(FamilyNotFoundException.ExceptionDto);
             }
-            return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
+            return Ok("Se Realizo el cambio con exito");
         }
 
         [HttpPut("{IdFamilia}/usuarios/{Dni}/RolesPorUsuario")]

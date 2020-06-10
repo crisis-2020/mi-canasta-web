@@ -93,43 +93,34 @@ namespace MiCanasta.MiCanasta.Services.Impl
             throw new FamilyNotFoundException();
         }
 
-        public Familia DesactivarSolicitudes(FamiliaInfoSinListasDto familiaDto)
+        public Familia DesactivarSolicitudes(int idFamilia,FamiliaInfoSinListasDto familiaDto)
         {
-            var nombreFamilia = familiaDto.Nombre;
-            var aceptaSolicitudes = familiaDto.AceptaSolicitudes;
-            Familia nombreFam;
-            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
+      
+            Familia fam;
+            fam = _context.Familias.SingleOrDefault(x => x.FamiliaId == idFamilia);
 
-            if (nombreFam == null) throw new FamilyNotFoundException();
+            if (fam == null) throw new FamilyNotFoundException();
 
             else
             {
-                Familia familia = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
-                var solicitudes = _context.Familias.Single(x => x.Nombre == nombreFamilia);
-                if (aceptaSolicitudes == true)
-                {
-                    nombreFam = new Familia
+                Familia familia = _context.Familias.SingleOrDefault(x => x.FamiliaId == idFamilia );
+                var solicitudes = _context.Familias.Single(x => x.FamiliaId==idFamilia);
+               
+                    fam = new Familia
                     {
-                        Nombre = nombreFam.Nombre,
-                        AceptaSolicitudes = false,
+                        Nombre = familiaDto.Nombre,
+                        Cantidad=familiaDto.Cantidad,
+                        Dni=familiaDto.Dni,
+                        AceptaSolicitudes =familiaDto.AceptaSolicitudes
                     };
-                }
-                else
-                {
-                    nombreFam = new Familia
-                    {
-                        Nombre = nombreFam.Nombre,
-                        AceptaSolicitudes = true,
-                    };
-                } 
-
-
-                _context.Add(nombreFam);
+                 
+                _context.Update(fam);
                 _context.Remove(solicitudes);
                 _context.SaveChanges();
 
             }
-            return _mapper.Map<Familia>(nombreFam);
+            return _mapper.Map<Familia>(fam);
+            
         }
 
         public UsuarioFamiliaDto Remove(string UserDni)
