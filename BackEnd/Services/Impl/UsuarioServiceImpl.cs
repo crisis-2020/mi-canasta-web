@@ -12,6 +12,8 @@ using MiCanasta.MiCanasta.Exceptions;
 using System.Text.RegularExpressions;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.Dto;
+using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -67,7 +69,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             try
             {
-                return _mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == Dni));
+                return _mapper.Map<UsuarioDto>(_context.Usuarios.Include(y => y.RolUsuarios).Single(x => x.Dni == Dni));
             }
             catch (Exception)
             {
