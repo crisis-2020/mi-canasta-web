@@ -63,7 +63,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
         
-        [HttpPut("/familias/{nombreFamilia}")]
+        [HttpPut("{nombreFamilia}")]
         public ActionResult DesactivarSolicitudes(string nombreFamilia, string Dni)
         {
             try
@@ -77,7 +77,7 @@ namespace MiCanasta.MiCanasta.Controllers
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
 
-        [HttpPut("nombreFamilia/usuarios/{Dni}")]
+        [HttpPut("{nombreFamilia}/usuarios/{Dni}")]
         public ActionResult asignarRolUsuario(string Dni, string AdminDni)
         {
             try

@@ -11,6 +11,7 @@
     <div class="family-container__list-members">
       <members-card-shared
         :person="user"
+        :idFamilia="idFamilia"
         v-for="(user, i) in miembros"
         v-bind:key="i"
       />

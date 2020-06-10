@@ -1,5 +1,8 @@
 <template>
-  <div class="member-container">
+  <div class="member-container"
+  :idFamilia="idFamilia"
+  :dni="person.dni"
+  >
     <div class="member-container__information">
       <div class="member-container__roles">
           <!-- <img v-if="person.roles.includes('Admin')" src="../../../assets/ic_crown.svg" alt="">
@@ -12,8 +15,11 @@
         <h2>{{ person.nombre }}</h2>
         <p>{{ person.dni }}</p>
       </div>
-      <div class="member-container__delete-btn">
-          <button>Remover</button>
+      <div class="member-container__delete-btn"
+      >
+          <button
+          @Event= "deleteUsuariofromFamilia"
+          >Remover</button>
       </div>
     </div>
 
@@ -25,13 +31,34 @@
 
 <script>
 import SelectShared from "../select/Select.component.vue";
+import UsuarioService from "../../core/services/usuario.service";
+
 export default {
   name: "MembersCardShared",
   components: {SelectShared},
   props: ['person'],
   data:function(){
     return{
+      idFamilia: -1,
+      dni: "",
       data: ["Administrador", "Comprador"]
+    }
+  },
+  methods: {
+    async deleteUsuariofromFamilia(){
+      console.log("Borrar usuario de familia");
+       try {
+        const res = await UsuarioService.deleteUsuariofromFamilia(this.dni, this.idFamilia);
+        console.log(res);
+        this.$data.errorFlagModalUnirse = true;
+        this.$data.errorFlagModal = true;
+        this.$router.push("/home/solicitudes");
+      }
+      catch (error) {
+        console.log(error);
+        this.$data.errorFlagModalUnirse = true;
+        
+      }
     }
   }
 };
