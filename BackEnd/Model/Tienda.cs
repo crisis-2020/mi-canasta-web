@@ -16,7 +16,7 @@ namespace MiCanasta.MiCanasta.Model
         public int Limite { get; set; }
         public List<UsuarioTienda> UsuarioTiendas { get; set; }
         public List<Stock> Stocks { get; set; }
-        public List<Historial> Historiales { get; set; }
+        public List<Compra> Compras { get; set; }
 
     }
 }
