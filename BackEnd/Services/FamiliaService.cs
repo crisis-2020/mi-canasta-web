@@ -14,11 +14,10 @@ namespace MiCanasta.MiCanasta.Services
     {
         public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre);
         public FamiliaCreateDto Create(FamiliaCreateDto model);
-        public Familia DesactivarSolicitudes(string nombreFamilia, string Dni);
+        public Familia DesactivarSolicitudes(int idFamilia,FamiliaInfoSinListasDto familiaDto);
         public UsuarioFamiliaDto Remove(string UserDni);
+        public void asignaRolUsuario(int IdFamilia, string Dni);
         public List<CompraDto> GetCompra(string FamiliaNombre, DateTime Inicio, DateTime Fin);
-        public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni);
-
         public FamiliaDataDto GetById(int FamiliaId);
     }        
 }

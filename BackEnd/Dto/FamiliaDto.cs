@@ -46,4 +46,13 @@ namespace MiCanasta.MiCanasta
         public bool AceptaSolicitudes { get; set; }
         public int Cantidad { get; set; }
     }
+    public class FamiliaInfoSinListasDto
+    {
+        [Required]
+        public string Nombre { get; set; }
+        public string Dni { get; set; }
+        public bool AceptaSolicitudes { get; set; }
+        public int Cantidad { get; set; }
+
+    }
 }

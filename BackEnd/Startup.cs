@@ -56,7 +56,6 @@ namespace MiCanasta
             .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
             ));*/
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

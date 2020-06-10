@@ -188,5 +188,18 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 return usuarioFamiliaGetDto;
             }throw new UserFamilyNotFoundException();
         }
+
+        public void CancelarSolicitud(String Dni,int idFamilia)
+        {
+            var solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni&&x.FamiliaId==idFamilia);
+            if (solicitud == null) throw new SolicitudeNotFoundException();
+
+            else
+            {
+                _context.Remove(solicitud);
+            }
+
+            _context.SaveChanges();
+        }
     }
 }
