@@ -46,9 +46,9 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("{NombreFamilia}/historiales")]
-        public ActionResult GetHistoriales(string NombreFamilia, DateTime FechaInicio, DateTime FechaFinal) {
-                return Ok(_familiaService.GetHistorial(NombreFamilia, FechaInicio, FechaFinal));
+        [HttpGet("{NombreFamilia}/compras")]
+        public ActionResult GetCompras(string NombreFamilia, DateTime FechaInicio, DateTime FechaFinal) {
+                return Ok(_familiaService.GetCompra(NombreFamilia, FechaInicio, FechaFinal));
         }
 
         [HttpDelete("{NombreFamilia}/usuarios/{Dni}")]
@@ -63,31 +63,31 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
         
-        [HttpPut("{nombreFamilia}")]
-        public ActionResult DesactivarSolicitudes(string nombreFamilia, string Dni)
+        [HttpPut("/{IdFamilia}")]
+        public ActionResult DesactivarSolicitudes(int IdFamilia, FamiliaInfoSinListasDto familiaDto)
         {
             try
             {
-                _familiaService.DesactivarSolicitudes(nombreFamilia, Dni);
+                _familiaService.DesactivarSolicitudes(IdFamilia,familiaDto);
             }
             catch (FamilyNotFoundException FamilyNotFoundException)
             {
                 return BadRequest(FamilyNotFoundException.ExceptionDto);
             }
-            return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
+            return Ok("Se Realizo el cambio con exito");
         }
 
-        [HttpPut("{nombreFamilia}/usuarios/{Dni}")]
-        public ActionResult asignarRolUsuario(string Dni, string AdminDni)
+        [HttpPut("{IdFamilia}/usuarios/{Dni}/RolesPorUsuario")]
+        public ActionResult asignarRolUsuario(int IdFamilia, string Dni)
         {
             try
             {
-                _familiaService.asignaRolUsuario(Dni, AdminDni);
+                _familiaService.asignaRolUsuario(IdFamilia,Dni);
                 return Ok("El rol fue modificado");
             }
-            catch (UserNotAdminException UserNotAdminException)
+            catch (UserNotFoundException userNotFoundException)
             {
-                return BadRequest(UserNotAdminException.ExceptionDto);
+                return BadRequest(userNotFoundException.ExceptionDto);
             }
         }
 
