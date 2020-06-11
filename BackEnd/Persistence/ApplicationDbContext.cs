@@ -16,7 +16,7 @@ namespace MiCanasta.Persistence
 
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Familia> Familias { get; set; }
-        public DbSet<Compra> Compras { get; set; }
+        public DbSet<Historial> Historiales { get; set; }
         public DbSet<Limite> Limites { get; set; }
         public DbSet<Perfil> Perfiles { get; set; }
         public DbSet<Producto> Productos { get; set; }
@@ -35,7 +35,7 @@ namespace MiCanasta.Persistence
 
             new CategoriaConfig(builder.Entity<Categoria>());
             new FamiliaConfig(builder.Entity<Familia>());
-            new CompraConfig(builder.Entity<Compra>());
+            new HistorialConfig(builder.Entity<Historial>());
             new LimiteConfig(builder.Entity<Limite>());
             new PerfilConfig(builder.Entity<Perfil>());
             new ProductoConfig(builder.Entity<Producto>());

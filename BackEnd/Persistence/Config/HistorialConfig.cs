@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Persistence.Config
 {
-    public class CompraConfig
+    public class HistorialConfig
     {
-        public CompraConfig(EntityTypeBuilder<Compra> entityBuilder)
+        public HistorialConfig(EntityTypeBuilder<Historial> entityBuilder)
         {
             entityBuilder.HasKey(x=> new { 
                 x.FamiliaId,
@@ -18,15 +18,15 @@ namespace MiCanasta.MiCanasta.Persistence.Config
             });
             
             entityBuilder.HasOne(x => x.Familia)
-            .WithMany(x => x.Compras)
+            .WithMany(x => x.Historiales)
             .HasForeignKey(x => x.FamiliaId);
 
             entityBuilder.HasOne(x => x.Tienda)
-            .WithMany(x => x.Compras)
+            .WithMany(x => x.Historiales)
             .HasForeignKey(x => x.TiendaId);
 
             entityBuilder.HasOne(x => x.Producto)
-            .WithMany(x => x.Compras)
+            .WithMany(x => x.Historiales)
             .HasForeignKey(x => x.ProductoId);
         }
     }

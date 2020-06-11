@@ -11,7 +11,7 @@ namespace MiCanasta.MiCanasta.Dto
         public int CategoriaId { get; set; }
         public string Descripcion { get; set; }
         public int CantidadUnit { get; set; }
-        public List<CompraDto> Compras { get; set; }
+        public List<HistorialDto> Historiales { get; set; }
         public List<StockDto> Stocks { get; set; }
     }
 
