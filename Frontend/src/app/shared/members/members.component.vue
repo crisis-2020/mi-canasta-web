@@ -1,7 +1,6 @@
 <template>
   <div class="member-container"
-  :idFamilia="idFamilia"
-  :dni="person.dni"
+  
   >
     <div class="member-container__information">
       <div class="member-container__roles">
@@ -18,7 +17,7 @@
       <div class="member-container__delete-btn"
       >
           <button
-          @Event= "deleteUsuariofromFamilia"
+          v-on:click="deleteUsuariofromFamilia"
           >Remover</button>
       </div>
     </div>
@@ -31,35 +30,54 @@
 
 <script>
 import SelectShared from "../select/Select.component.vue";
+import FamiliaService from "../../core/services/familia.service";
 import UsuarioService from "../../core/services/usuario.service";
 
 export default {
   name: "MembersCardShared",
   components: {SelectShared},
-  props: ['person'],
+  props: ['person','dni', 'nombreFamilia','idFamilia'],
   data:function(){
     return{
-      idFamilia: -1,
-      dni: "",
-      data: ["Administrador", "Comprador"]
+      rol: {
+        dni: "",
+        rolPerfilId: -1,
+        rolPerfil: -1
+      },
+      data: ["Administrador", "Comprador"],
     }
+  },
+  created(){
+    this.getRolUsuario();
   },
   methods: {
     async deleteUsuariofromFamilia(){
       console.log("Borrar usuario de familia");
        try {
-        const res = await UsuarioService.deleteUsuariofromFamilia(this.dni, this.idFamilia);
-        console.log(res);
-        this.$data.errorFlagModalUnirse = true;
-        this.$data.errorFlagModal = true;
-        this.$router.push("/home/solicitudes");
+        if(this.rol.rolPerfilId == 1){
+          const res = await FamiliaService.deleteUsuariofromFamilia(this.nombreFamilia, this.dni);
+          console.log(res);
+          this.$router.push("/home/family/${this.idFamilia}");
+        }
       }
       catch (error) {
-        console.log(error);
-        this.$data.errorFlagModalUnirse = true;
+        console.log(error);        
+      }
+    },
+    async getRolUsuario(){
+      console.log("Obtener Rol del Usuario");
+       try {
+        
+        const res = await UsuarioService.getUsuario(this.dni);
+        this.rol = res.rolUsuarios;
+        console.log(this.role);
+        //this.$router.push("/home/solicitudes");
         
       }
-    }
+      catch (error) {
+        console.log(error);        
+      }
+    },
   }
 };
 </script>

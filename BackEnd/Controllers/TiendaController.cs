@@ -70,7 +70,9 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("IdTienda/usuarios")]
+        [HttpGet("IdTienda/usuarios")] //HU16 - Viviana
+        // Ver usuarios por tienda
+  
         public ActionResult GetUsuariosByTiendaId(int id)
         {
             try
@@ -83,7 +85,8 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("IdTienda/usuarios/{Dni}")]
+        [HttpGet("IdTienda/usuarios/{Dni}")] // HU17 - Ángel
+        // Solo tiene que traer, no editar
         public ActionResult cambiardRolTienda(string Dni, string AdminDni)
         {
             try
@@ -97,6 +100,8 @@ namespace MiCanasta.MiCanasta.Controllers
 
             }
         }
+
+        // Y este código?
 
         [HttpGet("Tienda/{IdTienda}")]
         public ActionResult GetTiendaDetalles(int IdTienda)

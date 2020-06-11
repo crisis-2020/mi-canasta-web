@@ -125,7 +125,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni)
         {
 
-
             List<RolPerfilCambioDto> result = new List<RolPerfilCambioDto>();
             var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
 
@@ -146,7 +145,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                         RolPerfilId = 4,
                         Usuario = rolUsuario.Usuario,
                     };
-
+                    // ¿Por qué cambias????
                     _context.RolUsuarios.Remove(rolUsuario);
                     _context.RolUsuarios.Add(entry);
                     _context.SaveChanges();

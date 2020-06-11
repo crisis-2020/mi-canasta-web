@@ -14,4 +14,8 @@ export default class FamiliaService {
     static async listarMiembrosDeFamilia(nombreFamilia) {
         return await axios.get(`${environments.api}/familias/${nombreFamilia}/usuarios`);
     }
+
+    static async deleteUsuariofromFamilia(nombreFamilia, dni) {
+        return await axios.delete(`${environments.api}/familias/${nombreFamilia}/usuarios/${dni}`);
+    }
 }
