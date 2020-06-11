@@ -17,7 +17,7 @@
       <div class="member-container__delete-btn"
       >
           <button
-          v-on:click="deleteUsuariofromFamilia"
+          v-on:click="abrirModalConfirmacion"
           >Remover</button>
       </div>
     </div>
@@ -25,6 +25,28 @@
     <div class="member-container__select">
       <select-shared :options="data"/>
     </div>
+
+    <ConfirmationModalShared
+      @YesEvent="deleteUsuariofromFamilia"
+      @NoEvent="cerrarModalConfirmacion"
+      v-if="isShowConfirmationModal"
+      :title="'Confirmación'"
+      :description="'¿Desea eliminar al usuario seleccionado?'"
+    />
+
+    <ErrorModalShared
+      v-if="errorFlagModal"
+      :title="'Lo sentimos'"
+      :description="'El usuario a borrar es un administrador'"
+      @Event="cerrarModal"
+    ></ErrorModalShared>
+
+    <ErrorModalShared
+      v-if="errorFlagModalAdmin"
+      :title="'Lo sentimos'"
+      :description="'No cuenta con privilegios de administardor'"
+      @Event="cerrarModalAdmin"
+    ></ErrorModalShared>
   </div>
 </template>
 
@@ -32,18 +54,20 @@
 import SelectShared from "../select/Select.component.vue";
 import FamiliaService from "../../core/services/familia.service";
 import UsuarioService from "../../core/services/usuario.service";
+import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
+import ConfirmationModalShared from "../../shared/modal/confirmation-modal.component.vue";
 
 export default {
   name: "MembersCardShared",
-  components: {SelectShared},
-  props: ['person','dni', 'nombreFamilia','idFamilia'],
+  components: {SelectShared, ErrorModalShared, ConfirmationModalShared},
+  props: ['person','dni', 'nombreFamilia','idFamilia', 'userIsAdmin'],
   data:function(){
     return{
-      rol: {
-        dni: "",
-        rolPerfilId: -1,
-        rolPerfil: -1
-      },
+      roles: [],
+      errorFlagModal: false,
+      errorFlagModalAdmin: false,
+      userToDeleteIsAdmin: false,
+      isShowConfirmationModal: false,
       data: ["Administrador", "Comprador"],
     }
   },
@@ -54,10 +78,20 @@ export default {
     async deleteUsuariofromFamilia(){
       console.log("Borrar usuario de familia");
        try {
-        if(this.rol.rolPerfilId == 1){
-          const res = await FamiliaService.deleteUsuariofromFamilia(this.nombreFamilia, this.dni);
-          console.log(res);
-          this.$router.push("/home/family/${this.idFamilia}");
+        if(this.userIsAdmin == true){
+          if(this.userToDeleteIsAdmin == true){
+            this.errorFlagModal = true;
+            // El usuario a borrar es un administrador
+          }
+          else{
+            const res = await FamiliaService.deleteUsuariofromFamilia(this.nombreFamilia, this.dni);
+            console.log(res);
+            location.reload();
+          }
+        }
+        else {
+          this.errorFlagModalAdmin = true;
+          // No cuenta con privilegios de administardor
         }
       }
       catch (error) {
@@ -69,15 +103,30 @@ export default {
        try {
         
         const res = await UsuarioService.getUsuario(this.dni);
-        this.rol = res.rolUsuarios;
-        console.log(this.role);
-        //this.$router.push("/home/solicitudes");
-        
+        this.roles = res.data.rolUsuarios;
+        console.log(res);
+        console.log(this.roles);
+        for(let i=0; i < this.roles.length; i++){
+          if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
+        }        
       }
+
       catch (error) {
         console.log(error);        
       }
     },
+    cerrarModal() {
+      this.errorFlagModal = false;
+    },
+    cerrarModalAdmin(){
+       this.errorFlagModalAdmin = false;
+    },
+    abrirModalConfirmacion(){
+      this.isShowConfirmationModal=true;
+    },
+    cerrarModalConfirmacion(){
+      this.isShowConfirmationModal=false;
+    }
   }
 };
 </script>

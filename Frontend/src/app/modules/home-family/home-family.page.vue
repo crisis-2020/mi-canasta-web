@@ -14,6 +14,7 @@
         :nombreFamilia="nombreFamilia"
         :idFamilia="idFamilia"
         :dni="user.dni"
+        :userIsAdmin="userIsAdmin"
         v-for="(user, i) in miembros"
         v-bind:key="i"
       />
@@ -24,13 +25,14 @@
 <script>
 import MembersCardShared from "../../shared/members/members.component.vue";
 import FamiliaService from "../../core/services/familia.service";
+import UsuarioService from "../../core/services/usuario.service";
 export default {
   name: "HomeFamilyPage",
   components: { MembersCardShared },
 
   created() {
+    this.getRolUsuario();
     this.$data.idFamilia = this.$route.params.id;
-
     this.listarFamilia();
   },
   data: function() {
@@ -39,20 +41,8 @@ export default {
       nombreFamilia: "",
       aceptaSolicitudes: false,
       miembros: [ ],
-      mock: [
-        {
-          name: "Anthony",
-          dni: "10101010",
-          roles: ["Admin", "Comprador"],
-          categorias: ["Mercancia"],
-        },
-        {
-          name: "Jimena",
-          dni: "1245789",
-          roles: ["Comprador"],
-          categorias: ["Alimentos"],
-        },
-      ],
+      roles: [],
+      userIsAdmin: false,
     };
   },
   methods: {
@@ -82,6 +72,25 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async getRolUsuario(){
+      console.log("Obtener Rol del Usuario Logeado");
+       try {
+        const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+        this.roles = res.data.rolUsuarios;
+        console.log(res);
+        for(let i=0; i < this.roles.length; i++){
+          if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
+          console.log(this.userIsAdmin);
+        }        
+      }
+
+      catch (error) {
+        console.log(error);        
+      }
+    },
+    cerrarModal() {
+      this.errorFlagModal = false;
     },
   },
 };
