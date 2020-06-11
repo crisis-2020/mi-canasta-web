@@ -122,55 +122,56 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
 
 
-        public List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni)
+        public List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni, bool CambiarRol)
         {
-
+         
             List<RolPerfilCambioDto> result = new List<RolPerfilCambioDto>();
-            var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
-
-            if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 3))
-                throw new UserNotAdminException();
-
-            else
+            if (CambiarRol == true)
             {
-                var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
+                var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
 
+                if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 3))
+                    throw new UserNotAdminException();
 
-                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 3))
+                else
                 {
-                    var entry = new RolUsuario
+                    var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
+
+
+                    if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 3))
                     {
-                        Dni = rolUsuario.Dni,
-                        RolPerfil = rolUsuario.RolPerfil,
-                        RolPerfilId = 4,
-                        Usuario = rolUsuario.Usuario,
-                    };
-                    // ¿Por qué cambias????
-                    _context.RolUsuarios.Remove(rolUsuario);
-                    _context.RolUsuarios.Add(entry);
-                    _context.SaveChanges();
+                        var entry = new RolUsuario
+                        {
+                            Dni = rolUsuario.Dni,
+                            RolPerfil = rolUsuario.RolPerfil,
+                            RolPerfilId = 4,
+                            Usuario = rolUsuario.Usuario,
+                        };
+
+                        _context.RolUsuarios.Remove(rolUsuario);
+                        _context.RolUsuarios.Add(entry);
+                        _context.SaveChanges();
+                    }
+
+                    else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 4))
+                    {
+                        var entry = new RolUsuario
+                        {
+                            Dni = rolUsuario.Dni,
+                            RolPerfil = rolUsuario.RolPerfil,
+                            RolPerfilId = 3,
+                            Usuario = rolUsuario.Usuario,
+                        };
+
+                        _context.RolUsuarios.Remove(rolUsuario);
+                        _context.RolUsuarios.Add(entry);
+                        _context.SaveChanges();
+                    }
+
+
 
                 }
-
-                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 4))
-                {
-                    var entry = new RolUsuario
-                    {
-                        Dni = rolUsuario.Dni,
-                        RolPerfil = rolUsuario.RolPerfil,
-                        RolPerfilId = 3,
-                        Usuario = rolUsuario.Usuario,
-                    };
-
-                    _context.RolUsuarios.Remove(rolUsuario);
-                    _context.RolUsuarios.Add(entry);
-                    _context.SaveChanges();
-                }
-
-
-
             }
-
             List<RolPerfil> rolPerfiles = _context.RolPerfiles.AsQueryable().ToList();
 
 
