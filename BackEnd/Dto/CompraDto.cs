@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Dto
 {
-    public class HistorialDto
+    public class CompraDto
     {
         public int FamiliaId { get; set; }
         public int TiendaId { get; set; }
@@ -16,7 +16,7 @@ namespace MiCanasta.MiCanasta.Dto
         public DateTime FechaCompra { get; set; }
     }
 
-    public class HistorialCreateDto
+    public class CompraCreateDto
     {
         public int FamiliaId { get; set; }
         public int TiendaId { get; set; }
@@ -27,7 +27,7 @@ namespace MiCanasta.MiCanasta.Dto
         public DateTime FechaCompra { get; set; }
     }
 
-    public class HistorialUpdateDto
+    public class CompraUpdateDto
     {
         public int FamiliaId { get; set; }
         public int TiendaId { get; set; }
