@@ -70,7 +70,9 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("{IdTienda}/usuarios")]
+        [HttpGet("IdTienda/usuarios")] //HU16 - Viviana
+        // Ver usuarios por tienda
+  
         public ActionResult GetUsuariosByTiendaId(int id)
         {
             try
@@ -83,13 +85,14 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("/RolesPorPerfil")]
-        public ActionResult cambiardRolTienda(string Dni, string AdminDni, bool CambiarRol)
+        [HttpGet("IdTienda/usuarios/{Dni}")] // HU17 - Ángel
+        // Solo tiene que traer, no editar
+        public ActionResult cambiardRolTienda(string Dni, string AdminDni)
         {
             try
-            {   
+            {
                 
-                return Ok(_tiendaService.cambiarRolTienda(Dni, AdminDni,CambiarRol));
+                return Ok(_tiendaService.cambiarRolTienda(Dni, AdminDni));
             }
             catch (UserNotAdminException UserNotAdminException)
             {
@@ -98,7 +101,9 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("{IdTienda}")]
+        // Y este código?
+
+        [HttpGet("Tienda/{IdTienda}")]
         public ActionResult GetTiendaDetalles(int IdTienda)
         {
             try
@@ -111,7 +116,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("")]
+        [HttpGet("Tienda/")]
         public ActionResult GetTiendas()
         {
             try
