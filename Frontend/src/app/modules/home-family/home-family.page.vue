@@ -53,8 +53,12 @@ export default {
 
   methods: {
     onChange() {
-      FamiliaService.desactivarSolicitud(this.$data.idFamilia);
+      try{
+        FamiliaService.desactivarSolicitud(this.$data.idFamilia);
       console.log(this.$data.idFamilia);
+      } catch (error){
+        console.log(error);
+      }
     },
 
     async listarFamilia() {
