@@ -15,6 +15,8 @@
         :idFamilia="idFamilia"
         :dni="user.dni"
         :userIsAdmin="userIsAdmin"
+        :numIntegrantes = "numIntegrantes"
+        :unicoAdmin = "unicoAdmin"
         v-for="(user, i) in miembros"
         v-bind:key="i"
       />
@@ -26,6 +28,8 @@
 import MembersCardShared from "../../shared/members/members.component.vue";
 import FamiliaService from "../../core/services/familia.service";
 import UsuarioService from "../../core/services/usuario.service";
+
+
 export default {
   name: "HomeFamilyPage",
   components: { MembersCardShared },
@@ -43,11 +47,38 @@ export default {
       miembros: [ ],
       roles: [],
       userIsAdmin: false,
+      numIntegrantes: 0,
+      unicoAdmin: false,
     };
   },
   methods: {
     onChange() {
       console.log("qwe");
+    },
+
+    async isUnicoAdmin(){
+      let cont = 0;
+      for(let i = 0; i < this.numIntegrantes; i++){
+          if(await this.isAdmin(this.miembros[i].dni) == true) cont++;
+      }
+      if(this.userIsAdmin == true && cont == 1) this.unicoAdmin = true;
+    },
+
+    async isAdmin(dniIntegrante){
+      let cont = 0;
+      let rolesAux;
+      try {
+        const res = await UsuarioService.getUsuario(dniIntegrante);
+        rolesAux = res.data.rolUsuarios;
+        for(let i = 0; i < rolesAux.length; i++){
+          if(rolesAux[i].rolPerfilId == 1) cont++;
+        }
+        if(cont > 0) return true;
+        else return false;
+      }
+      catch (error) {
+        console.log(error);        
+      }
     },
 
     async listarFamilia() {
@@ -56,7 +87,6 @@ export default {
 
         this.$data.nombreFamilia = result.data.nombre;
         this.$data.aceptaSolicitudes =  result.data.aceptaSolicitudes;
-        console.log(this.$data.nombreFamilia);
         this.listarMiembros();
       } catch (error) {
         console.log(error);
@@ -69,19 +99,18 @@ export default {
           this.$data.nombreFamilia
         );
         this.$data.miembros  = result.data;
+        this.numIntegrantes = this.$data.miembros.length;
+        this.isUnicoAdmin();
       } catch (error) {
         console.log(error);
       }
     },
     async getRolUsuario(){
-      console.log("Obtener Rol del Usuario Logeado");
        try {
         const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
         this.roles = res.data.rolUsuarios;
-        console.log(res);
         for(let i=0; i < this.roles.length; i++){
           if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
-          console.log(this.userIsAdmin);
         }        
       }
 
