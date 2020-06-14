@@ -18,7 +18,7 @@ namespace MiCanasta.MiCanasta
         public int Cantidad { get; set; }
         public List<SolicitudDto> Solicitudes { get; set; }
         public List<UsuarioFamiliaDto> UsuarioFamilias { get; set; }
-        public List<CompraDto> Compras { get; set; }
+        public List<HistorialDto> Historiales { get; set; }
         public bool CrearGrupoFamiliar { get; set; }
     }
 
@@ -45,14 +45,5 @@ namespace MiCanasta.MiCanasta
         public string Nombre { get; set; }
         public bool AceptaSolicitudes { get; set; }
         public int Cantidad { get; set; }
-    }
-    public class FamiliaInfoSinListasDto
-    {
-        [Required]
-        public string Nombre { get; set; }
-        public string Dni { get; set; }
-        public bool AceptaSolicitudes { get; set; }
-        public int Cantidad { get; set; }
-
     }
 }

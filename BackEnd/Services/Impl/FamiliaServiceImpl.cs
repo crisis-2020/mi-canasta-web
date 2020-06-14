@@ -93,34 +93,29 @@ namespace MiCanasta.MiCanasta.Services.Impl
             throw new FamilyNotFoundException();
         }
 
-        public Familia DesactivarSolicitudes(int idFamilia,FamiliaInfoSinListasDto familiaDto)
+        public Familia DesactivarSolicitudes(string nombreFamilia, string Dni)
         {
-      
-            Familia fam;
-            fam = _context.Familias.SingleOrDefault(x => x.FamiliaId == idFamilia);
+            Familia nombreFam;
+            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia && x.Dni == Dni);
 
-            if (fam == null) throw new FamilyNotFoundException();
+            if (nombreFam == null) throw new FamilyNotFoundException();
 
             else
             {
-                Familia familia = _context.Familias.SingleOrDefault(x => x.FamiliaId == idFamilia );
-                var solicitudes = _context.Familias.Single(x => x.FamiliaId==idFamilia);
-               
-                    fam = new Familia
-                    {
-                        Nombre = familiaDto.Nombre,
-                        Cantidad=familiaDto.Cantidad,
-                        Dni=familiaDto.Dni,
-                        AceptaSolicitudes =familiaDto.AceptaSolicitudes
-                    };
-                 
-                _context.Update(fam);
+                Familia familia = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
+                var solicitudes = _context.Familias.Single(x => x.Nombre == nombreFamilia && x.Dni == Dni);
+                nombreFam = new Familia
+                {
+                    Nombre = nombreFam.Nombre,
+                    AceptaSolicitudes = false,
+                };
+
+                _context.Add(nombreFam);
                 _context.Remove(solicitudes);
                 _context.SaveChanges();
 
             }
-            return _mapper.Map<Familia>(fam);
-            
+            return _mapper.Map<Familia>(nombreFam);
         }
 
         public UsuarioFamiliaDto Remove(string UserDni)
@@ -142,12 +137,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return usuarioFamiliaDto;
         }
 
-        public List<CompraDto> GetCompra(string FamiliaNombre, DateTime inicio, DateTime fin)
+        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin)
         {
 
-            List<CompraDto> Compras =
-                _mapper.Map<List<CompraDto>>(_context.Compras.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
-            return Compras;
+            List<HistorialDto> Historiales =
+                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
+            return Historiales;
         }
 
         public RolUsuarioCreateDto asignarRolUsuario(RolUsuarioCreateDto model)
@@ -164,12 +159,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<RolUsuarioCreateDto>(model);
         }
 
-        public void asignaRolUsuario(int IdFamilia, string Dni)
+        public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni)
         {
 
-            var exist = _context.UsuarioFamilias.SingleOrDefault(x=>x.Dni==Dni&&x.FamiliaId==IdFamilia);
-            if (exist==null) throw new UserNotFoundException();
-            
+            var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
+
+            if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 1))
+                throw new UserNotAdminException();
 
             else
             {
@@ -207,7 +203,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
             
              
-         
+            return null;
         }
 
         void DeleteRolUsuario(RolUsuario rol)

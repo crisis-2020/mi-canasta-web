@@ -14,7 +14,7 @@
     <div class="home-container__list-button">
       <ButtonShared
         :loading="loadingCreaFamiliarButton"
-        :disable="grupoFamiliar.length < 1 || solicitudActiva == true"
+        :disable="grupoFamiliar.length < 1 /*|| solicitudActiva == true*/"
         :text="'Crear'"
         :type="'small'"
         :bgColor="'red'"
@@ -22,7 +22,7 @@
       ></ButtonShared>
 
       <ButtonShared
-        :disable="grupoFamiliar.length < 1 || solicitudActiva == true"
+        :disable="grupoFamiliar.length < 1 /*|| solicitudActiva == true*/"
         :text="'Unirse'"
         :type="'small'"
         :bgColor="'yellow'"

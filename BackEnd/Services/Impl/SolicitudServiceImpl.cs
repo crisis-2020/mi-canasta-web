@@ -99,6 +99,19 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         }
 
+        public void CancelarSolicitud (String Dni)
+        {
+            var solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
+            if (solicitud == null) throw new SolicitudeNotFoundException();
+
+            else
+            {
+                _context.Remove(solicitud);
+            }
+
+            _context.SaveChanges();
+        }
+
         public bool BorrarSolicitud(SolicitudUsuarioDto solicitudDto)
         {
             try

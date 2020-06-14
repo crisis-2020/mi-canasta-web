@@ -35,7 +35,7 @@ namespace MiCanasta
             services.AddTransient<TiendaService, TiendaServiceImpl>();
             services.AddTransient<ProductoService, ProductoServiceImpl>();
             services.AddTransient<CategoriaService, CategoriaServiceImpl>();
-            services.AddTransient<CompraService, CompraServiceImpl>();
+            services.AddTransient<HistorialService, HistorialServiceImpl>();
 
 
             services.AddCors(options =>
@@ -52,9 +52,10 @@ namespace MiCanasta
              ));
 
             /*services.AddDbContextPool<ApplicationDbContext>(options => options
-            .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=adminadmin;", mySqlOptions => mySqlOptions
+            .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
             .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
             ));*/
+
 
             services.AddSwaggerGen(c =>
             {

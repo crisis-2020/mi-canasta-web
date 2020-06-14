@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 namespace MiCanasta.MiCanasta.Controllers
 {
     [ApiController]
-    [Route("compras")]
-    public class CompraController: ControllerBase
+    [Route("historiales")]
+    public class HistorialController: ControllerBase
     {
-        private readonly CompraService _compraService;
-        public CompraController(CompraService CompraService)
+        private readonly HistorialService _historialService;
+        public HistorialController(HistorialService HistorialService)
         {
-            _compraService = CompraService;
+            _historialService = HistorialService;
         }
 
         [HttpPost]
-        public ActionResult Create(CompraCreateDto model)
+        public ActionResult Create(HistorialCreateDto model)
         {
             try
             {
-                return Created("", _compraService.Create(model));
+                return Created("", _historialService.Create(model));
             }
             catch (Exception) {
                 return BadRequest();
@@ -31,11 +31,11 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCompras(int FamiliaId, string dni, DateTime FechaInicio, DateTime FechaFinal)
+        public ActionResult GetHistoriales(int FamiliaId, string dni, DateTime FechaInicio, DateTime FechaFinal)
         {
             try
             {
-                return Ok(_compraService.GetCompra(FamiliaId, dni, FechaInicio, FechaFinal));
+                return Ok(_historialService.GetHistorial(FamiliaId, dni, FechaInicio, FechaFinal));
             }
             catch (Exception) {
                 return NoContent();
@@ -43,10 +43,10 @@ namespace MiCanasta.MiCanasta.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(CompraUpdateDto CompraUpdateDto) {
+        public ActionResult Update(HistorialUpdateDto HistorialUpdateDto) {
             try
             {
-                return Ok(_compraService.Update(CompraUpdateDto));
+                return Ok(_historialService.Update(HistorialUpdateDto));
             }
             catch (Exception) {
                 return BadRequest();
