@@ -4,7 +4,10 @@
       <h2>Participantes</h2>
     </div>
     <div class="family-container__enable-request">
-      <p>Desactivar solicitudes</p>
+      <div v-if="aceptaSolicitudes" :value="false" >
+      <p> La familia acepta solicitudes </p> </div> 
+      <div v-else>
+      <p> La familia no acepta solicitudes </p> </div> 
       <a-switch v-model="aceptaSolicitudes" @change="onChange" />
     </div>
 
@@ -30,11 +33,13 @@ export default {
   name: "HomeFamilyPage",
   components: { MembersCardShared },
 
+
   created() {
     this.getRolUsuario();
     this.$data.idFamilia = this.$route.params.id;
     this.listarFamilia();
   },
+
   data: function() {
     return {
       idFamilia: -1,
@@ -45,9 +50,11 @@ export default {
       userIsAdmin: false,
     };
   },
+
   methods: {
     onChange() {
-      console.log("qwe");
+      FamiliaService.desactivarSolicitud(this.$data.idFamilia);
+      console.log(this.$data.idFamilia);
     },
 
     async listarFamilia() {
@@ -73,6 +80,7 @@ export default {
         console.log(error);
       }
     },
+
     async getRolUsuario(){
       console.log("Obtener Rol del Usuario Logeado");
        try {
