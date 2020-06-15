@@ -27,25 +27,18 @@
     </div>
 
     <ConfirmationModalShared
-      @YesEvent="deleteUsuariofromFamilia"
+      @YesEvent="deleteUsuarioFromFamilia"
       @NoEvent="cerrarModalConfirmacion"
       v-if="isShowConfirmationModal"
       :title="'Confirmación'"
-      :description="'¿Desea eliminar al usuario seleccionado?'"
-    />
+      :description="descriptionConfirmModal"
+    ></ConfirmationModalShared>
 
     <ErrorModalShared
       v-if="errorFlagModal"
       :title="'Lo sentimos'"
-      :description="'El usuario a borrar es un administrador'"
+      :description="descriptionErrorModal"
       @Event="cerrarModal"
-    ></ErrorModalShared>
-
-    <ErrorModalShared
-      v-if="errorFlagModalAdmin"
-      :title="'Lo sentimos'"
-      :description="'No cuenta con privilegios de administardor'"
-      @Event="cerrarModalAdmin"
     ></ErrorModalShared>
   </div>
 </template>
@@ -60,14 +53,23 @@ import ConfirmationModalShared from "../../shared/modal/confirmation-modal.compo
 export default {
   name: "MembersCardShared",
   components: {SelectShared, ErrorModalShared, ConfirmationModalShared},
-  props: ['person','dni', 'nombreFamilia','idFamilia', 'userIsAdmin'],
+  props: [
+    'person',
+    'dni',
+    'nombreFamilia',
+    'idFamilia',
+    'userIsAdmin',
+    'numIntegrantes',
+    'unicoAdmin',
+    ],
   data:function(){
     return{
       roles: [],
       errorFlagModal: false,
-      errorFlagModalAdmin: false,
       userToDeleteIsAdmin: false,
       isShowConfirmationModal: false,
+      descriptionErrorModal: "",
+      descriptionConfirmModal: "",
       data: ["Administrador", "Comprador"],
     }
   },
@@ -75,37 +77,62 @@ export default {
     this.getRolUsuario();
   },
   methods: {
-    async deleteUsuariofromFamilia(){
-      console.log("Borrar usuario de familia");
-       try {
-        if(this.userIsAdmin == true){
-          if(this.userToDeleteIsAdmin == true){
-            this.errorFlagModal = true;
-            // El usuario a borrar es un administrador
-          }
-          else{
-            const res = await FamiliaService.deleteUsuariofromFamilia(this.nombreFamilia, this.dni);
-            console.log(res);
-            location.reload();
-          }
+
+    deleteUsuarioFromFamilia(){
+      if( localStorage.getItem("dni") == this.dni ){
+        this.deleteYo();
+      }
+      else {
+        this.deleteOtroUsuario();
+      }
+    },
+
+    async deleteYo(){
+      try {
+        if(this.numIntegrantes > 1 && this.unicoAdmin == true){
+          this.descriptionErrorModal = "Debe asignar otro administrador para poder salir del grupo familiar";
+          this.errorFlagModal = true;
+          this.cerrarModalConfirmacion();
         }
         else {
-          this.errorFlagModalAdmin = true;
-          // No cuenta con privilegios de administardor
+         await FamiliaService.deleteUsuariofromFamilia(this.nombreFamilia, this.dni);
+          this.$router.push("/home");
         }
       }
       catch (error) {
         console.log(error);        
       }
     },
+
+    async deleteOtroUsuario(){
+     try {
+      if(this.userIsAdmin == true){
+        if(this.userToDeleteIsAdmin == true){
+          this.descriptionErrorModal = "No puede eliminar a un administrador";
+          this.errorFlagModal = true;
+          this.cerrarModalConfirmacion();
+        }
+        else{
+          FamiliaService.deleteUsuariofromFamilia(this.nombreFamilia, this.dni);
+          location.reload();
+        }
+      }
+      else {
+        this.descriptionErrorModal = "No se cuenta con privilegios de administrador";
+        this.errorFlagModal = true;
+        this.cerrarModalConfirmacion();
+      }
+    }
+    catch (error) {
+      console.log(error);        
+    }
+  },
+
     async getRolUsuario(){
-      console.log("Obtener Rol del Usuario");
        try {
         
         const res = await UsuarioService.getUsuario(this.dni);
         this.roles = res.data.rolUsuarios;
-        console.log(res);
-        console.log(this.roles);
         for(let i=0; i < this.roles.length; i++){
           if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
         }        
@@ -118,10 +145,16 @@ export default {
     cerrarModal() {
       this.errorFlagModal = false;
     },
-    cerrarModalAdmin(){
-       this.errorFlagModalAdmin = false;
-    },
+
     abrirModalConfirmacion(){
+      if(localStorage.getItem("dni") == this.dni ){
+        if(this.numIntegrantes == 1)
+          this.descriptionConfirmModal="¿Desea abandonar el grupo familiar? Toda la información de la familia se perderá";
+        else this.descriptionConfirmModal="¿Desea abandonar el grupo familiar?";
+      }
+      else {
+        this.descriptionConfirmModal="¿Desea eliminar al usuario seleccionado?";
+      }
       this.isShowConfirmationModal=true;
     },
     cerrarModalConfirmacion(){
