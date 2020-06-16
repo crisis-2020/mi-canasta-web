@@ -18,15 +18,19 @@
             <label class="user-label-dni"> {{ user.dni }} </label><br><br>
             <label class="user-label-title"> Correo </label>
             <label class="user-label"> {{ user.correo }} </label><br>
-            <label class="user-label-title"> Roles en Grupo Familiar </label>
+            <label class="user-label-title"> {{ descriptionRoles }} </label>
             <li
             v-for="rol in user.rolUsuarios" :key="rol.rolPerfilId"
             >
-                <label  class="user-label" v-if="rol.rolPerfilId == 1">
+                <label  class="user-label" v-if="
+                (rol.rolPerfilId == 1 && userType == 0) ||
+                (rol.rolPerfilId == 3 && userType == 1)">
                     <img  src="../../../assets/ic_crown.svg" alt="">
                     Administrador
                 </label>
-                <label  class="user-label" v-if="rol.rolPerfilId == 2">
+                <label  class="user-label" v-if="
+                (rol.rolPerfilId == 2 && userType == 0) ||
+                (rol.rolPerfilId == 4 && userType == 1)">
                     <img  src="../../../assets/ic_shop-cart.svg" alt="">
                     {{ responsable }}
                 </label>
@@ -47,6 +51,7 @@ import { UsuarioGet } from '../../core/model/usuario.model';
                 dni: "",
                 src: "",
                 user: UsuarioGet,
+                descriptionRoles: "Roles en Grupo Familiar",
                 userType: 0, //familia
                 responsable: "Responsable de compra",
             };
@@ -69,6 +74,18 @@ import { UsuarioGet } from '../../core/model/usuario.model';
                 }
             },
 
+            changeProfile(){
+                if(this.userType == 0){
+                    this.responsable = "Responsable de venta";
+                    this.descriptionRoles = "Roles en Tienda";
+                    this.userType = 1;
+                }
+                else {
+                    this.responsable = "Responsable de compra";
+                    this.descriptionRoles = "Roles en Grupo Familiar";
+                    this.userType = 0;
+                }
+            },
         }
     }
 </script>
