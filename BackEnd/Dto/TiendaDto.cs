@@ -18,7 +18,7 @@ namespace MiCanasta.MiCanasta.Dto
         public int Limite { get; set; }
         public List<UsuarioTiendaDto> UsuarioTiendas { get; set; }
         public List<StockDto> Stocks { get; set; }
-        public List<HistorialDto> Historiales { get; set; }
+        public List<CompraDto> Compras { get; set; }
     }
 
     public class TiendaCreateDto
