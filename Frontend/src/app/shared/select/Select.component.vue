@@ -2,7 +2,7 @@
   <a-select
     mode="multiple"
     :size="'large'"
-    placeholder="Please select"
+    placeholder="Asignar nuevo rol"
     :default-value="['Administrador']"
     style="width: 100%"
     @change="handleChange"
@@ -18,11 +18,16 @@ export default {
   name: "SelectShared",
   props: ["options"],
   data() {
-    return { value: ["china"], size: "default" };
+    return { value: ["Comprador"], size: "default" };
   },
   methods: {
     handleChange(value) {
-      console.log(`Selected: ${value}`);
+      try{
+        this.FamiliaService.asignarRolUsuario(this.nombreFamilia, this.dni);
+        console.log(`Selected: ${value}`);
+      }catch (error){
+        this.descriptionErrorModal = "No se puede cambiar de rol";
+      }
     },
   },
 };

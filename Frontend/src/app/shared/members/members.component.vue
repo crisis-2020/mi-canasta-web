@@ -4,9 +4,9 @@
   >
     <div class="member-container__information">
       <div class="member-container__roles">
-          <!-- <img v-if="person.roles.includes('Admin')" src="../../../assets/ic_crown.svg" alt="">
+          <!-- <img v-if="person.roles.includes('Administrador')" src="../../../assets/ic_crown.svg" alt="">
           <img v-if="person.roles.includes('Comprador')" src="../../../assets/ic_shop-cart.svg" alt=""> -->
-          <img  src="../../../assets/ic_crown.svg" alt="">
+          <img src="../../../assets/ic_crown.svg" alt="">
           <img  src="../../../assets/ic_shop-cart.svg" alt="">
 
       </div>
@@ -14,8 +14,7 @@
         <h2>{{ person.nombre }}</h2>
         <p>{{ person.dni }}</p>
       </div>
-      <div class="member-container__delete-btn"
-      >
+      <div class="member-container__delete-btn">
           <button
           v-on:click="abrirModalConfirmacion"
           >Remover</button>
@@ -62,6 +61,7 @@ export default {
     'numIntegrantes',
     'unicoAdmin',
     ],
+
   data:function(){
     return{
       roles: [],
@@ -73,9 +73,11 @@ export default {
       data: ["Administrador", "Comprador"],
     }
   },
+
   created(){
     this.getRolUsuario();
   },
+
   methods: {
 
     deleteUsuarioFromFamilia(){
@@ -130,14 +132,12 @@ export default {
 
     async getRolUsuario(){
        try {
-        
         const res = await UsuarioService.getUsuario(this.dni);
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
           if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
         }        
       }
-
       catch (error) {
         console.log(error);        
       }
