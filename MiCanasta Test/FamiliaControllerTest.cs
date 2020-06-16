@@ -129,9 +129,9 @@ namespace MiCanasta_Test
 			Assert.IsType<OkObjectResult>(result);
 		}
 
-		//Flujo normal Obtener historial familia
+		//Flujo normal Obtener compra familia
 		[Fact]
-		public void Get_HistorialFamiliaTest()
+		public void Get_CompraFamiliaTest()
 		{
 			var _service = new Mock<FamiliaService>();
 			var _controller = new FamiliaController(_service.Object);
@@ -144,8 +144,8 @@ namespace MiCanasta_Test
 				FamiliaId = 1,
 				Nombre = "FamiliaPrueba",
 				Dni = "77634087",
-				Historiales = new List<HistorialDto> {
-					new HistorialDto
+				Compras = new List<CompraDto> {
+					new CompraDto
 					{
 						TiendaId = 1,
 						ProductoId = 001,
@@ -157,7 +157,7 @@ namespace MiCanasta_Test
 
 			};
 
-			//var result = _controller.GetHistoriales("FamiliaPrueba", '2010-05-22 14:17', '2010-05-22 14:16');
+			//var result = _controller.GetCompras("FamiliaPrueba", '2010-05-22 14:17', '2010-05-22 14:16');
 			// Assert
 			//Assert.IsType<OkObjectResult>(familia);
 		}

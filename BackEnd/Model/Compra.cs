@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.MiCanasta.Model
 {
-    public class Historial
+    public class Compra
     {
         public int FamiliaId { get; set; }
         public Familia Familia { get; set; }

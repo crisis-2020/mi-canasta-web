@@ -134,12 +134,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return usuarioFamiliaDto;
         }
 
-        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin)
+        public List<CompraDto> GetCompra(string FamiliaNombre, DateTime inicio, DateTime fin)
         {
 
-            List<HistorialDto> Historiales =
-                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
-            return Historiales;
+            List<CompraDto> Compras =
+                _mapper.Map<List<CompraDto>>(_context.Compras.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
+            return Compras;
         }
 
         public RolUsuarioCreateDto asignarRolUsuario(RolUsuarioCreateDto model)
@@ -156,13 +156,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<RolUsuarioCreateDto>(model);
         }
 
-        public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni)
+        public void asignaRolUsuario(int IdFamilia, string Dni)
         {
 
-            var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
+            var exist = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni && x.FamiliaId == IdFamilia);
+            if (exist == null) throw new UserNotFoundException();
 
-            if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 1))
-                throw new UserNotAdminException();
 
             else
             {
@@ -198,9 +197,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     _context.SaveChanges();
                 }
             }
-            
-             
-            return null;
+
+
+
         }
 
         void DeleteRolUsuario(RolUsuario rol)
