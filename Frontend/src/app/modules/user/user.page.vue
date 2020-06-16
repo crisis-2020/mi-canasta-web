@@ -3,7 +3,8 @@
         <div class="field-container margin">
             <div>
                 <img class = "image-left" src="../../../assets/ic_settings.svg" alt="">
-                <img class = "image-right" src="../../../assets/ic_change.svg" alt="">
+                <img class = "image-right" src="../../../assets/ic_change.svg" alt=""
+                v-on:click="changeProfile">
             </div>
             <br>
             <img id='barcode' 
