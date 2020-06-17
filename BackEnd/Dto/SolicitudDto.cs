@@ -42,4 +42,9 @@ namespace MiCanasta.MiCanasta.Dto
         public string Dni { get; set; }
         public int FamiliaId { get; set; } 
     }
+    public class SolicitudGetDto
+    {
+        public string Dni { get; set; }
+        public int FamiliaId { get; set; }
+    }
 }

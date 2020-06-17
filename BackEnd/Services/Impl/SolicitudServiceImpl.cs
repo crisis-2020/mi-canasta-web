@@ -5,6 +5,7 @@ using MiCanasta.MiCanasta.Model;
 using MiCanasta.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -125,8 +126,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 return false;
             }
         }
+        public List<SolicitudGetDto> GetSolicitudesByFamiliaId(int? FamiliaId) 
+        {
+            List<Solicitud> solicitudes = _context.Solicitudes.Where(x => x.FamiliaId == FamiliaId).AsQueryable().ToList();
+            List<SolicitudGetDto> solicitudGetDtos = _mapper.Map<List<SolicitudGetDto>>(solicitudes);
+            return solicitudGetDtos;
+        }
 
-        
+
 
     }
 }

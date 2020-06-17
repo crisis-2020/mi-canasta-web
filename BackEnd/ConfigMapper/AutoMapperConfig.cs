@@ -41,6 +41,7 @@ namespace MiCanasta.BackEnd.ConfigMapper
             CreateMap<CompraCreateDto, Compra>();
             CreateMap<CompraUpdateDto, Compra>();
             CreateMap<Stock, StockRequestDto>();
+            CreateMap<Solicitud, SolicitudGetDto>();
 
         }
 
