@@ -39,6 +39,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 {
                     Nombre = model.FamiliaNombre,
                     Dni = model.Dni,
+                    AceptaSolicitudes = true,
                     UsuarioFamilias = new List<UsuarioFamilia> {
                     new UsuarioFamilia {
                         Dni = model.Dni,   
@@ -93,29 +94,25 @@ namespace MiCanasta.MiCanasta.Services.Impl
             throw new FamilyNotFoundException();
         }
 
-        public Familia DesactivarSolicitudes(string nombreFamilia, string Dni)
+        public void DesactivarSolicitudes(int FamiliaId)
         {
             Familia nombreFam;
-            nombreFam = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia && x.Dni == Dni);
+            nombreFam = _context.Familias.SingleOrDefault(x => x.FamiliaId == FamiliaId);
 
             if (nombreFam == null) throw new FamilyNotFoundException();
 
-            else
+            if (nombreFam.AceptaSolicitudes == true)
             {
-                Familia familia = _context.Familias.SingleOrDefault(x => x.Nombre == nombreFamilia);
-                var solicitudes = _context.Familias.Single(x => x.Nombre == nombreFamilia && x.Dni == Dni);
-                nombreFam = new Familia
-                {
-                    Nombre = nombreFam.Nombre,
-                    AceptaSolicitudes = false,
-                };
-
-                _context.Add(nombreFam);
-                _context.Remove(solicitudes);
-                _context.SaveChanges();
-
+                nombreFam.AceptaSolicitudes = false;
+                Solicitud solicitudes;
+                solicitudes = _context.Solicitudes.SingleOrDefault(x => x.FamiliaId == FamiliaId);
+                if (solicitudes == null) { nombreFam.AceptaSolicitudes = false; }
+                if (solicitudes != null) { _context.Remove(solicitudes); }
             }
-            return _mapper.Map<Familia>(nombreFam);
+            else{
+                if (nombreFam.AceptaSolicitudes == false) { nombreFam.AceptaSolicitudes = true; }
+            }
+            _context.SaveChanges();
         }
 
         public UsuarioFamiliaDto Remove(string UserDni)
@@ -137,12 +134,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return usuarioFamiliaDto;
         }
 
-        public List<HistorialDto> GetHistorial(string FamiliaNombre, DateTime inicio, DateTime fin)
+        public List<CompraDto> GetCompra(string FamiliaNombre, DateTime inicio, DateTime fin)
         {
 
-            List<HistorialDto> Historiales =
-                _mapper.Map<List<HistorialDto>>(_context.Historiales.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
-            return Historiales;
+            List<CompraDto> Compras =
+                _mapper.Map<List<CompraDto>>(_context.Compras.Where(x => x.Familia.Nombre == FamiliaNombre && inicio <= x.FechaCompra && x.FechaCompra <= fin).OrderBy(x => x.FechaCompra).AsQueryable().ToList());
+            return Compras;
         }
 
         public RolUsuarioCreateDto asignarRolUsuario(RolUsuarioCreateDto model)
@@ -159,13 +156,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<RolUsuarioCreateDto>(model);
         }
 
-        public RolUsuarioCreateDto asignaRolUsuario(string Dni, string AdminDni)
+        public void asignaRolUsuario(int IdFamilia, string Dni)
         {
 
-            var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
+            var exist = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni && x.FamiliaId == IdFamilia);
+            if (exist == null) throw new UserNotFoundException();
 
-            if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 1))
-                throw new UserNotAdminException();
 
             else
             {
@@ -201,9 +197,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     _context.SaveChanges();
                 }
             }
-            
-             
-            return null;
+
+
+
         }
 
         void DeleteRolUsuario(RolUsuario rol)

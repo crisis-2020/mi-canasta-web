@@ -1,5 +1,6 @@
 import axios from "axios";
 import { environments } from "../../environments/environments";
+
 export default class FamiliaService {
     static async crearFamilia(familiaRequest) {
         return await axios
@@ -17,5 +18,9 @@ export default class FamiliaService {
 
     static async deleteUsuariofromFamilia(nombreFamilia, dni) {
         return await axios.delete(`${environments.api}/familias/${nombreFamilia}/usuarios/${dni}`);
+    }
+
+    static async desactivarSolicitud(idFamilia){
+        return await axios.put(`${environments.api}/familias/${idFamilia}`);
     }
 }

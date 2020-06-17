@@ -6,7 +6,7 @@ export default class Usuario {
   }
 }
 
-/*export class UsuarioGet{
+export class UsuarioGet{
   dni;
   nombre;
   apellidoPaterno;
@@ -14,4 +14,4 @@ export default class Usuario {
   contrasena;
   correo;
   rolUsuarios;
-}*/
+}
