@@ -1,5 +1,5 @@
 :<template>
-    <div class="user-container">
+    <div class="user-container" v-if="loaded">
         <div class="field-container margin">
             <div>
                 <img class = "image-left" src="../../../assets/ic_settings.svg" alt="">
@@ -55,6 +55,7 @@ import { UsuarioGet } from '../../core/model/usuario.model';
                 descriptionRoles: "Roles en Grupo Familiar",
                 userType: 0, //familia
                 responsable: "Responsable de compra",
+                loaded: false,
             };
         },
 
@@ -67,12 +68,13 @@ import { UsuarioGet } from '../../core/model/usuario.model';
         methods: {
             async getUsuario(){
                 try {
-                    const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+                    const res = await UsuarioService.getUsuario(this.dni);
                     this.user = res.data;  
                 }
                 catch (error) {
                     console.log(error);        
                 }
+                this.loaded=true;
             },
 
             changeProfile(){
