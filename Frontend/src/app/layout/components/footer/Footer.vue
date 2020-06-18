@@ -16,7 +16,7 @@
           class="footer-container__list__noselected"
                     :class="{'active': 2 == activedIndex}"
 
-          v-on:click="onSelecteFooterIcon(2)"
+          v-on:click="onSelecteFooterIcon2(2)"
           src="@/assets/ic_team.svg"
           alt=""
         />
@@ -26,7 +26,7 @@
           class="footer-container__list__noselected"
                     :class="{'active': 3 == activedIndex}"
 
-          v-on:click="onSelecteFooterIcon(3)"
+          v-on:click="onSelecteFooterIcon3(3)"
           src="@/assets/ic_order.svg"
           alt=""
         />
@@ -36,7 +36,7 @@
           class="footer-container__list__noselected"
                     :class="{'active': 4 == activedIndex}"
 
-          v-on:click="onSelecteFooterIcon(4)"
+          v-on:click="onSelecteFooterIcon4(4)"
           src="@/assets/ic_profile.svg"
           alt=""
         />
@@ -48,15 +48,33 @@
 <script>
 export default {
   name: "FooterComponent",
+
   data: function() {
     return {
       activedIndex: 1,
     };
   },
+  
   methods: {
-    onSelecteFooterIcon: function(index) {
+  onSelecteFooterIcon: function(index) {
       this.$data.activedIndex = index;
+  },
+
+    onSelecteFooterIcon2: function(index){
+      this.$data.activedIndex = index;
+      this.$router.push(`/home/family/1`);
     },
+
+    onSelecteFooterIcon3: function(index){
+      this.$data.activedIndex = index;
+      this.$router.push(`/home/limit`);
+    },
+
+    onSelecteFooterIcon4: function(index){
+      this.$data.activedIndex = index;
+      this.$router.push(`/home/user`);
+    }
+
   },
 };
 </script>
