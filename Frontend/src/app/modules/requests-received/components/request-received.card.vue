@@ -27,6 +27,7 @@ export default {
   methods: {
     deniedSolicitude: function() {
       SolicitudService.denegarSolicitud(this.request.dni);
+      location.reload();
     },
   },
 };

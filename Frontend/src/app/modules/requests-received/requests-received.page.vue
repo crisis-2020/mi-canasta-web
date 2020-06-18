@@ -10,7 +10,7 @@
     </div>
     <div class="request-received__list">
       <request-card
-        v-for="(request, index) in mock"
+        v-for="(request, index) in Solicitudes"
         :request="request"
         v-bind:key="index"
       ></request-card>
@@ -20,18 +20,39 @@
 
 <script>
 import RequestCard from "./components/request-received.card.vue";
+import SolicitudService from "../../core/services/solicitud.service";
+import UsuarioService from "../../core/services/usuario.service";
 export default {
   name: "RequestReceived",
   components: { RequestCard },
+
+  created() {
+    this.getSolicitudes();
+  },
+
   data: function() {
     return {
-      mock: [
-        { title: "Solicitud 10", nombre: "Felipe Gomez", dni: "12345674" },
-        { title: "Solicitud 10", nombre: "Felipe Gomez", dni: "73044851" },
-        { title: "Solicitud 10", nombre: "Felipe Gomez", dni: "73044851" },
-        { title: "Solicitud 10", nombre: "Felipe Gomez", dni: "73044851" },
-      ],
+      Solicitudes: [],
     };
+  },
+  methods: {
+    async getSolicitudes() {
+      const input = await SolicitudService.obtenerSolicitudesPorFamilia(7);
+      var SolicitudesData = input.data;
+      var usuario;
+      for (let i = 0; i < SolicitudesData.length; i++) {
+        usuario = await this.getUsuarioData(SolicitudesData[i].dni);
+        this.Solicitudes.push({
+          title: "Solicitud " + (i + 1),
+          nombre: usuario.data.nombre + " " + usuario.data.apellidoPaterno,
+          dni: usuario.data.dni,
+        });
+      }
+      console.log(this.Solicitudes);
+    },
+    getUsuarioData(dni) {
+      return UsuarioService.getUsuario(dni);
+    },
   },
 };
 </script>
