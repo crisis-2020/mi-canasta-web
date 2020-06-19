@@ -5,7 +5,7 @@
     </div>
     <div class="request-sent__list">
       <request-card
-        v-for="(request, index) in mock"
+        v-for="(request, index) in familiaNombre"
         :request="request"
         v-bind:key="index"
       ></request-card>
@@ -20,9 +20,12 @@ export default {
   components: { RequestCard },
   data: function() {
     return {
-      mock: [{ familyName: "Familia82BDH" }],
+      familiaNombre: "",
     };
   },
+
+
+  
 };
 </script>
 
