@@ -28,6 +28,7 @@ namespace MiCanasta.Persistence
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioFamilia> UsuarioFamilias { get; set; }
         public DbSet<UsuarioTienda> UsuarioTiendas { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -47,6 +48,7 @@ namespace MiCanasta.Persistence
             new UsuarioConfig(builder.Entity<Usuario>());
             new UsuarioFamiliaConfig(builder.Entity<UsuarioFamilia>());
             new UsuarioTiendaConfig(builder.Entity<UsuarioTienda>());
+            
 
         }
     }
