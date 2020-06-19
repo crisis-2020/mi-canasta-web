@@ -71,6 +71,7 @@ export default {
       descriptionErrorModal: "",
       descriptionConfirmModal: "",
       data: ["Administrador", "Comprador"],
+      data2: ["Administrador", "Responsable de Ventas"],
     }
   },
   created(){

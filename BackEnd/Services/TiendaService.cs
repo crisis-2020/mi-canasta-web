@@ -13,7 +13,7 @@ namespace MiCanasta.MiCanasta.Services
     public interface TiendaService
     {
         TiendaDto getById(int id);
-        TiendaUsuarioDto PostUsuarioInTienda(string Dni, int TiendaId);
+        TiendaUsuarioDto PostUsuarioInTienda(int idTienda, string dni);
 
         List<StockDto> GetStocksById(int IdTienda);
         StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto);

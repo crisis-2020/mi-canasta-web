@@ -31,25 +31,25 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<TiendaDto>(_context.Tiendas.Single(x => x.TiendaId == id));
         }
 
-        public TiendaUsuarioDto PostUsuarioInTienda(string Dni, int TiendaId)
+        public TiendaUsuarioDto PostUsuarioInTienda(int idTienda, string dni)
         {
             UsuarioTienda NewUsuarioTienda = null;
-            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
+            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == dni);
             if (usuario != null)
             {
-                int cantidadUsuarios = _context.UsuarioTiendas.Where(x => x.TiendaId == TiendaId).Count();
-                Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == TiendaId);
+                int cantidadUsuarios = _context.UsuarioTiendas.Where(x => x.TiendaId == idTienda).Count();
+                Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == idTienda);
                 if (cantidadUsuarios + 1 <= tienda.Limite)
                 {
                     NewUsuarioTienda = new UsuarioTienda()
                     {
-                        Dni = Dni,
-                        TiendaId = TiendaId
+                        Dni = dni,
+                        TiendaId = idTienda
                     };
 
                     _context.Add(NewUsuarioTienda);
                     _context.SaveChanges();
-                    return new TiendaUsuarioDto() { Dni = Dni, TiendaId = TiendaId, Descripcion = tienda.Descripcion };
+                    return new TiendaUsuarioDto() { Dni = dni, TiendaId = idTienda, Descripcion = tienda.Descripcion };
                 }
                 else
                     throw new UserAddedShopExceedLimitException();

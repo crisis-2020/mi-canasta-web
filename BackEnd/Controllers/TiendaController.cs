@@ -21,18 +21,18 @@ namespace MiCanasta.MiCanasta.Controllers
             _tiendaService = TiendaService;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        [HttpGet("{idTienda}")]
+        public ActionResult GetById(int idTienda)
         {
-            return Ok(_tiendaService.getById(id));
+            return Ok(_tiendaService.getById(idTienda));
         }
 
-        [HttpPost("/{IdTienda}/usuario/{Dni}/usuariosportienda")]
-        public ActionResult PostNewUserInShop(int IdTienda, string Dni)
+        [HttpPost("{idTienda}/usuario/{dni}/usuariosportienda")]
+        public ActionResult PostNewUserInShop(int idTienda, string dni)
         {
             try
             {
-                return Created("Created", _tiendaService.PostUsuarioInTienda(Dni, IdTienda));
+                return Created("Created", _tiendaService.PostUsuarioInTienda(idTienda, dni));
             }
             catch (UserAddedShopIncorrectException user)
             {
@@ -57,7 +57,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpPut("{IdTienda}/productos/{IdProducto}/stocks")]
+        [HttpPut("/{IdTienda}/productos/{IdProducto}/stocks")]
         public ActionResult UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto)
         {
             try
@@ -70,14 +70,15 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("IdTienda/usuarios")] //HU16 - Viviana
+        [HttpGet("{idTienda}/usuarios")] //HU16 - Viviana
         // Ver usuarios por tienda
+        // public List<UsuarioDto> GetByTiendaId(int idTienda)
   
-        public ActionResult GetUsuariosByTiendaId(int id)
+        public ActionResult GetUsuariosByTiendaId(int idTienda)
         {
             try
             {
-                return Ok(_tiendaService.GetByTiendaId(id));
+                return Ok(_tiendaService.GetByTiendaId(idTienda));
             }
             catch (TiendaNotFoundException)
             {
