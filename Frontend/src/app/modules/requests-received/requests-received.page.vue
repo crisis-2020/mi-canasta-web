@@ -27,17 +27,21 @@ export default {
   components: { RequestCard },
 
   created() {
+    this.$data.idFamilia = this.$route.params.idFam;
     this.getSolicitudes();
   },
 
   data: function() {
     return {
       Solicitudes: [],
+      idFamilia: null,
     };
   },
   methods: {
     async getSolicitudes() {
-      const input = await SolicitudService.obtenerSolicitudesPorFamilia(7);
+      const input = await SolicitudService.obtenerSolicitudesPorFamilia(
+        this.$data.idFamilia
+      );
       var SolicitudesData = input.data;
       var usuario;
       for (let i = 0; i < SolicitudesData.length; i++) {
@@ -46,6 +50,7 @@ export default {
           title: "Solicitud " + (i + 1),
           nombre: usuario.data.nombre + " " + usuario.data.apellidoPaterno,
           dni: usuario.data.dni,
+          familiaId: this.$data.idFamilia,
         });
       }
       console.log(this.Solicitudes);

@@ -7,7 +7,7 @@
       <h3>{{ request.nombre }}</h3>
       <p id="dni">{{ request.dni }}</p>
       <div class="request-received-card__buttons">
-        <button class="accept-button">
+        <button class="accept-button" v-on:click="aceptedSolicitude">
           Aceptar
         </button>
         <button class="deny-button" v-on:click="deniedSolicitude">
@@ -26,8 +26,23 @@ export default {
   props: ["request"],
   methods: {
     deniedSolicitude: function() {
-      SolicitudService.denegarSolicitud(this.request.dni);
-      location.reload();
+      try {
+        let res = SolicitudService.denegarSolicitud(this.request.dni);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    aceptedSolicitude: function() {
+      try {
+        let res = SolicitudService.aceptarSolicitud({
+          dni: this.request.dni,
+          familiaId: this.request.familiaId,
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
