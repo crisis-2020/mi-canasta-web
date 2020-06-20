@@ -13,6 +13,12 @@ export default class SolicitudService {
   static async denegarSolicitud(dni) {
     return await axios.delete(`${environments.api}/solicitudes/${dni}`);
   }
+  static async aceptarSolicitud(solicitudResponse) {
+    return await axios.post(
+      `${environments.api}/usuariosporfamilia`,
+      solicitudResponse
+    );
+  }
   static async obtenerSolicitudesPorFamilia(familiaId) {
     return await axios.get(
       `${environments.api}/solicitudes?IdFamilia=${familiaId}`
