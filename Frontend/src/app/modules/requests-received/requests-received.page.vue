@@ -51,6 +51,7 @@ export default {
           nombre: usuario.data.nombre + " " + usuario.data.apellidoPaterno,
           dni: usuario.data.dni,
           familiaId: this.$data.idFamilia,
+          render: true,
         });
       }
       console.log(this.Solicitudes);

@@ -1,5 +1,5 @@
 <template>
-  <div class="request-received-card">
+  <div v-if="request.render" class="request-received-card">
     <div class="request-received-card__title">
       <h2>{{ request.title }}</h2>
     </div>
@@ -23,23 +23,28 @@ import SolicitudService from "../../../core/services/solicitud.service";
 
 export default {
   name: "RequestCard",
+
   props: ["request"],
+
   methods: {
     deniedSolicitude: function() {
       try {
-        let res = SolicitudService.denegarSolicitud(this.request.dni);
+        const res = SolicitudService.denegarSolicitud(this.request.dni);
         console.log(res);
+        this.request.render = false;
       } catch (error) {
         console.log(error);
       }
     },
+
     aceptedSolicitude: function() {
       try {
-        let res = SolicitudService.aceptarSolicitud({
+        const res = SolicitudService.aceptarSolicitud({
+          familiaId: Number(this.request.familiaId),
           dni: this.request.dni,
-          familiaId: this.request.familiaId,
         });
         console.log(res);
+        this.request.render = false;
       } catch (error) {
         console.log(error);
       }
