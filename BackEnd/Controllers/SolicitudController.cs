@@ -46,19 +46,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult CancelarSolicitud(String id)
-        {
-            try
-            {
-                _solicitudService.CancelarSolicitud(id);
-                return Ok("La solicitud se ha eliminado");
-            }
-            catch (SolicitudeNotFoundException SolicitudeNotFoundException)
-            {
-                return NotFound(SolicitudeNotFoundException.ExceptionDto);
-            }
-        }
+        
 
     }
 }
