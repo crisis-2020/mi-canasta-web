@@ -48,6 +48,12 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     };
 
                     _context.Add(NewUsuarioTienda);
+                    var entry = new RolUsuario
+                    {
+                        Dni = dni,
+                        RolPerfilId = 4,
+                    };
+                    _context.RolUsuarios.Add(entry);
                     _context.SaveChanges();
                     return new TiendaUsuarioDto() { Dni = dni, TiendaId = idTienda, Descripcion = tienda.Descripcion };
                 }

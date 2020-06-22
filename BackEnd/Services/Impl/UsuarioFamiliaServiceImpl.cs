@@ -55,6 +55,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 UsuarioFamilia usuario = _mapper.Map<UsuarioFamilia>(solicitud);
                 _context.UsuarioFamilias.Add(usuario);
+                
+                var entry = new RolUsuario
+                {
+                    Dni = usuario.Dni,
+                    RolPerfilId = 2,
+                };
+                _context.RolUsuarios.Add(entry);
                 _context.SaveChanges();
                 return true;
             }catch(Exception)
