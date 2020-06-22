@@ -4,7 +4,7 @@
   >
     <div class="member-container__information">
       <div class="member-container__roles">
-          <img v-if="$data.rolPerfilId == 1" src="../../../assets/ic_crown.svg" alt="">
+          <img v-if="this.$data.rolPerfilId==1" src="../../../assets/ic_crown.svg" alt="">
           <img v-else src="../../../assets/ic_shop-cart.svg" alt="">
 
       </div>
