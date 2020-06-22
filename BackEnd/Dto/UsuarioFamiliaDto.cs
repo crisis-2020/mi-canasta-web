@@ -30,4 +30,13 @@ namespace MiCanasta.MiCanasta.Dto
         public int FamiliaId { get; set; }
         public string Dni { get; set; }
     }
+    public class ListarUsuarioFamiliaDto
+    {
+        public string Dni { get; set; }
+        public string Nombre { get; set; }
+        public string ApellidoPaterno { get; set; }
+        public int RolPerfilId { get; set; }
+        public string Descripcion { get; set; }
+
+    }
 }

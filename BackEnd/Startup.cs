@@ -35,7 +35,9 @@ namespace MiCanasta
             services.AddTransient<TiendaService, TiendaServiceImpl>();
             services.AddTransient<ProductoService, ProductoServiceImpl>();
             services.AddTransient<CategoriaService, CategoriaServiceImpl>();
+            services.AddTransient<RolesPorPerfilService, RolesPorPerfilServiceImpl>();
             services.AddTransient<CompraService, CompraServiceImpl>();
+           
 
 
             services.AddCors(options =>
@@ -47,7 +49,7 @@ namespace MiCanasta
             });
 
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                     .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
+                      .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
                          .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
              ));
 

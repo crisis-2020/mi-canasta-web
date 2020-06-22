@@ -26,9 +26,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
             _mapper = mapper;
         }
 
-        public TiendaDto getById(int id)
+        public TiendaDto getById(int IdTienda)
         {
-            return _mapper.Map<TiendaDto>(_context.Tiendas.Single(x => x.TiendaId == id));
+            return _mapper.Map<TiendaDto>(_context.Tiendas.Single(x => x.TiendaId == IdTienda));
         }
 
         public TiendaUsuarioDto PostUsuarioInTienda(int idTienda, string dni)
@@ -124,77 +124,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
             }
             return result;
-        }
-
-
-
-        public List<RolPerfilCambioDto> cambiarRolTienda(string Dni, string AdminDni)
-        {
-
-            List<RolPerfilCambioDto> result = new List<RolPerfilCambioDto>();
-            var rolUsuarioAdmin = _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni);
-
-            if (rolUsuarioAdmin == _context.RolUsuarios.SingleOrDefault(x => x.Dni == AdminDni && x.RolPerfilId != 3))
-                throw new UserNotAdminException();
-
-            else
-            {
-                var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
-
-
-                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 3))
-                {
-                    var entry = new RolUsuario
-                    {
-                        Dni = rolUsuario.Dni,
-                        RolPerfil = rolUsuario.RolPerfil,
-                        RolPerfilId = 4,
-                        Usuario = rolUsuario.Usuario,
-                    };
-                    // ¿Por qué cambias????
-                    _context.RolUsuarios.Remove(rolUsuario);
-                    _context.RolUsuarios.Add(entry);
-                    _context.SaveChanges();
-
-                }
-
-                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 4))
-                {
-                    var entry = new RolUsuario
-                    {
-                        Dni = rolUsuario.Dni,
-                        RolPerfil = rolUsuario.RolPerfil,
-                        RolPerfilId = 3,
-                        Usuario = rolUsuario.Usuario,
-                    };
-
-                    _context.RolUsuarios.Remove(rolUsuario);
-                    _context.RolUsuarios.Add(entry);
-                    _context.SaveChanges();
-                }
-
-
-
-            }
-
-            List<RolPerfil> rolPerfiles = _context.RolPerfiles.AsQueryable().ToList();
-
-
-            foreach (RolPerfil rolPerfil in rolPerfiles)
-            {
-                var entry = new RolPerfilCambioDto
-                {
-                    RolPerfilId = rolPerfil.RolPerfilId,
-                    Descripcion = rolPerfil.Descripcion
-                };
-
-
-                result.Add(entry);
-            }
-
-            return result;
-
-
         }
 
         public List<TiendaDataDto> GetTiendas()
