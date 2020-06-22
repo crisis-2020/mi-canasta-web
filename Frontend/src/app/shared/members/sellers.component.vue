@@ -2,10 +2,8 @@
   <div class="member-container">
     <div class="member-container__information">
       <div class="member-container__roles">
-          <!-- <img v-if="person.roles.includes('Admin')" src="../../../assets/ic_crown.svg" alt="">
-          <img v-if="person.roles.includes('Comprador')" src="../../../assets/ic_shop-cart.svg" alt=""> -->
-          <img src="../../../assets/ic_crown.svg" alt="">
-          <img src="../../../assets/ic_shop-cart.svg" alt="">
+          <img v-if="$data.rolPerfilId == 3" src="../../../assets/ic_crown.svg" alt="" >
+          <img v-else src="../../../assets/ic_shop-cart.svg" alt=""  >
 
       </div>
       <div class="member-container__personal">
@@ -47,30 +45,50 @@ export default {
   },
   created(){
     this.getRolUsuario();
+    this.$data.rolPerfilId = this.$route.rolUsuario;
   },
-  methods: {
+  
+  methods:{
 
-    async getRolUsuario(){
-       try {
-        
-        const res = await UsuarioService.getUsuario(this.dni);
-        this.roles = res.data.rolUsuarios;
-        for(let i=0; i < this.roles.length; i++){
-          if(this.roles[i].rolPerfilId == 1) {
-          this.userToDeleteIsAdmin=true;
-          }
-        }        
+  async isUnicoAdmin(){
+      let cont = 0;
+      for(let i = 0; i < this.numIntegrantes; i++){
+          if(await this.isAdmin(this.miembros[i].dni) == true) cont++;
       }
+      if(this.userIsAdmin == true && cont == 1) this.unicoAdmin = true;
+    },
 
+    async isAdmin(dniIntegrante){
+      let cont = 0;
+      let rolesAux;
+      try {
+        const res = await UsuarioService.getUsuario(dniIntegrante);
+        rolesAux = res.data.rolUsuarios;
+        for(let i = 0; i < rolesAux.length; i++){
+          if(rolesAux[i].rolPerfilId == 3) cont++;
+        }
+        if(cont > 0) return true;
+        else return false;
+      }
       catch (error) {
         console.log(error);        
       }
     },
-    cerrarModal() {
-      this.errorFlagModal = false;
-    },
 
-  }
+
+    async getRolUsuario(){
+       try {
+        const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+        this.roles = res.data.rolUsuarios;
+        for(let i=0; i < this.roles.length; i++){
+          if(this.roles[i].rolPerfilId == 3); 
+        }        
+      }
+      catch (error) {
+        console.log(error);        
+      }
+    },
+  },
 };
 </script>
 

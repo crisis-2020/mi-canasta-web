@@ -98,21 +98,21 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
                 foreach (UsuarioDto usuarioAux in usuario)
                 {
-                    var rolUsario = _context.RolUsuarios.Single(x => x.Dni == usuarioAux.Dni);
+                    var rolUsuario = _context.RolUsuarios.Single(x => x.Dni == usuarioAux.Dni);
 
                     var entry = new ListarUsuarioTiendaDto
                     {
                         Nombre = usuarioAux.Nombre,
                         ApellidoPaterno = usuarioAux.ApellidoPaterno,
-                        Descripcion = _context.RolPerfiles.Single(x => x.RolPerfilId == rolUsario.RolPerfilId).Descripcion,
-                        RolPerfilId = rolUsario.RolPerfilId,
+                        Descripcion = _context.RolPerfiles.Single(x => x.RolPerfilId == rolUsuario.RolPerfilId).Descripcion,
+                        RolPerfilId = rolUsuario.RolPerfilId,
                         Dni = usuarioAux.Dni,
                     };
 
 
                     result.Add(entry);
 
-                    rolUsario = null;
+                    rolUsuario = null;
                     usuario = null;
                 }
 

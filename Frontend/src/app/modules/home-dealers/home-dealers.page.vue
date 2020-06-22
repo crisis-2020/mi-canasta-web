@@ -2,7 +2,7 @@
   <div class="dealers-container">
     <div class="dealers-container__members-quantity">
       <img src="../../../assets/ic_members.svg" alt="members" />
-      <p color-rojo>2/10</p>
+      <p color-rojo>3/10</p>
     </div>
     <div class="dealers-container__title">
       <h2>Lista de distribuidores</h2>
@@ -56,6 +56,7 @@ export default {
       userIsAdmin: false,
       numIntegrantes: 0,
       unicoAdmin: false,
+      rolx: false,
       dni: "",
     };
   },
@@ -73,6 +74,7 @@ methods: {
       const res = await TiendaService.agregarSeller(this.$data.idTienda,
       this.$data.dni,
     );
+    this.$router.go();
     console.log(res);
     } catch (error) {
       console.log(error);
@@ -132,7 +134,12 @@ methods: {
         const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
-          if(this.roles[i].rolPerfilId == 3) this.userIsAdmin=true;
+          if(this.roles[i].rolPerfilId == 3) {
+            this.userIsAdmin=true;
+            this.rolx = true;
+          } else {
+            this.rolx = false;
+          }
         }        
       }
       catch (error) {
