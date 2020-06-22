@@ -32,7 +32,7 @@ namespace MiCanasta.MiCanasta.Controllers
         {
             try
             {
-                return Created("Created", _tiendaService.PostUsuarioInTienda(idTienda, dni));
+                return Created("Created", _tiendaService.PostUsuarioInTienda(IdTienda, Dni));
             }
             catch (UserAddedShopIncorrectException user)
             {
