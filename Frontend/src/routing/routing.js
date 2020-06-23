@@ -12,6 +12,7 @@ import RequestsSentPage from "../app/modules/request-sent/requests-sent.page.vue
 import RequestReceived from "../app/modules/requests-received/requests-received.page.vue";
 import SalePage from "../app/modules/sale/sale.page.vue";
 import UserPage from "../app/modules/user/user.page.vue";
+import UserEditPage from "../app/modules/user/user-edit.page.vue";
 
 Vue.use(Router);
 
@@ -47,7 +48,8 @@ export default new Router({
         { path: "requests-sent", name: "RequestsSentPage",component: RequestsSentPage },
         { path: "requests-received", name: "RequestReceived",component: RequestReceived },
         { path: "sell", name: "SalePage", component: SalePage},
-        { path: "user", name: "UserPage", component: UserPage}
+        { path: "user", name: "UserPage", component: UserPage},
+        { path: "user/edit", name: "UserEditPage", component: UserEditPage},
       ],
     },
     {

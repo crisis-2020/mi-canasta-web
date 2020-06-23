@@ -1,8 +1,10 @@
 :<template>
-    <div class="user-container">
+    <div class="user-container" v-if="loaded">
         <div class="field-container margin">
             <div>
-                <img class = "image-left" src="../../../assets/ic_settings.svg" alt="">
+                <img class = "image-left" src="../../../assets/ic_settings.svg" alt=""
+                v-on:click="editUser"
+                >
                 <img class = "image-right" src="../../../assets/ic_change.svg" alt=""
                 v-on:click="changeProfile">
             </div>
@@ -55,6 +57,7 @@ import { UsuarioGet } from '../../core/model/usuario.model';
                 descriptionRoles: "Roles en Grupo Familiar",
                 userType: 0, //familia
                 responsable: "Responsable de compra",
+                loaded: false,
             };
         },
 
@@ -67,12 +70,13 @@ import { UsuarioGet } from '../../core/model/usuario.model';
         methods: {
             async getUsuario(){
                 try {
-                    const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+                    const res = await UsuarioService.getUsuario(this.dni);
                     this.user = res.data;  
                 }
                 catch (error) {
                     console.log(error);        
                 }
+                this.loaded=true;
             },
 
             changeProfile(){
@@ -87,6 +91,10 @@ import { UsuarioGet } from '../../core/model/usuario.model';
                     this.userType = 0;
                 }
             },
+
+            editUser(){
+                this.$router.push("/home/user/edit");
+            }
         }
     }
 </script>
