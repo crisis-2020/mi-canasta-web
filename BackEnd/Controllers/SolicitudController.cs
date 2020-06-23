@@ -68,10 +68,5 @@ namespace MiCanasta.MiCanasta.Controllers
                 return NotFound(SolicitudeNotFoundException.ExceptionDto);
             }
         }
-        [HttpGet("{IdFamilia}")]
-        public ActionResult GetSolicitudesByFamily(int IdFamilia)
-        {
-                return Ok();
-        }
     }
 }
