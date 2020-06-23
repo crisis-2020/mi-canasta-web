@@ -105,12 +105,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 return false;
             }
         }
-        public List<SolicitudGetDto> GetSolicitudesByFamiliaId(int? FamiliaId) 
-        {
-            List<Solicitud> solicitudes = _context.Solicitudes.Where(x => x.FamiliaId == FamiliaId).AsQueryable().ToList();
-            List<SolicitudGetDto> solicitudGetDtos = _mapper.Map<List<SolicitudGetDto>>(solicitudes);
-            return solicitudGetDtos;
-        }
+
+        
 
     }
 }
