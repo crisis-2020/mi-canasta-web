@@ -144,7 +144,7 @@ export default {
       isShowWarningModal: false,
       dataHorizontaBar:[
         {text: "2kg", color: "red", value: 2},
-        {text: "1kg", color: "orange", value: 1},
+        {text: "1kg", color: "orange", value:21},
       ]
     };
   },
@@ -185,8 +185,10 @@ export default {
   margin: 24px 0;
 }
 .container-components {
-  width: 100vw;
-  padding: 32px;
+  padding: 12px 32px;
+  align-content: center;
+  align-self: center;
+  align-items: center;
 }
 
 .btn-container .list {
