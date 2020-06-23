@@ -62,7 +62,8 @@ export default {
 
     onSelecteFooterIcon2: function(index){
       this.$data.activedIndex = index;
-      this.$router.push(`/home/family/1`);
+      let data = JSON.parse(localStorage.getItem('data'));
+      this.$router.push(`/home/family/` + data.usuario.familia.familiaId);
     },
 
     onSelecteFooterIcon3: function(index){
