@@ -92,5 +92,19 @@ namespace MiCanasta.MiCanasta.Controllers
                 return NotFound();
             }
         }
+
+        [HttpDelete("{dni}/familia/{familiaId}")]
+        public ActionResult CancelarSolicitud(String dni, int familiaId)
+        {
+            try
+            {
+                _usuarioService.CancelarSolicitud(dni, familiaId);
+                return Ok("La solicitud se ha eliminado");
+            }
+            catch (SolicitudeNotFoundException SolicitudeNotFoundException)
+            {
+                return NotFound(SolicitudeNotFoundException.ExceptionDto);
+            }
+        }
     }
 }
