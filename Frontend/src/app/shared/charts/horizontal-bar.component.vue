@@ -70,6 +70,8 @@ background: #F76A8C;
   overflow: hidden;
   display: flex;
   align-items: center;
+  align-content: center;
+  align-self: center;
 }
 .line-father .line {
   height: 100%;
@@ -79,5 +81,7 @@ background: #F76A8C;
   text-align: center;
   color: #ffffff;
   font-weight: 600;
+  align-content: center;
+  align-self: center;
 }
 </style>

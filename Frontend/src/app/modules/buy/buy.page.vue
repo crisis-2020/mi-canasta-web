@@ -3,6 +3,7 @@
     <div class="sale-container__header">
       <h2> {{ user.nombre +" "+ user.apellidoPaterno }} </h2>
       <p color-rojo> {{ user.dni }} </p>
+      
     </div>
     <div
       class="sale-container__slider"
@@ -29,11 +30,11 @@
  
       <ButtonShared
         class="sell-container__button"
-        :text="'Realizar pedido'"
+        :text="'Confirmar pedido'"
         :disable="minValue = 0 "
         :type="'small'"
         :bgColor="'red'"
-        @Event="realizarPedido" >
+        @Event="confirmarPedido" >
     </ButtonShared>
 </div>
 
@@ -47,7 +48,7 @@ import { UsuarioGet } from '../../core/model/usuario.model';
 
 
 export default {
-  name: "SalePage",
+  name: "BuyPage",
   components: { ButtonShared },
   data: function() {
     return {
@@ -79,10 +80,10 @@ export default {
         }
     },
 
-    async realizarPedido(){
+    async confirmarPedido(){
       this.$data.loadingButton = true;
       try{
-        this.$router.push(`/home/buy`);
+        this.$router.push(`/home/limit`);
         /**const res = await CompraService.getItem({
         dni: localStorage.getItem("dni"), 
         idFamilia: localStorage.getItem("idFamilia"),**/

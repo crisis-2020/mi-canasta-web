@@ -13,6 +13,8 @@ import RequestReceived from "../app/modules/requests-received/requests-received.
 import SalePage from "../app/modules/sale/sale.page.vue";
 import DealersLocation from "../app/modules/home-dealers/dealers-location.page.vue";
 import UserPage from "../app/modules/user/user.page.vue";
+import LimitPage from "../app/modules/limit/limit.page.vue";
+import BuyPage from "../app/modules/buy/buy.page.vue";
 import UserEditPage from "../app/modules/user/user-edit.page.vue";
 
 Vue.use(Router);
@@ -52,6 +54,8 @@ export default new Router({
         { path: "requests-received", name: "RequestReceived",component: RequestReceived },
         { path: "sell", name: "SalePage", component: SalePage},
         { path: "user", name: "UserPage", component: UserPage},
+        { path: "limit", name: "LimitPage", component: LimitPage},
+        { path: "buy", name: "BuyPage", component: BuyPage},
         { path: "user/edit", name: "UserEditPage", component: UserEditPage},
       ],
     },
