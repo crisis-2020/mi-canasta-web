@@ -120,7 +120,8 @@ export default {
 
     async getRolUsuario(){
        try {
-        const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+        let data = JSON.parse(localStorage.getItem("data"));
+        const res = await UsuarioService.getUsuario(data.usuario.usuario.dni);
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
           if(this.roles[i].rolPerfilId == 1) {
