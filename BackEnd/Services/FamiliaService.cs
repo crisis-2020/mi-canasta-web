@@ -12,7 +12,7 @@ namespace MiCanasta.MiCanasta.Services
 {
     public interface FamiliaService 
     {
-        public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre);
+        public List<ListarUsuarioFamiliaDto> GetByFamiliaNombre(string familiaNombre);
         public FamiliaCreateDto Create(FamiliaCreateDto model);
         public void DesactivarSolicitudes(int FamiliaId);
         public UsuarioFamiliaDto Remove(string UserDni);

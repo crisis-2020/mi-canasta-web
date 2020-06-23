@@ -64,10 +64,11 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
 
 
-        public List<UsuarioDto> GetByFamiliaNombre(string familiaNombre)
+        public List<ListarUsuarioFamiliaDto> GetByFamiliaNombre(string familiaNombre)
         {
 
-            List<UsuarioDto> result = new List<UsuarioDto>();
+            List<ListarUsuarioFamiliaDto> result = new List<ListarUsuarioFamiliaDto>();
+            List<UsuarioDto> usuario = new List<UsuarioDto>();
 
             if (_context.Familias
                 .SingleOrDefault(x => x.Nombre == familiaNombre) == null)
@@ -80,10 +81,31 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
                 foreach (UsuarioFamilia usuarioFamilia in UsuariosFamilia)
                 {
-                    result.Add(_mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == usuarioFamilia.Dni)));
+                    usuario.Add(_mapper.Map<UsuarioDto>(_context.Usuarios.Single(x => x.Dni == usuarioFamilia.Dni)));
                 }
+
+                foreach (UsuarioDto usuarioAux in usuario)
+                {
+                    var rolUsario = _context.RolUsuarios.Single(x => x.Dni == usuarioAux.Dni);
+
+                    var entry = new ListarUsuarioFamiliaDto
+                    {
+                        Nombre = usuarioAux.Nombre,
+                        ApellidoPaterno = usuarioAux.ApellidoPaterno,
+                        Descripcion = _context.RolPerfiles.Single(x => x.RolPerfilId == rolUsario.RolPerfilId).Descripcion,
+                        RolPerfilId = rolUsario.RolPerfilId,
+                        Dni = usuarioAux.Dni,
+                    };
+
+
+                    result.Add(entry);
+
+                    rolUsario = null;
+                    usuario = null;
+                }
+                return result;
             }
-            return result;
+           
         }
 
         public FamiliaDataDto GetById(int FamiliaId)
