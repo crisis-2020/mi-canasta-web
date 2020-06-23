@@ -28,7 +28,6 @@ namespace MiCanasta.BackEnd.ConfigMapper
             CreateMap<RolUsuario, RolUsuarioDto>();
             CreateMap<RolPerfil, RolPerfilDto>();
             CreateMap<Solicitud, SolicitudDto>();
-            CreateMap<SolicitudFamiliaDni, SolicitudBusquedaDto>();
             CreateMap<SolicitudUsuarioDto, Solicitud>();
             CreateMap<SolicitudUsuarioDto, UsuarioFamilia>();
             CreateMap<Stock, StockDto>();
