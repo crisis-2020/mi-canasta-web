@@ -47,15 +47,12 @@ namespace MiCanasta
                     .AllowAnyHeader());
             });
 
-            //services.AddDbContextPool<ApplicationDbContext>(options => options
-            //          .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
-            //             .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
-            // ));
-
             services.AddDbContextPool<ApplicationDbContext>(options => options
-                     .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=9C3aXT]o89%68sIwic;", mySqlOptions => mySqlOptions
+                      .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
                          .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
+             ));
 
+           
             ));
             /*services.AddDbContextPool<ApplicationDbContext>(options => options
             .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
