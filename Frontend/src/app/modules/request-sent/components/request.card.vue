@@ -12,7 +12,7 @@
         :bgColor="'red'"
         :text="'Cancelar'"
         :type="'small'"
-        @Event="cancelarSolicitud"
+        @Event="CancelarSolicitud"
       ></button-shared>
     </div>
   </div>
@@ -20,21 +20,20 @@
 
 <script>
 import ButtonShared from "../../../shared/button/button.component.vue";
-import UsuarioService from "../../core/services/usuario.service";
 export default {
   name: "RequestCard",
   components: { ButtonShared },
   props: ["request"],
+  dni: '40801122',
+  idFamilia: '1',
 
-
-methods: {
-    async cancelarSolicitud() {
-      this.UsuarioService.cancelarSolicitud(this.$data.dni. this.$data.idFamilia);
-      }
- }
+    methods: {
+     async CancelarSolicitud() {
+        this.$router.push("/home");
+       //await this.UsuarioService.CancelarSolicitud(this.$data.dni. this.$data.idFamilia);
+       }
+  }
 };
-
-
 </script>
 
 <style>

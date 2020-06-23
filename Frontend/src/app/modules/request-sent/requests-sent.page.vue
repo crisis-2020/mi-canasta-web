@@ -20,7 +20,7 @@ export default {
   components: { RequestCard },
   data: function() {
     return {
-      familiaNombre: "",
+      mock: [{ familyName: "FamilyZ" }],
     };
   },
 
