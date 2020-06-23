@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MiCanasta.Micanasta.Dto;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -53,6 +54,20 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     Descripcion = rolPerfil.Descripcion,
                 };
                 return result;
+            }
+            else return null;
+        }
+        public IdPerfilPorUsuarioDto ObtenerPerfilId(string dni)
+        {
+            RolUsuario usuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == dni);
+            if (usuario != null)
+            {
+                var entry = new IdPerfilPorUsuarioDto
+                {
+                    Dni = dni,
+                    PerfilId = _context.RolUsuarios.SingleOrDefault(x => x.Dni == dni).RolPerfilId,
+                };
+                return entry;
             }
             else return null;
         }

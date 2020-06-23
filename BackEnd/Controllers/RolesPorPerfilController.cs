@@ -32,7 +32,7 @@ namespace Micanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpGet("{idRolPerfil}")]
+        [HttpGet("{idRolPerfil}/Perfil")]
         public ActionResult GetPerfilById(int idRolPerfil)
         {
             try
@@ -42,6 +42,18 @@ namespace Micanasta.MiCanasta.Controllers
             catch (Exception)
             {
                 return NoContent();
+            }
+        }
+        [HttpGet("{dni}")]
+        public ActionResult GetPerfilById(string dni)
+        {
+            try
+            {
+                return Ok(_rolesPorPerfilService.ObtenerPerfilId(dni));
+            }
+             catch (Exception)
+            {
+               return NoContent();
             }
         }
 

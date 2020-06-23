@@ -1,4 +1,5 @@
 ﻿using MiCanasta.Dto;
+using MiCanasta.Micanasta.Dto;
 using MiCanasta.MiCanasta.Model;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace MiCanasta.MiCanasta.Services
         List<RolPerfilCambioDto> GetRolesxPerfiles();
 
         RolPerfilCambioDto GetById(int id);
-        
+
+        IdPerfilPorUsuarioDto ObtenerPerfilId(string dni);        
 
     }
 }
