@@ -6,6 +6,7 @@ using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,8 +38,6 @@ namespace MiCanasta
             services.AddTransient<CategoriaService, CategoriaServiceImpl>();
             services.AddTransient<RolesPorPerfilService, RolesPorPerfilServiceImpl>();
             services.AddTransient<CompraService, CompraServiceImpl>();
-           
-
 
             services.AddCors(options =>
             {
@@ -48,11 +47,16 @@ namespace MiCanasta
                     .AllowAnyHeader());
             });
 
-            services.AddDbContextPool<ApplicationDbContext>(options => options
-                      .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
-                         .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
-             ));
+            //services.AddDbContextPool<ApplicationDbContext>(options => options
+            //          .UseMySql("Server=remotemysql.com;Database=Zct6qUV10Y;User=Zct6qUV10Y;Password=H3KbNV9dLI;", mySqlOptions => mySqlOptions
+            //             .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
+            // ));
 
+            services.AddDbContextPool<ApplicationDbContext>(options => options
+                     .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=9C3aXT]o89%68sIwic;", mySqlOptions => mySqlOptions
+                         .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
+
+            ));
             /*services.AddDbContextPool<ApplicationDbContext>(options => options
             .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
             .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
