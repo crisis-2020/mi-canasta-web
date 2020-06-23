@@ -1,8 +1,8 @@
 <template>
   <a-select
-    mode="multiple"
+    mode="unique"
     :size="'large'"
-    placeholder="Please select"
+    placeholder="Seleccione el rol"
     :default-value="['Administrador']"
     style="width: 100%"
     @change="handleChange"

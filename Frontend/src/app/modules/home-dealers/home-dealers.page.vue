@@ -2,59 +2,155 @@
   <div class="dealers-container">
     <div class="dealers-container__members-quantity">
       <img src="../../../assets/ic_members.svg" alt="members" />
-      <p color-rojo>10/15</p>
+      <p color-rojo>3/10</p>
     </div>
     <div class="dealers-container__title">
       <h2>Lista de distribuidores</h2>
     </div>
 
     <div class="dealers-container__add">
-      <button>
+      <button  v-on:click="agregarSeller">
         <img src="../../../assets/ic_plus.svg" alt="plus" />
       </button>
+
+      
       <div class="input-shared-container">
         <input
           class="input-shared-component"
           type="text"
-          placeholder="Ingrese un dni"
+          v-model="dni"
+          placeholder="Ingrese un DNI"
           maxlength="8"
         />
-      </div>
-    </div>
 
-    <div class="dealers-container__list">
+      <div class="dealers-container__list-members">
       <members-card-shared
-        v-for="person in mock"
-        v-bind:key="person"
-        :person="person"
-      ></members-card-shared>
+        :person="user"
+        :dni="user.dni"
+        :userIsAdmin="userIsAdmin"
+        :numIntegrantes = "numIntegrantes"
+        :unicoAdmin = "unicoAdmin"
+        v-for="(user, i) in miembros"
+        v-bind:key="i"
+      />
+    </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import MembersCardShared from "../../shared/members/members.component.vue";
+import MembersCardShared from "../../shared/members/sellers.component.vue";
+import UsuarioService from "../../core/services/usuario.service";
+import TiendaService from "../../core/services/tienda.service";
+
 export default {
-  components: { MembersCardShared },
   name: "HomeDealersPage",
+  components: { MembersCardShared },
+
   data: function() {
-    return {
-      mock: [
-        {
-          name: "Anthony",
-          dni: "10101010",
-          roles: ["Admin", "Comprador"],
-          categorias: ["Mercancia"],
-        },
-        {
-          name: "Jimena",
-          dni: "1245789",
-          roles: ["Comprador"],
-          categorias: ["Alimentos"],
-        },
-      ],
+    return {   
+      idTienda: -1,
+      miembros: [ ],
+      roles: [],
+      userIsAdmin: false,
+      numIntegrantes: 0,
+      unicoAdmin: false,
+      rolx: false,
+      dni: "",
     };
   },
+
+  created() {
+    this.getRolUsuario();
+    this.$data.idTienda = this.$route.params.id;
+    this.listarMiembros();
+  },
+
+methods: {
+
+  async agregarSeller(){
+    try{
+      const res = await TiendaService.agregarSeller(this.$data.idTienda,
+      this.$data.dni,
+    );
+    this.$router.go();
+    console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+    async isUnicoAdmin(){
+      let cont = 0;
+      for(let i = 0; i < this.numIntegrantes; i++){
+          if(await this.isAdmin(this.miembros[i].dni) == true) cont++;
+      }
+      if(this.userIsAdmin == true && cont == 1) this.unicoAdmin = true;
+    },
+
+    async isAdmin(dniIntegrante){
+      let cont = 0;
+      let rolesAux;
+      try {
+        const res = await UsuarioService.getUsuario(dniIntegrante);
+        rolesAux = res.data.rolUsuarios;
+        for(let i = 0; i < rolesAux.length; i++){
+          if(rolesAux[i].rolPerfilId == 3) cont++;
+        }
+        if(cont > 0) return true;
+        else return false;
+      }
+      catch (error) {
+        console.log(error);        
+      }
+    },
+
+    async listarTienda() {
+      try {
+        const result = await TiendaService.listarTienda(this.$data.idTienda);
+        this.$data.idTienda = result.data.idTienda;
+        this.listarMiembros();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async listarMiembros() {
+        try {
+        const result = await TiendaService.getUsuariosByTiendaId(
+          this.$data.idTienda
+        );
+        this.$data.miembros  = result.data;
+        this.numIntegrantes = this.$data.miembros.length;
+        this.isUnicoAdmin();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getRolUsuario(){
+       try {
+        const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+        this.roles = res.data.rolUsuarios;
+        for(let i=0; i < this.roles.length; i++){
+          if(this.roles[i].rolPerfilId == 3) {
+            this.userIsAdmin=true;
+            this.rolx = true;
+          } else {
+            this.rolx = false;
+          }
+        }        
+      }
+      catch (error) {
+        console.log(error);        
+      }
+    },
+    cerrarModal() {
+      this.errorFlagModal = false;
+    },
+  },
+
 };
 </script>
 

@@ -47,6 +47,7 @@ export default new Router({
         { path: "dealers/location", name: "DealersLocation", component:DealersLocation},
         { path: "solicitudes", name: "SolicitudPage", component: SolicitudPage },
         { path: "family/:id", name: "FamilyPage", component: HomeFamilyPage },
+        { path: "dealers/:id", name: "DealersPage", component: DealersPage },
         { path: "requests-sent", name: "RequestsSentPage",component: RequestsSentPage },
         { path: "requests-received", name: "RequestReceived",component: RequestReceived },
         { path: "sell", name: "SalePage", component: SalePage},

@@ -54,6 +54,7 @@ export default {
       userIsAdmin: false,
       numIntegrantes: 0,
       unicoAdmin: false,
+      rol: false,
     };
   },
 
@@ -122,7 +123,11 @@ export default {
         const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
-          if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
+          if(this.roles[i].rolPerfilId == 1) {
+            this.userIsAdmin=true;
+          }else{
+            this.userIsAdmin=false;
+          }
         }        
       }
 
