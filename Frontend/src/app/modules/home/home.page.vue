@@ -14,7 +14,7 @@
     <div class="home-container__list-button">
       <ButtonShared
         :loading="loadingCreaFamiliarButton"
-        :disable="grupoFamiliar.length < 1"
+        :disable="grupoFamiliar.length < 1 /*|| solicitudActiva == true*/"
         :text="'Crear'"
         :type="'small'"
         :bgColor="'red'"
@@ -22,7 +22,7 @@
       ></ButtonShared>
 
       <ButtonShared
-        :disable="grupoFamiliar.length < 1"
+        :disable="grupoFamiliar.length < 1 /*|| solicitudActiva == true*/"
         :text="'Unirse'"
         :type="'small'"
         :bgColor="'yellow'"
@@ -38,11 +38,21 @@
       @Event="cerrarModal"
     >
     </ErrorModalShared>
+
+      <ErrorModalShared
+      class="modal-familia-no-existe"
+      v-if="errorFlagModalUnirse"
+      :title="'Lo sentimos'"
+      :description="'El grupo familiar no existe o no acepta solicitudes por el momento'"
+      @Event="cerrarModalUnirse"
+    >
+    </ErrorModalShared>
   </div>
 </template>
 
 <script>
 import FamiliaService from "../../core/services/familia.service";
+import SolicitudService from "../../core/services/solicitud.service";
 import ButtonShared from "../../shared/button/button.component.vue";
 import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
 export default {
@@ -50,10 +60,15 @@ export default {
   components: { ButtonShared, ErrorModalShared },
   data: function() {
     return {
+      solicitudActiva: false,
       grupoFamiliar: "",
       loadingCreaFamiliarButton: false,
       errorFlagModal: false,
+      errorFlagModalUnirse: false,
     };
+  },
+  created() {
+    this.tieneSolicitudes();
   },
 
   methods: {
@@ -62,7 +77,6 @@ export default {
       this.$data.loadingCreaFamiliarButton = true;
       try {
         const res = await FamiliaService.crearFamilia({
-          aceptaSolicitudes: true,
           dni: localStorage.getItem("dni"),
           familiaNombre: this.$data.grupoFamiliar,
         });
@@ -76,11 +90,42 @@ export default {
         this.$data.errorFlagModal = true;
       }
     },
-    unirseGrupo() {
-      console.log("unirse gurpo");
+    async unirseGrupo() {
+      console.log("unirse grupo");
+       try {
+        const res = await SolicitudService.crearSolicitud({
+          familiaNombre: this.$data.grupoFamiliar,
+          //dni: "77777777"
+          dni: localStorage.getItem("dni")
+        });
+        console.log(res);
+        this.$data.errorFlagModalUnirse = true;
+        this.$data.errorFlagModal = true;
+        this.$router.push("/home/solicitudes");
+      }
+      catch (error) {
+        console.log(error);
+        this.$data.errorFlagModalUnirse = true;
+        
+      }
     },
+  
+    async tieneSolicitudes(){
+      try{
+      const res = await SolicitudService.obtenerSolicitudes(localStorage.getItem("dni"));
+      this.$data.solicitudActiva=true;
+      console.log(res);
+      }
+      catch(error){
+        this.$data.solicitudActiva=false;
+      }
+    },
+
     cerrarModal() {
       this.$data.errorFlagModal = false;
+    },
+    cerrarModalUnirse() {
+      this.$data.errorFlagModalUnirse = false;
     },
   },
 };

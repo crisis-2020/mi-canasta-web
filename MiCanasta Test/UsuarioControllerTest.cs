@@ -31,7 +31,7 @@ namespace MiCanasta_Test
             UsuarioAccesoDto UsuarioResponse = new UsuarioAccesoDto();
             //
             _service.Setup(x => x.ValidateLogin(UsuarioWrongLogin.Dni,UsuarioWrongLogin.Contrasena)).Returns(UsuarioResponse);
-            ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
+            ActionResult<UsuarioDataDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
             Assert.IsType <UsuarioAccesoDto>(UsuarioResponse);
         }
@@ -51,7 +51,7 @@ namespace MiCanasta_Test
             //
             _service.Setup(x => x.ValidateLogin(UsuarioWrongLogin.Dni, UsuarioWrongLogin.Contrasena)).Returns(UsuarioResponse);
             
-            ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
+            ActionResult<UsuarioDataDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
             Assert.IsType<ExceptionDto>(new UserLoginIncorrectException().ExceptionDto);
         }
@@ -70,7 +70,7 @@ namespace MiCanasta_Test
             UsuarioAccesoDto UsuarioResponse = new UsuarioAccesoDto();
             //
             _service.Setup(x => x.ValidateLogin(UsuarioWrongLogin.Dni, UsuarioWrongLogin.Contrasena)).Returns(UsuarioResponse);
-            ActionResult<UsuarioAccesoDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
+            ActionResult<UsuarioDataDto> result = _controller.ValidarIngreso(UsuarioWrongLogin);
             //Assert
             Assert.IsType<ExceptionDto>(new UserLoginNotFoundException().ExceptionDto);
         }
