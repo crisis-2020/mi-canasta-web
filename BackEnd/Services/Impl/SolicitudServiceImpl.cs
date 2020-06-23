@@ -79,26 +79,20 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
 
             var solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
-            if (solicitud == null) return null;
-            
-            var familia = _context.Familias.Single(x => x.FamiliaId == solicitud.FamiliaId);
-            
-            var entry = new SolicitudFamiliaDni
+            if (solicitud == null) return null;         
+         
+            var familia =  _context.Familias.Single(x => x.FamiliaId == solicitud.FamiliaId);
+
+            SolicitudBusquedaDto entry = new SolicitudBusquedaDto
             {
-                NombreFamilia = familia.Nombre,
                 Dni = Dni,
+                NombreFamilia = familia.Nombre,
             };
-
-            return _mapper.Map<SolicitudBusquedaDto>(entry);
-
-        }
-
-        public class SolicitudFamiliaDni //Arreglar en un próximo fix
-        {
-            public string NombreFamilia { get; set; }
-            public string Dni { get; set; }
+         
+            return entry;
 
         }
+
         public bool BorrarSolicitud(SolicitudUsuarioDto solicitudDto)
         {
             try

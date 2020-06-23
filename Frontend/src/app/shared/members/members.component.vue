@@ -4,10 +4,8 @@
   >
     <div class="member-container__information">
       <div class="member-container__roles">
-          <!-- <img v-if="person.roles.includes('Admin')" src="../../../assets/ic_crown.svg" alt="">
-          <img v-if="person.roles.includes('Comprador')" src="../../../assets/ic_shop-cart.svg" alt=""> -->
-          <img  src="../../../assets/ic_crown.svg" alt="">
-          <img  src="../../../assets/ic_shop-cart.svg" alt="">
+          <img v-if="this.$data.rolPerfilId==1" src="../../../assets/ic_crown.svg" alt="">
+          <img v-else src="../../../assets/ic_shop-cart.svg" alt="">
 
       </div>
       <div class="member-container__personal">
@@ -65,12 +63,14 @@ export default {
   data:function(){
     return{
       roles: [],
+      rol: false,
       errorFlagModal: false,
       userToDeleteIsAdmin: false,
       isShowConfirmationModal: false,
       descriptionErrorModal: "",
       descriptionConfirmModal: "",
       data: ["Administrador", "Comprador"],
+      data2: ["Administrador", "Responsable de Ventas"],
     }
   },
   created(){
@@ -130,14 +130,16 @@ export default {
 
     async getRolUsuario(){
        try {
-        
         const res = await UsuarioService.getUsuario(this.dni);
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
-          if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
+          if(this.roles[i].rolPerfilId == 1) {
+            this.userToDeleteIsAdmin=true;
+          } else {
+            console.log("roles");
+          }
         }        
       }
-
       catch (error) {
         console.log(error);        
       }

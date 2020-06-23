@@ -71,4 +71,9 @@ namespace MiCanasta.Micanasta.Dto
         public List<RolUsuarioDataDto> rolUsuario { get; set; }
 
     }
+    public class IdPerfilPorUsuarioDto
+    {
+        public string Dni { get; set; }
+        public int PerfilId { get; set; }
+    }
 }

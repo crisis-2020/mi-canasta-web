@@ -18,6 +18,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 {
     public class UsuarioServiceImpl : UsuarioService
     {
+        private static byte[] salt = { 1, 2, 3, 4, 5, 6, 7, 8 };
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         
@@ -50,7 +51,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     Nombre = model.Nombre1 + " " + model.Nombre2,
                     ApellidoPaterno = model.ApellidoPaterno,
                     ApellidoMaterno = model.ApellidoMaterno,
-                    Contrasena = model.Dni,
+                    Contrasena = model.Dni.GetHashCode().ToString(),
                     Correo = " "
                 };
                 _context.Add(Nuevo);
@@ -85,7 +86,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 var resultData = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
-            else if (Contrasena == resultValidacion.Contrasena)
+            else if (Contrasena.GetHashCode().ToString() == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
@@ -140,14 +141,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
             if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
                 throw new NewPasswordNotMatchException();
             }
-            if (UsuarioUpdateDto.Contrasena != entry.Contrasena)
+            if (UsuarioUpdateDto.Contrasena.GetHashCode().ToString() != entry.Contrasena)
             {
                 throw new ActualPasswordNotMatchException();
             }
             if (UsuarioUpdateDto.Contrasena != null)
             {
                 if (UsuarioUpdateDto.Correo != null) entry.Correo = UsuarioUpdateDto.Correo;
-                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = UsuarioUpdateDto.NuevaContrasena;
+                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = UsuarioUpdateDto.NuevaContrasena.GetHashCode().ToString();
             }
 
             _context.SaveChanges();
