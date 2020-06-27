@@ -2,6 +2,8 @@
 using MiCanasta.MiCanasta.Model;
 using MiCanasta.MiCanasta.Persistence;
 using MiCanasta.MiCanasta.Persistence.Config;
+using MiCanasta.Model.Identity;
+using MiCanasta.Persistence.Config;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +14,10 @@ using System.Threading.Tasks;
 
 namespace MiCanasta.Persistence
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string,
+        IdentityUserClaim<string>,
+        ApplicationUserRole, IdentityUserLogin<string>,
+        IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -30,7 +35,11 @@ namespace MiCanasta.Persistence
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioFamilia> UsuarioFamilias { get; set; }
         public DbSet<UsuarioTienda> UsuarioTiendas { get; set; }
-       
+        //
+        public DbSet<ApplicationUser>ApplicationUsers { get; set;}
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -50,7 +59,10 @@ namespace MiCanasta.Persistence
             new UsuarioConfig(builder.Entity<Usuario>());
             new UsuarioFamiliaConfig(builder.Entity<UsuarioFamilia>());
             new UsuarioTiendaConfig(builder.Entity<UsuarioTienda>());
-            
+            //
+            new ApplicationUserConfig(builder.Entity<ApplicationUser>());
+            new ApplicationRoleConfig(builder.Entity<ApplicationRole>());
+
 
         }
     }
