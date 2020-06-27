@@ -16,5 +16,6 @@ namespace MiCanasta.MiCanasta.Services
         TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto);
         UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni);
         void CancelarSolicitud(String Dni, int idFamilia);
+        String Encriptar(String _cadenaAencriptar);
     }
 }

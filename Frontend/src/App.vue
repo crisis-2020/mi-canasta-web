@@ -39,6 +39,12 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
+.input-number-shared-container{
+  display: flex;
+  flex-direction: column;
+}
+
 .label-shared-component {
     font-size: 14px;
     font-weight: 600;
@@ -57,6 +63,18 @@ export default {
     padding: 16px;
     border-radius: 4px;
 }
+
+.input-number-shared-component{
+  width: 264px;
+    border: none;
+    background: #FAFAFA;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 16px;
+    border-radius: 4px;
+}
+
 button:disabled{
   opacity: .3;
   cursor: not-allowed;

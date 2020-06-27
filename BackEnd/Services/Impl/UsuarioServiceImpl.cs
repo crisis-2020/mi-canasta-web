@@ -18,7 +18,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 {
     public class UsuarioServiceImpl : UsuarioService
     {
-        private static byte[] salt = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         
@@ -51,7 +51,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     Nombre = model.Nombre1 + " " + model.Nombre2,
                     ApellidoPaterno = model.ApellidoPaterno,
                     ApellidoMaterno = model.ApellidoMaterno,
-                    Contrasena = model.Dni.GetHashCode().ToString(),
+                    Contrasena = Encriptar(model.Dni),
                     Correo = " "
                 };
                 _context.Add(Nuevo);
@@ -86,7 +86,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 var resultData = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
-            else if (Contrasena.GetHashCode().ToString() == resultValidacion.Contrasena)
+            else if (Encriptar(Contrasena) == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
@@ -141,20 +141,19 @@ namespace MiCanasta.MiCanasta.Services.Impl
             if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
                 throw new NewPasswordNotMatchException();
             }
-            if (UsuarioUpdateDto.Contrasena.GetHashCode().ToString() != entry.Contrasena)
+            if (Encriptar(UsuarioUpdateDto.Contrasena) != entry.Contrasena)
             {
                 throw new ActualPasswordNotMatchException();
             }
             if (UsuarioUpdateDto.Contrasena != null)
             {
                 if (UsuarioUpdateDto.Correo != null) entry.Correo = UsuarioUpdateDto.Correo;
-                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = UsuarioUpdateDto.NuevaContrasena.GetHashCode().ToString();
+                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = Encriptar(UsuarioUpdateDto.NuevaContrasena);
             }
 
             _context.SaveChanges();
             return UsuarioUpdateDto;
         }
-
 
         public TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto)
         {
@@ -201,6 +200,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
 
             _context.SaveChanges();
+        }
+
+        public String Encriptar(String _cadenaAencriptar)
+        {
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
+            String result = Convert.ToBase64String(encryted);
+            return result;
         }
     }
 }
