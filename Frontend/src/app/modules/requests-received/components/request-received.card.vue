@@ -27,24 +27,24 @@ export default {
   props: ["request"],
 
   methods: {
-    deniedSolicitude: function() {
+    async deniedSolicitude() {
       try {
-        const res = SolicitudService.denegarSolicitud(this.request.dni);
+        const res = await SolicitudService.denegarSolicitud(this.request.dni);
         console.log(res);
-        this.request.render = false;
+        this.$emit("actualizar-tarjeta");
       } catch (error) {
         console.log(error);
       }
     },
 
-    aceptedSolicitude: function() {
+    async aceptedSolicitude() {
       try {
-        const res = SolicitudService.aceptarSolicitud({
+        const res = await SolicitudService.aceptarSolicitud({
           familiaId: Number(this.request.familiaId),
           dni: this.request.dni,
         });
         console.log(res);
-        this.request.render = false;
+        this.$emit("actualizar-tarjeta");
       } catch (error) {
         console.log(error);
       }
