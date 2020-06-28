@@ -2,14 +2,13 @@
   <div class="family-container">
     <div class="family-container__title">
       <h2>Participantes</h2>
-    </div>
+    
     <div class="family-container__enable-request">
       <div v-if="aceptaSolicitudes" :value="false" >
       <p> La familia acepta solicitudes </p> </div> 
       <div v-else>
       <p> La familia no acepta solicitudes </p> </div> 
       <a-switch v-model="aceptaSolicitudes" @change="onChange" />
-    </div>
 
     <div class="family-container__list-members">
       <members-card-shared
@@ -21,8 +20,9 @@
         :numIntegrantes = "numIntegrantes"
         :unicoAdmin = "unicoAdmin"
         v-for="(user, i) in miembros"
-        v-bind:key="i"
-      />
+        v-bind:key="i" />  
+    </div>
+        </div>
     </div>
   </div>
 </template>
@@ -144,7 +144,9 @@ export default {
 
 <style>
 .family-container {
-  margin: 0 32px;
+  padding: 0 32px;
+  height: calc(640px  - 128px);
+  overflow: auto;
 }
 .family-container__title {
   margin: 24px 0;

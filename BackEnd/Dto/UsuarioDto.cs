@@ -20,6 +20,7 @@ namespace MiCanasta.Micanasta.Dto
         public string Contrasena { get; set; }
         public string Correo { get; set; }
         public List<RolUsuarioDto> RolUsuarios { get; set; }
+
     }
     public class UsuarioLoginDto
     {

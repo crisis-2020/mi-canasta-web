@@ -2,8 +2,8 @@
   <div class="member-container">
     <div class="member-container__information">
       <div class="member-container__roles">
-          <img v-if="this.$data.rolPerfilId == 3" src="../../../assets/ic_crown.svg" alt="" >
-          <img v-else src="../../../assets/ic_shop-cart.svg" alt=""  >
+          <img v-if="person.rolPerfilId == 3" src="../../../assets/ic_crown.svg" alt="" >
+          <img v-if="person.rolPerfilId == 4" src="../../../assets/ic_shop-cart.svg" alt=""  >
 
       </div>
       <div class="member-container__personal">
@@ -78,10 +78,11 @@ export default {
 
     async getRolUsuario(){
        try {
-        const res = await UsuarioService.getUsuario(localStorage.getItem("dni"));
+        const res = await UsuarioService.getUsuario(this.dni);
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
           if(this.roles[i].rolPerfilId == 3); 
+          
         }        
       }
       catch (error) {
