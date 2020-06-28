@@ -31,6 +31,20 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return _mapper.Map<TiendaDto>(_context.Tiendas.Single(x => x.TiendaId == IdTienda));
         }
 
+        public TiendaLimiteDto GetLimiteTienda(int idTienda)
+        {
+            Tienda tienda = _context.Tiendas.Single(x => x.TiendaId == idTienda);
+            if (tienda != null)
+            {
+                var result = new TiendaLimiteDto
+                {
+                    Limite = tienda.Limite,
+                };
+                return result;
+
+            } else return null;
+        }
+
         public TiendaUsuarioDto PostUsuarioInTienda(int idTienda, string dni)
         {
             UsuarioTienda NewUsuarioTienda = null;

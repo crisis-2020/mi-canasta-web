@@ -27,6 +27,12 @@ namespace MiCanasta.MiCanasta.Controllers
             return Ok(_tiendaService.getById(idTienda));
         }
 
+        [HttpGet("{idTienda}/limite")]
+        public ActionResult GetLimiteTienda(int idTienda)
+        {
+            return Ok(_tiendaService.GetLimiteTienda(idTienda));
+        }
+
         [HttpPost("{IdTienda}/usuario/{Dni}/usuariosportienda")]
         public ActionResult PostNewUserInShop(int IdTienda, string Dni)
         {

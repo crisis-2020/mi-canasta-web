@@ -65,5 +65,11 @@ namespace MiCanasta.MiCanasta.Dto
         public List<StockProductoDto> Productos { get; set; }
 
     }
+
+    public class TiendaLimiteDto
+    {
+        public int Limite { get; set; }
+    }
+
 }
 

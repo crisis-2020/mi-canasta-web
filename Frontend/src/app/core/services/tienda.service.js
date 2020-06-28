@@ -14,5 +14,9 @@ export default class TiendaService {
     static async agregarSeller(idTienda, dni){
         return await axios.post(`${environments.api}/tiendas/${idTienda}/usuario/${dni}/usuariosportienda`);
     }
+
+    static async GetLimiteTienda(idTienda) {
+        return await axios.get(`${environments.api}/tiendas/${idTienda}/limite`);
+    }
 }
 
