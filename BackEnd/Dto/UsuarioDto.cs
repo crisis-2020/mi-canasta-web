@@ -68,7 +68,8 @@ namespace MiCanasta.Micanasta.Dto
         public UsuarioAccesoDto usuario { get; set; }
         public FamiliaDataDto familia { get; set; }
         public TiendaDataDto tienda { get; set; }
-        public List<RolUsuarioDataDto> rolUsuario { get; set; }
+        public List<RolUsuarioDataDto> roles { get; set; }
+        public Solicitud solicitud { get; set; }
 
     }
     public class IdPerfilPorUsuarioDto

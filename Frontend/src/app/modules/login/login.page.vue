@@ -70,7 +70,7 @@ export default {
         localStorage.setItem("dni", this.$data.dni);
         await AuthService.autenticacion(usuario).then(e => {
           this.$data.loadingButton = false;
-          localStorage.setItem("data", JSON.stringify(e.data));
+          AuthService.saveUsuarioAutenticacion(e.data);
 
           if (e.data.usuario.familia != null) {
             this.$router.push(`/home/family/${e.data.usuario.familia.familiaId}`);
