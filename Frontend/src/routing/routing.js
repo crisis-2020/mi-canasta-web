@@ -51,6 +51,7 @@ export default new Router({
         { path: "solicitudes", name: "SolicitudPage", component: SolicitudPage },
         { path: "family/:id", name: "FamilyPage", component: HomeFamilyPage },
         { path: "dealers/:id", name: "DealersPage", component: DealersPage },
+        { path: "dealers/:id/edit", name: "DealerEditPage", component: DealerEditPage},
         { path: "requests-sent", name: "RequestsSentPage",component: RequestsSentPage },
         { path: "requests-received", name: "RequestReceived",component: RequestReceived },
         { path: "sell", name: "SalePage", component: SalePage},
@@ -58,7 +59,6 @@ export default new Router({
         { path: "limit", name: "LimitPage", component: LimitPage},
         { path: "buy", name: "BuyPage", component: BuyPage},
         { path: "user/edit", name: "UserEditPage", component: UserEditPage},
-        { path: "dealer/edit", name: "DealerEditPage", component: DealerEditPage},
       ],
     },
     {

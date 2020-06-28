@@ -45,6 +45,32 @@ namespace MiCanasta.MiCanasta.Services.Impl
             } else return null;
         }
 
+        public TiendaUpdateDto UpdateTienda(int IdTienda, string Dni, TiendaUpdateDto TiendaUpdateDto)
+        {
+            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
+            Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == IdTienda);
+
+            if (usuario.Contrasena != TiendaUpdateDto.Contrasena)
+            {
+                throw new ActualPasswordNotMatchException();
+            }
+            else 
+            {
+                if (TiendaUpdateDto.Descripcion != null)
+                    tienda.Descripcion = TiendaUpdateDto.Descripcion;
+                if (TiendaUpdateDto.Direccion != null)
+                    tienda.Direccion = TiendaUpdateDto.Direccion;
+                if (TiendaUpdateDto.Longitud != null)
+                    tienda.Longitud = TiendaUpdateDto.Longitud;
+                if (TiendaUpdateDto.Latitud != null)
+                    tienda.Latitud = TiendaUpdateDto.Latitud;
+                if (TiendaUpdateDto.Horario != null)
+                    tienda.Horario = TiendaUpdateDto.Horario;
+                _context.SaveChanges();
+            }
+            return TiendaUpdateDto;
+        }
+
         public TiendaUsuarioDto PostUsuarioInTienda(int idTienda, string dni)
         {
             UsuarioTienda NewUsuarioTienda = null;

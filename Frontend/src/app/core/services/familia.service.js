@@ -7,7 +7,6 @@ export default class FamiliaService {
             .post(`${environments.api}/familias`, familiaRequest)
     }
 
-
     static async listarFamilia(id) {
         return await axios.get(`${environments.api}/familias/${id}`);
     }

@@ -70,17 +70,6 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpPut("{Dni}/tiendas/{IdTienda}")]
-        public ActionResult UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto ) {
-            try
-            {
-                return Ok(_usuarioService.UpdateTienda(Dni, IdTienda, TiendaUpdateDto));
-            }
-            catch (ActualPasswordNotMatchException e) {
-                return BadRequest(e.ExceptionDto); 
-            }
-        }
-
         [HttpGet("{Dni}/usuariosporfamilia")]
         public ActionResult UpdateTienda (string Dni)
         {

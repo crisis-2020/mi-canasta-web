@@ -87,6 +87,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
             else if (Contrasena.GetHashCode().ToString() == resultValidacion.Contrasena)
+            //else if (Contrasena == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
@@ -155,31 +156,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
             return UsuarioUpdateDto;
         }
 
-
-        public TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto)
-        {
-            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
-            Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == IdTienda);
-
-            if (usuario.Contrasena != TiendaUpdateDto.Contrasena)
-            {
-                throw new ActualPasswordNotMatchException();
-            }
-            else {
-                if (TiendaUpdateDto.Descripcion != null)
-                    tienda.Descripcion = TiendaUpdateDto.Descripcion;
-                if (TiendaUpdateDto.Direccion != null)
-                    tienda.Direccion = TiendaUpdateDto.Direccion;
-                if (TiendaUpdateDto.Longitud != null)
-                    tienda.Longitud = TiendaUpdateDto.Longitud;
-                if (TiendaUpdateDto.Latitud != null)
-                    tienda.Latitud = TiendaUpdateDto.Latitud;
-                if (TiendaUpdateDto.Horario != null)
-                    tienda.Horario = TiendaUpdateDto.Horario;
-                _context.SaveChanges();
-            }
-            return _mapper.Map<TiendaDto>(tienda);
-        }
 
         public UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni)
         {
