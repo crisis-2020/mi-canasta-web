@@ -1,6 +1,9 @@
 <template>
   <div class="stock-product-container">
-        <input type="number" class="input-number-shared-component" v-model="stock.cantidad">
+        <input
+         type="number"
+         class="input-number-shared-component"
+         v-model="stockUpdate.cantidad">
         <label> {{ producto.descripcion }} </label><br>
         <b>{{ unidad }}</b>
   </div>
@@ -15,7 +18,7 @@ import { ProductoRequest } from '../../core/model/request/producto.model';
 export default {
     name: "StockProductComponent",
     props: [
-    'stock',
+    'stockUpdate',
     ],
     
     data: function(){
@@ -33,7 +36,7 @@ export default {
 
         async getProducto(){
             try {
-                const res = await ProductoService.getProducto(this.stock.productoId);
+                const res = await ProductoService.getProducto(this.stockUpdate.productoId);
                 this.producto = res.data;
                 this.getCategoria();
             }
@@ -50,7 +53,7 @@ export default {
             catch (error) {
                 console.log(error);        
             }
-        }
+        },
     }
 }
 </script>
