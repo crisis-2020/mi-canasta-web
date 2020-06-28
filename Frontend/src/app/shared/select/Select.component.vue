@@ -31,11 +31,12 @@ export default {
   methods: {
     handleChange(value) {
     try{
-      UsuarioService.getUsuario(this.$data.dniIntegrante);
-      FamiliaService.asignarRolUsuario(this.$data.idFamilia,
-      this.$data.dniIntegrante);
+      let data = JSON.parse(localStorage.getItem("data"));
+      UsuarioService.getUsuario(data.usuario.usuario.dni);
+      FamiliaService.asignarRolUsuario(data.usuario.familia.familiaId,
+      data.usuario.usuario.dni);
       console.log(`Selected: ${value}`);
-      //this.$router.go();
+      // this.$router.go();
     } catch (error){
       console.log(error);
     }

@@ -19,7 +19,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 {
     public class UsuarioServiceImpl : UsuarioService
     {
-        private static byte[] salt = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         
@@ -53,7 +53,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                     Nombre = model.Nombre1 + " " + model.Nombre2,
                     ApellidoPaterno = model.ApellidoPaterno,
                     ApellidoMaterno = model.ApellidoMaterno,
-                    Contrasena = ContrasenaEnc,
+                    Contrasena = Encriptar(model.Dni),
                     Correo = " "
                 };
                 _context.Add(Nuevo);
@@ -91,7 +91,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 var resultData = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
-            else if (contrasenaHash == resultValidacion.Contrasena)
+            else if (Encriptar(Contrasena) == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
@@ -116,14 +116,10 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 Tienda tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
                 tiendaData = _mapper.Map<TiendaDataDto>(tienda);
             } else tiendaData = null;
-            if (tiendaData != null && familiaData != null)
-            {
-                rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
-                rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
-            }
-            else rolesUsuarioData = null;
-
-            return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, rolUsuario = rolesUsuarioData };
+            rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
+            List<RolUsuarioDataDto> rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
+            Solicitud solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
+            return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, roles = rolesUsuarioData, solicitud = solicitud };
 
 
         }
@@ -152,20 +148,19 @@ namespace MiCanasta.MiCanasta.Services.Impl
             if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
                 throw new NewPasswordNotMatchException();
             }
-            if (Encoding.ASCII.GetBytes(UsuarioUpdateDto.Contrasena).ToString() != entry.Contrasena)
+            if (Encriptar(UsuarioUpdateDto.Contrasena) != entry.Contrasena)
             {
                 throw new ActualPasswordNotMatchException();
             }
             if (UsuarioUpdateDto.Contrasena != null)
             {
                 if (UsuarioUpdateDto.Correo != null) entry.Correo = UsuarioUpdateDto.Correo;
-                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = UsuarioUpdateDto.NuevaContrasena.GetHashCode().ToString();
+                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = Encriptar(UsuarioUpdateDto.NuevaContrasena);
             }
 
             _context.SaveChanges();
             return UsuarioUpdateDto;
         }
-
 
         public TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto)
         {
@@ -212,6 +207,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
 
             _context.SaveChanges();
+        }
+
+        public String Encriptar(String _cadenaAencriptar)
+        {
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
+            String result = Convert.ToBase64String(encryted);
+            return result;
         }
     }
 }
