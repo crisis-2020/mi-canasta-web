@@ -95,5 +95,20 @@ namespace MiCanasta.MiCanasta.Controllers
                 return NotFound(SolicitudeNotFoundException.ExceptionDto);
             }
         }
+
+        [HttpPut("{Dni}/RolesPorUsuario")]
+        public ActionResult cambiarRolUsuario(string Dni)
+        {
+            try
+            {
+                _usuarioService.cambiarRolUsuario(Dni);
+                return Ok("El rol fue modificado");
+            }
+            catch (UserNotFoundException userNotFoundException)
+            {
+                return BadRequest(userNotFoundException.ExceptionDto);
+            }
+        }
+
     }
 }

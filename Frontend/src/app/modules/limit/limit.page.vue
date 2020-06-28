@@ -1,8 +1,10 @@
 <template>
   <div class="request-sent-container">
     <div class="request-sent__title">
-      <h2>Stock de la Semana</h2>
-    </div>
+      <h2>Compras de la Semana</h2> 
+      <div class="set-date-label">
+      <p> 21/06/2020 al 28/06/20 </p>
+    </div> </div>
 
     <div class="container-components">
         <p>Arroz</p>
@@ -72,6 +74,10 @@ export default {
 </script>
 
 <style>
+.set-date-label{
+text-align: center;
+}
+
 .container-components{
   margin: -42px;
   position: relative;

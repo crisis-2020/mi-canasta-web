@@ -86,8 +86,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 var resultData = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
-            else if (Contrasena.GetHashCode().ToString() == resultValidacion.Contrasena)
-            //else if (Contrasena == resultValidacion.Contrasena)
+            //else if (Contrasena.GetHashCode().ToString() == resultValidacion.Contrasena)
+            else if (Contrasena == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
@@ -177,6 +177,59 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
 
             _context.SaveChanges();
+        }
+
+        public void cambiarRolUsuario(string Dni)
+        {
+
+            var exist = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
+            if (exist == null) throw new UserNotFoundException();
+
+            else
+            {
+                var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
+                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1))
+                {
+                    var entry = new RolUsuario
+                    {
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 2,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    DeleteRolUsuario(rolUsuario);
+                    AddRolUsuario(entry);
+                    _context.SaveChanges();
+
+                }
+
+                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+                {
+                    var entry = new RolUsuario
+                    {
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 1,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    DeleteRolUsuario(rolUsuario);
+                    AddRolUsuario(entry);
+                    _context.SaveChanges();
+                }
+            }
+
+        }
+
+        void DeleteRolUsuario(RolUsuario rol)
+        {
+            _context.RolUsuarios.Remove(rol);
+
+        }
+        void AddRolUsuario(RolUsuario rol)
+        {
+            _context.RolUsuarios.Add(rol);
         }
     }
 }

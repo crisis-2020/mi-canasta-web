@@ -8,4 +8,7 @@ export default class UsuarioService {
     static async putUsuario(dni, usuarioPut) {
         return await axios.put(`${environments.api}/usuarios/${dni}`, usuarioPut);
     }
+    static async cambiarRolUsuario(dni){
+        return await axios.put(`${environments.api}/usuarios/${dni}/RolesPorUsuario`);
+    }
 }
