@@ -16,6 +16,7 @@ import UserPage from "../app/modules/user/user.page.vue";
 import LimitPage from "../app/modules/limit/limit.page.vue";
 import BuyPage from "../app/modules/buy/buy.page.vue";
 import UserEditPage from "../app/modules/user/user-edit.page.vue";
+import StockPage from "../app/modules/stock/stock.page.vue";
 
 Vue.use(Router);
 
@@ -75,6 +76,7 @@ export default new Router({
         { path: "limit", name: "LimitPage", component: LimitPage },
         { path: "buy", name: "BuyPage", component: BuyPage },
         { path: "user/edit", name: "UserEditPage", component: UserEditPage },
+        { path: "stock", name: "StockPage", component: StockPage },
       ],
     },
     {
