@@ -15,6 +15,7 @@ namespace MiCanasta.MiCanasta.Services
         UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto);
         UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni);
         void CancelarSolicitud(String Dni, int idFamilia);
-        public void cambiarRolUsuario(string Dni);
+        void cambiarRolUsuario(string Dni);
+        String Encriptar(String _cadenaAencriptar);
     }
 }

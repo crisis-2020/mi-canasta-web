@@ -1,4 +1,3 @@
-
 export default class Usuario {
   constructor(dni, contrasena) {
     this.dni = dni;
@@ -6,7 +5,7 @@ export default class Usuario {
   }
 }
 
-export class UsuarioGet{
+export class UsuarioGet {
   dni;
   nombre;
   apellidoPaterno;

@@ -47,11 +47,12 @@ export default {
 
     handleChange(value) {
     try{
-        UsuarioService.cambiarRolUsuario(localStorage.getItem("dni"));
-        console.log(`Selected: ${value}`);
-        this.$router.go();
-    } catch (error) {
-      console.log("123");
+      let data = JSON.parse(localStorage.getItem("data"));
+      UsuarioService.cambiarRolUsuario(data.usuario.usuario.dni);
+      console.log(`Selected: ${value}`);
+      // this.$router.go();
+    } catch (error){
+      console.log(error);
     }
     },
 

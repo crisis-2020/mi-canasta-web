@@ -23,5 +23,8 @@ export default class TiendaService {
         return await axios.put(`${environments.api}/tiendas/${idTienda}/${dni}`, putTienda);
     }
 
+    static async putStock(idTienda, idProducto, stockPut) {
+        return await axios.put(`${environments.api}/tiendas/${idTienda}/productos/${idProducto}/stocks`, stockPut);
+    }
 }
 

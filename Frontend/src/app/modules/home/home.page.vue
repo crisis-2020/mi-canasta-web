@@ -1,14 +1,8 @@
 <template>
   <div class="home-container">
     <div class="field-container margin">
-      <label class="label-shared-component grupo-familiar-label"
-        >Grupo Familiar</label
-      >
-      <input
-        class="input-shared-component"
-        type="text"
-        v-model="grupoFamiliar"
-      />
+      <label class="label-shared-component grupo-familiar-label">Grupo Familiar</label>
+      <input class="input-shared-component" type="text" v-model="grupoFamiliar" />
     </div>
 
     <div class="home-container__list-button">
@@ -27,26 +21,23 @@
         :type="'small'"
         :bgColor="'yellow'"
         @Event="unirseGrupo"
-      >
-      </ButtonShared>
+      ></ButtonShared>
     </div>
 
     <ErrorModalShared
       v-if="errorFlagModal"
       :title="'Lo sentimos'"
-      :description="'El nombre del grupo  familiar ya existe'"
+      :description="messageError"
       @Event="cerrarModal"
-    >
-    </ErrorModalShared>
+    ></ErrorModalShared>
 
-      <ErrorModalShared
+    <ErrorModalShared
       class="modal-familia-no-existe"
       v-if="errorFlagModalUnirse"
       :title="'Lo sentimos'"
-      :description="'El grupo familiar no existe o no acepta solicitudes por el momento'"
+      :description="messageError"
       @Event="cerrarModalUnirse"
-    >
-    </ErrorModalShared>
+    ></ErrorModalShared>
   </div>
 </template>
 
@@ -65,6 +56,7 @@ export default {
       loadingCreaFamiliarButton: false,
       errorFlagModal: false,
       errorFlagModalUnirse: false,
+      messageError: ""
     };
   },
   created() {
@@ -73,26 +65,30 @@ export default {
 
   methods: {
     async crearGrupo() {
-      console.log("qweqwe");
       this.$data.loadingCreaFamiliarButton = true;
       try {
         const res = await FamiliaService.crearFamilia({
           dni: localStorage.getItem("dni"),
-          familiaNombre: this.$data.grupoFamiliar,
+          familiaNombre: this.$data.grupoFamiliar
         });
 
-          this.$data.loadingCreaFamiliarButton = false;
-        
-        console.log(res);
+        this.$data.loadingCreaFamiliarButton = false;
+        let data = JSON.parse(localStorage.getItem("data"));
+        data.usuario.familia = {};
+        data.usuario.familia.familiaId = res.data.id;
+        data.usuario.familia.nombre = res.data.familiaNombre;
+        localStorage.setItem("data", JSON.stringify(data));
+        this.$router.push("/home/family/" + data.usuario.familia.familiaId);
       } catch (error) {
         console.log(error);
+        this.messageError = `El grupo familiar '${this.$data.grupoFamiliar}' ya existe`;
         this.$data.loadingCreaFamiliarButton = false;
         this.$data.errorFlagModal = true;
       }
     },
     async unirseGrupo() {
       console.log("unirse grupo");
-       try {
+      try {
         const res = await SolicitudService.crearSolicitud({
           familiaNombre: this.$data.grupoFamiliar,
           //dni: "77777777"
@@ -102,22 +98,22 @@ export default {
         this.$data.errorFlagModalUnirse = true;
         this.$data.errorFlagModal = true;
         this.$router.push("/home/solicitudes");
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
+        this.messageError = `El grupo familiar '${this.$data.grupoFamiliar}' no existe o no está permitido el envío de solicitud en este momento`;
         this.$data.errorFlagModalUnirse = true;
-        
       }
     },
-  
-    async tieneSolicitudes(){
-      try{
-      const res = await SolicitudService.obtenerSolicitudes(localStorage.getItem("dni"));
-      this.$data.solicitudActiva=true;
-      console.log(res);
-      }
-      catch(error){
-        this.$data.solicitudActiva=false;
+
+    async tieneSolicitudes() {
+      try {
+        const res = await SolicitudService.obtenerSolicitudes(
+          localStorage.getItem("dni")
+        );
+        this.$data.solicitudActiva = true;
+        console.log(res);
+      } catch (error) {
+        this.$data.solicitudActiva = false;
       }
     },
 
@@ -126,8 +122,8 @@ export default {
     },
     cerrarModalUnirse() {
       this.$data.errorFlagModalUnirse = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

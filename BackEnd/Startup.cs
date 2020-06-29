@@ -6,6 +6,7 @@ using MiCanasta.MiCanasta.Services.Impl;
 using MiCanasta.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,8 +38,6 @@ namespace MiCanasta
             services.AddTransient<CategoriaService, CategoriaServiceImpl>();
             services.AddTransient<RolesPorPerfilService, RolesPorPerfilServiceImpl>();
             services.AddTransient<CompraService, CompraServiceImpl>();
-           
-
 
             services.AddCors(options =>
             {
@@ -53,6 +52,7 @@ namespace MiCanasta
                          .ServerVersion(new Version(8, 0, 13), ServerType.MySql)
              ));
 
+     
             /*services.AddDbContextPool<ApplicationDbContext>(options => options
             .UseMySql("Server=localhost;Database=mi-canasta-web;User=root;Password=root;", mySqlOptions => mySqlOptions
             .ServerVersion(new Version(8, 0, 13), ServerType.MySql)

@@ -13,12 +13,13 @@ using System.Text.RegularExpressions;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.Dto;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
     public class UsuarioServiceImpl : UsuarioService
     {
-        private static byte[] salt = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         
@@ -45,13 +46,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public UsuarioDto Create(UsuarioReniecDto model)
         {
             if (model !=null) {
+                var ContrasenaEnc= Encoding.ASCII.GetBytes(model.Dni).ToString();
                 var Nuevo = new Usuario
                 {
                     Dni = model.Dni,
                     Nombre = model.Nombre1 + " " + model.Nombre2,
                     ApellidoPaterno = model.ApellidoPaterno,
                     ApellidoMaterno = model.ApellidoMaterno,
-                    Contrasena = model.Dni.GetHashCode().ToString(),
+                    Contrasena = Encriptar(model.Dni),
                     Correo = " "
                 };
                 _context.Add(Nuevo);
@@ -82,12 +84,13 @@ namespace MiCanasta.MiCanasta.Services.Impl
             var resultValidacion = GetById(Dni);
             if (resultValidacion.Dni == null)
             {
+                if (Dni != Contrasena) throw new UserLoginIncorrectException();
+
                 var resultReniec = ValidarIdentidad(Dni);
                 var resultData = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
             }
-            //else if (Contrasena.GetHashCode().ToString() == resultValidacion.Contrasena)
-            else if (Contrasena == resultValidacion.Contrasena)
+            else if (Encriptar(Contrasena) == resultValidacion.Contrasena)
             {
                 return _mapper.Map<UsuarioAccesoDto>(resultValidacion);
             }
@@ -97,6 +100,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             UsuarioAccesoDto usuario = ValidateLogin(Dni, Contrasena);
             List<RolUsuario> rolesUsuario;
+            List<RolUsuarioDataDto> rolesUsuarioData;
             TiendaDataDto tiendaData;
             FamiliaDataDto familiaData;
             UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
@@ -112,8 +116,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 tiendaData = _mapper.Map<TiendaDataDto>(tienda);
             } else tiendaData = null;
             rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
-            List<RolUsuarioDataDto> rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
-            return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, rolUsuario = rolesUsuarioData };
+            rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
+            Solicitud solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
+            return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, roles = rolesUsuarioData, solicitud = solicitud };
 
 
         }
@@ -142,20 +147,44 @@ namespace MiCanasta.MiCanasta.Services.Impl
             if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
                 throw new NewPasswordNotMatchException();
             }
-            if (UsuarioUpdateDto.Contrasena.GetHashCode().ToString() != entry.Contrasena)
+            if (Encriptar(UsuarioUpdateDto.Contrasena) != entry.Contrasena)
             {
                 throw new ActualPasswordNotMatchException();
             }
             if (UsuarioUpdateDto.Contrasena != null)
             {
                 if (UsuarioUpdateDto.Correo != null) entry.Correo = UsuarioUpdateDto.Correo;
-                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = UsuarioUpdateDto.NuevaContrasena.GetHashCode().ToString();
+                if (UsuarioUpdateDto.NuevaContrasena != null) entry.Contrasena = Encriptar(UsuarioUpdateDto.NuevaContrasena);
             }
 
             _context.SaveChanges();
             return UsuarioUpdateDto;
         }
 
+        public TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto)
+        {
+            Usuario usuario = _context.Usuarios.SingleOrDefault(x => x.Dni == Dni);
+            Tienda tienda = _context.Tiendas.SingleOrDefault(x => x.TiendaId == IdTienda);
+
+            if (usuario.Contrasena != TiendaUpdateDto.Contrasena)
+            {
+                throw new ActualPasswordNotMatchException();
+            }
+            else {
+                if (TiendaUpdateDto.Descripcion != null)
+                    tienda.Descripcion = TiendaUpdateDto.Descripcion;
+                if (TiendaUpdateDto.Direccion != null)
+                    tienda.Direccion = TiendaUpdateDto.Direccion;
+                if (TiendaUpdateDto.Longitud != null)
+                    tienda.Longitud = TiendaUpdateDto.Longitud;
+                if (TiendaUpdateDto.Latitud != null)
+                    tienda.Latitud = TiendaUpdateDto.Latitud;
+                if (TiendaUpdateDto.Horario != null)
+                    tienda.Horario = TiendaUpdateDto.Horario;
+                _context.SaveChanges();
+            }
+            return _mapper.Map<TiendaDto>(tienda);
+        }
 
         public UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni)
         {
@@ -230,6 +259,11 @@ namespace MiCanasta.MiCanasta.Services.Impl
         void AddRolUsuario(RolUsuario rol)
         {
             _context.RolUsuarios.Add(rol);
+        public String Encriptar(String _cadenaAencriptar)
+        {
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
+            String result = Convert.ToBase64String(encryted);
+            return result;
         }
     }
 }

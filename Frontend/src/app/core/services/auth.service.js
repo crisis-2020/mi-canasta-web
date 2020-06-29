@@ -1,17 +1,6 @@
 import axios from "axios";
 import { environments } from "../../environments/environments";
 export default class AuthService {
-  /**
-   * EJEMPLO PARA GET
-   */
-
-  // static async autenticacion(dni) {
-  //     return await axios({
-  //         url: `${environments.api}/${dni}`,
-  //         method: "GET"
-  //     })
-  // }
-
   static async autenticacion(usuario) {
     return await axios({
       url: `${environments.api}/usuarios`,
@@ -21,5 +10,13 @@ export default class AuthService {
         contrasena: usuario.contrasena,
       },
     });
+  }
+
+  static getUsuarioAutenticacion() {
+    return JSON.parse(sessionStorage.getItem("usuario"));
+  }
+
+  static saveUsuarioAutenticacion(usuarioAutenticacion) {
+    sessionStorage.setItem("usuario", JSON.stringify(usuarioAutenticacion));
   }
 }

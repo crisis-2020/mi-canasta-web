@@ -29,14 +29,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
 
         public FamiliaCreateDto Create(FamiliaCreateDto model)
-        {
-
+        { 
             if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) != null) throw new ExistingFamilyException();
 
             else
             {
                 var familia = new Familia
                 {
+
                     Nombre = model.FamiliaNombre,
                     Dni = model.Dni,
                     AceptaSolicitudes = true,
@@ -58,7 +58,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 _context.Add(familia);
                 _context.Add(entry);
                 _context.SaveChanges();
-
+                familia = _context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre);
+                model.Id = familia.FamiliaId;
             }
             return _mapper.Map<FamiliaCreateDto>(model);
         }
