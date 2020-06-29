@@ -67,7 +67,7 @@ export default new Router({
           component: RequestsSentPage,
         },
         {
-          path: "requests-received/:idFam",
+          path: "requests-received",
           name: "RequestReceived",
           component: RequestReceived,
         },
