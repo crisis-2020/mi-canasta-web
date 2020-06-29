@@ -39,18 +39,18 @@ export default {
         const res = await FamiliaService.listarMiembrosDeFamilia(this.$data.idFamilia);
         this.user = res.data;
         this.dni = this.user.dni;
-        //UsuarioService.cambiarRolUsuario(this.dni);
-        //UsuarioService.cambiarRolUsuario(localStorage.getItem("dni"));
+        console.log(this.user.dni);
       }
     },
 
 
     handleChange(value) {
     try{
-      let data = JSON.parse(localStorage.getItem("data"));
-      UsuarioService.cambiarRolUsuario(data.usuario.usuario.dni);
+      //let data = JSON.parse(localStorage.getItem("data"));
+      //UsuarioService.cambiarRolUsuario(data.usuario.usuario.dni);
+      UsuarioService.cambiarRolUsuario(localStorage.getItem("dni"));
       console.log(`Selected: ${value}`);
-      // this.$router.go();
+      this.$router.go();
     } catch (error){
       console.log(error);
     }

@@ -22,4 +22,8 @@ export default class FamiliaService {
     static async desactivarSolicitud(idFamilia){
         return await axios.put(`${environments.api}/familias/${idFamilia}`);
     }
+
+    static async getCompras(nombreFamilia, fechaInicio, fechaFin) {
+        return await axios.get(`${environments.api}/familias/${nombreFamilia}/compras?fechaFin=${fechaFin}&fechaInicio=${fechaInicio}`);
+    }
 }

@@ -1,4 +1,4 @@
-/*** Modelo para la realizar una compra */
+/*** Modelo para realizar una compra */
 export class CompraRequest{
     FamiliaId;
     TiendaId;
@@ -19,3 +19,9 @@ export class CompraRequest{
     FechaCompra;
   }
   
+  export class CompraGet{
+    nombreFamilia;
+    ProductoId;
+    Cantidad;
+    FechaCompra;
+  }

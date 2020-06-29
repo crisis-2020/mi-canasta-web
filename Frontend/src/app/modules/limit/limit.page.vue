@@ -39,6 +39,9 @@
 
 <script>
 import HorizontalBarShared from "../../shared/charts/horizontal-bar.component.vue";
+//import FamiliaService from '../../core/services/familia.service';
+//import { CompraGet } from '../../core/model/compra.model';
+//import { ProductoGet } from '../../core/model/producto.model';
 export default {
   name: "LimitPage",
   components: {
@@ -47,6 +50,19 @@ export default {
 
     data: function() {
     return {
+      nombreFamilia: "",
+      productoId: "",
+      cantidad:"",
+      fechaCompra:"",
+
+      categoriaId: "",
+      descripcion:"",
+      cantidadUnit: "",
+
+      fechaInicio:"",
+      fechaFin:"",
+      //compra: CompraGet,
+
       dataHorizontaBar:[
         {text: "3kg", color: "green", value: 3},
         {text: "2kg", color: "orange", value: 2},
@@ -66,10 +82,29 @@ export default {
         {text: "2 rollos", color: "green", value: 2},
         {text: "4 rollos", color: "orange", value: 4},
       ]
-
-    };
+    }
   },
-};
+
+      /***created(){
+          this.$data.idFamilia = this.$route.params.id;
+          this.getCompras();            
+      },
+
+      methods:{
+
+      async getCompras(){
+        try {
+           const res = await FamiliaService.getCompras(this.nombreFamilia,
+           this.fechaInicio, this.fechaFin);
+           this.compra = res.data;
+           this.cantidad = this.compra.cantidad;  
+           console.log("777");
+         } catch (error) {
+           console.log(error);        
+           }
+        },
+      }*/
+}
 
 </script>
 

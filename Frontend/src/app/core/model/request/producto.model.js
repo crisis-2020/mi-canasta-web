@@ -6,3 +6,10 @@ export class ProductoRequest{
     compras;
     stocks;
   }
+
+  export class ProductoGet{
+    productoId;
+    categoriaId;
+    descripcion;
+    cantidadUnit;
+  }
