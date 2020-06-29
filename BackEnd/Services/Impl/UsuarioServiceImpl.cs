@@ -22,7 +22,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        
+
         public UsuarioServiceImpl(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
@@ -45,8 +45,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
         public UsuarioDto Create(UsuarioReniecDto model)
         {
-            if (model !=null) {
-                var ContrasenaEnc= Encoding.ASCII.GetBytes(model.Dni).ToString();
+            if (model != null) {
+                var ContrasenaEnc = Encoding.ASCII.GetBytes(model.Dni).ToString();
                 var Nuevo = new Usuario
                 {
                     Dni = model.Dni,
@@ -190,10 +190,10 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioFamilia != null)
-            { 
-                UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia); 
+            {
+                UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia);
                 return usuarioFamiliaGetDto;
-            }throw new UserFamilyNotFoundException();
+            } throw new UserFamilyNotFoundException();
         }
         public void CancelarSolicitud(String Dni, int idFamilia)
         {
@@ -259,11 +259,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
         void AddRolUsuario(RolUsuario rol)
         {
             _context.RolUsuarios.Add(rol);
+        }
+
         public String Encriptar(String _cadenaAencriptar)
         {
-            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
-            String result = Convert.ToBase64String(encryted);
-            return result;
+                byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
+                String result = Convert.ToBase64String(encryted);
+                return result;
+            
         }
     }
 }
