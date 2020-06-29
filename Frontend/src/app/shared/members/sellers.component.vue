@@ -7,7 +7,7 @@
 
       </div>
       <div class="member-container__personal">
-        <h2>{{ person.nombre }}</h2>
+         <h2>{{ person.nombre +" "+ person.apellidoPaterno}}</h2>
         <p>{{ person.dni }}</p>
       </div>
     </div>
@@ -45,7 +45,6 @@ export default {
   },
   created(){
     this.getRolUsuario();
-    this.$data.rolPerfilId = this.$route.rolUsuario;
   },
   
   methods:{
@@ -81,8 +80,7 @@ export default {
         const res = await UsuarioService.getUsuario(this.dni);
         this.roles = res.data.rolUsuarios;
         for(let i=0; i < this.roles.length; i++){
-          if(this.roles[i].rolPerfilId == 3); 
-          
+          if(this.roles[i].rolPerfilId == 3) console.log("TiendaUser"); 
         }        
       }
       catch (error) {

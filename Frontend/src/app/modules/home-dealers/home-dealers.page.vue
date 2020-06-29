@@ -69,7 +69,7 @@ export default {
       dni: "",
       tienda: TiendaGet,
       isShowModalError: false,
-      error: { title: "Error" },
+      error: { title: "¡Error!" },
     };
   },
 
