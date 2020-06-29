@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using MiCanasta.MiCanasta.Dto;
 using MiCanasta.Dto;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace MiCanasta.MiCanasta.Services.Impl
 {
@@ -45,6 +46,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public UsuarioDto Create(UsuarioReniecDto model)
         {
             if (model !=null) {
+                var ContrasenaEnc= Encoding.ASCII.GetBytes(model.Dni).ToString();
                 var Nuevo = new Usuario
                 {
                     Dni = model.Dni,
@@ -80,8 +82,11 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public UsuarioAccesoDto ValidateLogin(string Dni, string Contrasena)
         {
             var resultValidacion = GetById(Dni);
+            var contrasenaHash = Encoding.ASCII.GetBytes(Contrasena).ToString();
             if (resultValidacion.Dni == null)
             {
+                if (Dni != Contrasena) throw new UserLoginIncorrectException();
+
                 var resultReniec = ValidarIdentidad(Dni);
                 var resultData = Create(resultReniec);
                 return _mapper.Map<UsuarioAccesoDto>(resultData);
@@ -96,6 +101,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             UsuarioAccesoDto usuario = ValidateLogin(Dni, Contrasena);
             List<RolUsuario> rolesUsuario;
+            List<RolUsuarioDataDto> rolesUsuarioData;
             TiendaDataDto tiendaData;
             FamiliaDataDto familiaData;
             UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
