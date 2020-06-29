@@ -82,7 +82,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
         public UsuarioAccesoDto ValidateLogin(string Dni, string Contrasena)
         {
             var resultValidacion = GetById(Dni);
-            var contrasenaHash = Encoding.ASCII.GetBytes(Contrasena).ToString();
             if (resultValidacion.Dni == null)
             {
                 if (Dni != Contrasena) throw new UserLoginIncorrectException();
@@ -117,7 +116,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 tiendaData = _mapper.Map<TiendaDataDto>(tienda);
             } else tiendaData = null;
             rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
-            List<RolUsuarioDataDto> rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
+            rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
             Solicitud solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
             return new UsuarioDataDto() { usuario = usuario, familia = familiaData, tienda = tiendaData, roles = rolesUsuarioData, solicitud = solicitud };
 
