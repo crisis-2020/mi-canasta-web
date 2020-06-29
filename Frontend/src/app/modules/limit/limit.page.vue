@@ -62,6 +62,21 @@ export default {
       fechaInicio:"",
       fechaFin:"",
       //compra: CompraGet,
+            /*var auxiliarDate = new Date();
+auxiliarDate.setHours(0,0,0,0);
+var inicioDeSemana = new Date(auxiliarDate.setDate(auxiliarDate.getDate()-auxiliarDate.getDay()));
+
+var fin de semana= new Date(auxiliarDate.SetDate(auxiliarDate.getDate()- auxiliarDate.getDay()+6));
+
+finDeSemana.setHours(23,59,59);
+
+console.log(inicioDeSemana);
+console.log(finDeSemana);
+console.log(
+inicioDeSemana.getDate()+"/"+
+inicioDeSemana.getMonth()+1)+"/"+
+inicioDeSemana.getFullYear()
+); */
 
       dataHorizontaBar:[
         {text: "3kg", color: "green", value: 3},
