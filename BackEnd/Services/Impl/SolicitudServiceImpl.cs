@@ -46,7 +46,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 return true;
             else return false;
         }
-
         public void CancelarSolicitud(String Dni)
         {
             var solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
@@ -59,7 +58,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
             _context.SaveChanges();
         }
-
+        
         public SolicitudDto Create(SolicitudCreateDto model)
         {
             Solicitud entry = null;

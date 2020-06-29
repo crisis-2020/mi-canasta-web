@@ -40,17 +40,17 @@ export default {
         this.user = res.data;
         this.dni = this.user.dni;
         //UsuarioService.cambiarRolUsuario(this.dni);
-        //UsuarioService.cambiarRolUsuario(localStorage.getItem("dni"));
       }
     },
 
 
     handleChange(value) {
     try{
+      //UsuarioService.cambiarRolUsuario(localStorage.getItem("dni"));
       let data = JSON.parse(localStorage.getItem("data"));
       UsuarioService.cambiarRolUsuario(data.usuario.usuario.dni);
       console.log(`Selected: ${value}`);
-      // this.$router.go();
+      this.$router.go();
     } catch (error){
       console.log(error);
     }

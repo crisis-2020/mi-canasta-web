@@ -45,7 +45,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
         public UsuarioDto Create(UsuarioReniecDto model)
         {
-            if (model != null) {
+            if (model != null)
+            {
                 var ContrasenaEnc = Encoding.ASCII.GetBytes(model.Dni).ToString();
                 var Nuevo = new Usuario
                 {
@@ -108,13 +109,15 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 Familia familia = _context.Familias.Single(x => x.FamiliaId == usuarioFamilia.FamiliaId);
                 familiaData = _mapper.Map<FamiliaDataDto>(familia);
-            } else familiaData = null;
+            }
+            else familiaData = null;
             UsuarioTienda usuarioTienda = _context.UsuarioTiendas.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioTienda != null)
             {
                 Tienda tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
                 tiendaData = _mapper.Map<TiendaDataDto>(tienda);
-            } else tiendaData = null;
+            }
+            else tiendaData = null;
             rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
             rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
             Solicitud solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
@@ -123,7 +126,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         }
 
-        bool CorreoValido(string email) {
+        bool CorreoValido(string email)
+        {
             if (email != null)
             {
                 String expresion;
@@ -139,12 +143,15 @@ namespace MiCanasta.MiCanasta.Services.Impl
             else return true;
         }
 
-        public UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto) {
+        public UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto)
+        {
             var entry = _context.Usuarios.Single(x => x.Dni == Dni);
-            if (CorreoValido(UsuarioUpdateDto.Correo) == false) {
+            if (CorreoValido(UsuarioUpdateDto.Correo) == false)
+            {
                 throw new EmailWrongFormatException();
             }
-            if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
+            if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena)
+            {
                 throw new NewPasswordNotMatchException();
             }
             if (Encriptar(UsuarioUpdateDto.Contrasena) != entry.Contrasena)
@@ -170,7 +177,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 throw new ActualPasswordNotMatchException();
             }
-            else {
+            else
+            {
                 if (TiendaUpdateDto.Descripcion != null)
                     tienda.Descripcion = TiendaUpdateDto.Descripcion;
                 if (TiendaUpdateDto.Direccion != null)
@@ -193,7 +201,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia);
                 return usuarioFamiliaGetDto;
-            } throw new UserFamilyNotFoundException();
+            }
+            throw new UserFamilyNotFoundException();
         }
         public void CancelarSolicitud(String Dni, int idFamilia)
         {
@@ -263,10 +272,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         public String Encriptar(String _cadenaAencriptar)
         {
-                byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
-                String result = Convert.ToBase64String(encryted);
-                return result;
-            
+            byte[] encryted = System.Text.Encoding.Unicode.GetBytes(_cadenaAencriptar);
+            String result = Convert.ToBase64String(encryted);
+            return result;
         }
     }
 }
