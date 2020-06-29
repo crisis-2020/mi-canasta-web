@@ -27,6 +27,12 @@ namespace MiCanasta.MiCanasta.Controllers
             return Ok(_tiendaService.getById(idTienda));
         }
 
+        [HttpGet("{idTienda}/limite")]
+        public ActionResult GetLimiteTienda(int idTienda)
+        {
+            return Ok(_tiendaService.GetLimiteTienda(idTienda));
+        }
+
         [HttpPost("{IdTienda}/usuario/{Dni}/usuariosportienda")]
         public ActionResult PostNewUserInShop(int IdTienda, string Dni)
         {
@@ -85,8 +91,21 @@ namespace MiCanasta.MiCanasta.Controllers
                 return NoContent();
             }
         }
-        
-        [HttpGet("{IdTienda}")]
+
+        [HttpPut("/tiendas/{IdTienda}/{Dni}")]
+        public ActionResult UpdateTienda(int IdTienda, string Dni, TiendaUpdateDto TiendaUpdateDto)
+        {
+            try
+            {
+                return Ok(_tiendaService.UpdateTienda(IdTienda, Dni, TiendaUpdateDto));
+            }
+            catch (ActualPasswordNotMatchException e)
+            {
+                return BadRequest(e.ExceptionDto);
+            }
+        }
+
+        [HttpGet("{IdTienda}/detalles")]
         public ActionResult GetTiendaDetalles(int IdTienda)
         {
             try

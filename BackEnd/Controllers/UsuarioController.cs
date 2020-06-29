@@ -89,17 +89,6 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpPut("{Dni}/tiendas/{IdTienda}")]
-        public ActionResult UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto ) {
-            try
-            {
-                return Ok(_usuarioService.UpdateTienda(Dni, IdTienda, TiendaUpdateDto));
-            }
-            catch (ActualPasswordNotMatchException e) {
-                return BadRequest(e.ExceptionDto); 
-            }
-        }
-
         [HttpGet("{Dni}/usuariosporfamilia")]
         public ActionResult UpdateTienda (string Dni)
         {
@@ -123,6 +112,20 @@ namespace MiCanasta.MiCanasta.Controllers
             catch (SolicitudeNotFoundException SolicitudeNotFoundException)
             {
                 return NotFound(SolicitudeNotFoundException.ExceptionDto);
+            }
+        }
+
+        [HttpPut("{Dni}/RolesPorUsuario")]
+        public ActionResult cambiarRolUsuario(string Dni)
+        {
+            try
+            {
+                _usuarioService.cambiarRolUsuario(Dni);
+                return Ok("El rol fue modificado");
+            }
+            catch (UserNotFoundException userNotFoundException)
+            {
+                return BadRequest(userNotFoundException.ExceptionDto);
             }
         }
 

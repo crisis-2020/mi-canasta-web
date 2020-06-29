@@ -22,7 +22,7 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        
+
         public UsuarioServiceImpl(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
@@ -45,8 +45,9 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
         public UsuarioDto Create(UsuarioReniecDto model)
         {
-            if (model !=null) {
-                var ContrasenaEnc= Encoding.ASCII.GetBytes(model.Dni).ToString();
+            if (model != null)
+            {
+                var ContrasenaEnc = Encoding.ASCII.GetBytes(model.Dni).ToString();
                 var Nuevo = new Usuario
                 {
                     Dni = model.Dni,
@@ -108,13 +109,15 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 Familia familia = _context.Familias.Single(x => x.FamiliaId == usuarioFamilia.FamiliaId);
                 familiaData = _mapper.Map<FamiliaDataDto>(familia);
-            } else familiaData = null;
+            }
+            else familiaData = null;
             UsuarioTienda usuarioTienda = _context.UsuarioTiendas.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioTienda != null)
             {
                 Tienda tienda = _context.Tiendas.Single(x => x.TiendaId == usuarioTienda.TiendaId);
                 tiendaData = _mapper.Map<TiendaDataDto>(tienda);
-            } else tiendaData = null;
+            }
+            else tiendaData = null;
             rolesUsuario = _context.RolUsuarios.Where(x => x.Dni == Dni).OrderBy(x => x.RolPerfilId).ToList();
             rolesUsuarioData = _mapper.Map<List<RolUsuarioDataDto>>(rolesUsuario);
             Solicitud solicitud = _context.Solicitudes.SingleOrDefault(x => x.Dni == Dni);
@@ -123,7 +126,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
 
         }
 
-        bool CorreoValido(string email) {
+        bool CorreoValido(string email)
+        {
             if (email != null)
             {
                 String expresion;
@@ -139,12 +143,15 @@ namespace MiCanasta.MiCanasta.Services.Impl
             else return true;
         }
 
-        public UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto) {
+        public UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto)
+        {
             var entry = _context.Usuarios.Single(x => x.Dni == Dni);
-            if (CorreoValido(UsuarioUpdateDto.Correo) == false) {
+            if (CorreoValido(UsuarioUpdateDto.Correo) == false)
+            {
                 throw new EmailWrongFormatException();
             }
-            if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena) {
+            if (UsuarioUpdateDto.NuevaContrasena != UsuarioUpdateDto.RepetirContrasena)
+            {
                 throw new NewPasswordNotMatchException();
             }
             if (Encriptar(UsuarioUpdateDto.Contrasena) != entry.Contrasena)
@@ -170,7 +177,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
             {
                 throw new ActualPasswordNotMatchException();
             }
-            else {
+            else
+            {
                 if (TiendaUpdateDto.Descripcion != null)
                     tienda.Descripcion = TiendaUpdateDto.Descripcion;
                 if (TiendaUpdateDto.Direccion != null)
@@ -190,10 +198,11 @@ namespace MiCanasta.MiCanasta.Services.Impl
         {
             UsuarioFamilia usuarioFamilia = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
             if (usuarioFamilia != null)
-            { 
-                UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia); 
+            {
+                UsuarioFamiliaGetDto usuarioFamiliaGetDto = _mapper.Map<UsuarioFamiliaGetDto>(usuarioFamilia);
                 return usuarioFamiliaGetDto;
-            }throw new UserFamilyNotFoundException();
+            }
+            throw new UserFamilyNotFoundException();
         }
         public void CancelarSolicitud(String Dni, int idFamilia)
         {
@@ -206,6 +215,59 @@ namespace MiCanasta.MiCanasta.Services.Impl
             }
 
             _context.SaveChanges();
+        }
+
+        public void cambiarRolUsuario(string Dni)
+        {
+
+            var exist = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni);
+            if (exist == null) throw new UserNotFoundException();
+
+            else
+            {
+                var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
+                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1))
+                {
+                    var entry = new RolUsuario
+                    {
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 2,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    DeleteRolUsuario(rolUsuario);
+                    AddRolUsuario(entry);
+                    _context.SaveChanges();
+
+                }
+
+                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
+                {
+                    var entry = new RolUsuario
+                    {
+                        Dni = rolUsuario.Dni,
+                        RolPerfil = rolUsuario.RolPerfil,
+                        RolPerfilId = 1,
+                        Usuario = rolUsuario.Usuario,
+                    };
+
+                    DeleteRolUsuario(rolUsuario);
+                    AddRolUsuario(entry);
+                    _context.SaveChanges();
+                }
+            }
+
+        }
+
+        void DeleteRolUsuario(RolUsuario rol)
+        {
+            _context.RolUsuarios.Remove(rol);
+
+        }
+        void AddRolUsuario(RolUsuario rol)
+        {
+            _context.RolUsuarios.Add(rol);
         }
 
         public String Encriptar(String _cadenaAencriptar)

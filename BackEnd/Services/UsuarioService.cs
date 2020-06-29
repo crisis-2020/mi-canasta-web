@@ -13,9 +13,9 @@ namespace MiCanasta.MiCanasta.Services
         UsuarioDto Create(UsuarioReniecDto model);
         UsuarioAccesoDto ValidateLogin(String Dni, String Contrasena);
         UsuarioUpdateDto Update(string Dni, UsuarioUpdateDto UsuarioUpdateDto);
-        TiendaDto UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto);
         UsuarioFamiliaGetDto GetUsuarioFamilia(string Dni);
         void CancelarSolicitud(String Dni, int idFamilia);
+        void cambiarRolUsuario(string Dni);
         String Encriptar(String _cadenaAencriptar);
     }
 }

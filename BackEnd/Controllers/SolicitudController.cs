@@ -54,6 +54,13 @@ namespace MiCanasta.MiCanasta.Controllers
                 return BadRequest(FamilyNotAceptedSolicitudeException.ExceptionDto);
             }
         }
+
+        [HttpGet("{IdFamilia}")]
+        public ActionResult GetSolicitudesByFamily(int IdFamilia)
+        {
+                return Ok();
+        }
+        
         [HttpDelete("{id}")]
         public ActionResult CancelarSolicitud(String id)
         {
