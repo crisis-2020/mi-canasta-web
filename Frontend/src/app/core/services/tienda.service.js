@@ -7,6 +7,13 @@ export default class TiendaService {
         return await axios.get(`${environments.api}/tiendas/${idTienda}`);
     }
 
+    static async listarTiendas(){
+        return await axios.get(`${environments.api}/tiendas`);
+    }
+
+    static async listarStock(id){
+        return await axios.get(`${environments.api}/tiendas/${id}/stocks`)
+    }    
     static async getUsuariosByTiendaId(idTienda) {
         return await axios.get(`${environments.api}/tiendas/${idTienda}/usuarios`);
     }

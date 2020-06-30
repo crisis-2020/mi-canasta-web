@@ -72,7 +72,6 @@ export default {
         await AuthService.autenticacion(usuario).then(e => {
           this.$data.loadingButton = false;
           AuthService.saveUsuarioAutenticacion(e.data);
-
           if (e.data.usuario.solicitud != null) {
             this.$router.push(`/start/requests-sent`);
           } else if (e.data.usuario.tienda != null) {
