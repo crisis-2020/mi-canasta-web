@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import AuthService from '../../../core/services/auth.service';
 export default {
   name: "FooterDelearComponent",
   created() {
@@ -57,23 +58,23 @@ export default {
   methods: {
     onSelecteFooterIcon: function(index) {
       this.$data.activedIndex = index;
-      this.$router.push(`/family/location`);
+      this.$router.push(`/dealer/location`);
     },
 
     onSelecteFooterIcon2: function(index) {
       this.$data.activedIndex = index;
-      let data = JSON.parse(localStorage.getItem("data"));
-      this.$router.push(`/family/family/` + data.usuario.familia.familiaId);
+      let data = AuthService.getUsuarioAutenticacion();
+      this.$router.push(`/dealer/dealers/` + data.usuario.tienda.tiendaId);
     },
 
     onSelecteFooterIcon3: function(index) {
       this.$data.activedIndex = index;
-      this.$router.push(`/family/limit`);
+      this.$router.push(`/dealer/stock`);
     },
 
     onSelecteFooterIcon4: function(index) {
       this.$data.activedIndex = index;
-      this.$router.push(`/family/user`);
+      this.$router.push(`/dealer/user`);
     }
   }
 };

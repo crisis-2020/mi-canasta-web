@@ -75,7 +75,7 @@ export default {
           if (e.data.usuario.solicitud != null) {
             this.$router.push(`/start/requests-sent`);
           } else if (e.data.usuario.tienda != null) {
-            this.$router.push(`/home/dealers`);
+            this.$router.push(`/dealer/dealers/${e.data.usuario.tienda.tiendaId}`);
           } else if (e.data.usuario.familia != null) {
             this.validarSolicitudes(e);
           } else {

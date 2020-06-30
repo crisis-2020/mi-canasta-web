@@ -133,12 +133,12 @@ import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
             },
 
             volver(){
-                this.$router.push("/home/user");
+                this.$router.push("/family/user");
             },
 
             closeModal() {
                 this.isShowModal = false;
-                location.reload();
+                // location.reload();
             },
         }
     }
