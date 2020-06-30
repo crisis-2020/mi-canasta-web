@@ -74,8 +74,12 @@ export default {
 
           if (e.data.usuario.familia != null) {
             this.$router.push(`/home/family/${e.data.usuario.familia.familiaId}`);
-          } else {
-            this.$router.push("/home");
+          } else if(e.data.usuario.tienda !== null){
+            this.$router.push(`/home/dealers/`)
+          } else if(e.data.usuario.solicitud !== null){
+            this.$router.push(`/home/requests-sent`)
+          }
+           else{ this.$router.push("/home");
           }
         });
       } catch (error) {

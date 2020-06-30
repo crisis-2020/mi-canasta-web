@@ -2,18 +2,22 @@
   <div class="dealers-location-container">
     <div class="dealers-location-container__title">
       <h2>Filtrar</h2>
-      <a-select
-        default-value="Arroz"
-        style="width: 120px"
-        @change="handleChange"
-      >
-        <a-select-option value="Arroz">
-          Arroz
-        </a-select-option>
-        <a-select-option value="Leche">
-          Leche
-        </a-select-option>
-      </a-select>
+      <div>
+        <a-select
+          style="width: 120px"
+          @change="handleChange"
+        >
+          <a-select-option v-for="(producto, i) in productos" :key="i">
+            {{ producto.nombre }}
+          </a-select-option>
+        </a-select>
+        <a-input-number
+          id="inputNumber"
+          v-model="maxValue"
+          :min="1"
+          :max="maxValue"
+        />
+      </div>
     </div>
     <div class="dealers-location-container__body">
       <div class="dealers-location-container__body__filter">
@@ -23,12 +27,12 @@
           v-bind:key="i"
         >
           <img
-            v-if="i === actualFilterSelected"
+            v-if="filter.flag === true"
             v-bind:src="filter.iconActivate"
             alt=""
           />
           <img
-            v-if="i !== actualFilterSelected"
+            v-if="filter.flag !== true"
             v-bind:src="filter.iconDesactivate"
             alt=""
           />
@@ -37,7 +41,7 @@
       <div class="mapa">
         <GmapMap
           :center="{ lat: lat, lng: lng }"
-          :zoom="14"
+          :zoom="13"
           :options="{
             zoomControl: true,
             mapTypeControl: false,
@@ -47,7 +51,6 @@
             fullscreenControl: true,
             disableDefaultUI: false,
           }"
-          
           style="width: 100%; height: 400px"
         >
           <GmapMarker
@@ -65,12 +68,11 @@
 </template>
 
 <script>
-// import Mapa from "./components/mapa.vue";
-// import Marcadores from "./components/marcadores.mapa.vue";
+import TiendaService from "../../core/services/tienda.service";
+import ProductoService from "../../core/services/producto.service";
 import { configMapa } from "./components/configMapa";
 export default {
   name: "DealersLocation",
-  //   components: { Mapa, Marcadores },
 
   data() {
     return {
@@ -94,35 +96,28 @@ export default {
         { position: { lat: -12.099093, lng: -76.999226 }, title: "Tienda 3" },
       ],
 
-      emergenciaMarkers: [
-        {
-          position: { lat: -12.127908, lng: -77.020861 },
-          title: "Emergencia 1",
-        },
-        {
-          position: { lat: -12.128988, lng: -77.024208 },
-          title: "Emergencia 2",
-        },
-        {
-          position: { lat: -12.128988, lng: -77.024208 },
-          title: "Emergencia 3",
-        },
-      ],
+      productos: [],
+
+      productoSeleccionado: null,
+
+      tiendas: [],
+
+      superMercados: [],
+
       filterOptionsMap: [
         {
           name: "Kiosko",
           iconActivate: require("../../../assets/stand_activate.svg"),
           iconDesactivate: require("../../../assets/stand_desactivate.svg"),
+          flag: true,
+          arr: this.kioskoMarkers,
         },
         {
           name: "Tienda",
           iconActivate: require("../../../assets/shop_activate.svg"),
           iconDesactivate: require("../../../assets/shop_desactivate.svg"),
-        },
-        {
-          name: "Hospital",
-          iconActivate: require("../../../assets/hospital_activate.svg"),
-          iconDesactivate: require("../../../assets/hospital_desactivate.svg"),
+          flag: true,
+          arr: this.tiendaMarkers,
         },
       ],
 
@@ -138,19 +133,25 @@ export default {
           title: "Lima - Perú",
         },
       ],
+      maxValue: 3,
     };
   },
   methods: {
     handleChange(value) {
-      console.log(`selected ${value}`);
+      
+      this.maxValue = (this.productos[value].stock);
     },
 
     changeOption(i) {
       this.actualFilterSelected = i;
 
-      if (i === 0) this.mostrarKiosos();
-      else if (i === 1) this.mostrarTiendas();
-      else this.mostrarEmergencias();
+      this.filterOptionsMap[i].flag = !this.filterOptionsMap[i].flag;
+
+      let aux = this.filterOptionsMap
+        .filter((e) => e.flag === true)
+        .map((e) => e.arr);
+
+      this.markers = [...aux][0] ? [...aux][0].concat([...aux][1] || []) : [];
     },
 
     mostrarKiosos() {
@@ -168,9 +169,67 @@ export default {
       this.lng = -77.020861;
       this.markers = this.emergenciaMarkers;
     },
+
+    async listarTiendas() {
+      try {
+        const _tiendas = await TiendaService.listarTiendas();
+
+        this.$data.tiendas = [_tiendas.data[0], _tiendas.data[1]];
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async listarSuperMercados() {
+      try {
+        const _superMarkets = await TiendaService.listarTiendas();
+        this.$data.superMercados = [_superMarkets.data[0]];
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async listarTodasTiendas() {
+      try {
+        const tiendas = await TiendaService.listarTiendas();
+
+        tiendas.data.forEach(async (tienda) => {
+          try {
+            const stocks = await TiendaService.listarStock(tienda.tiendaId);
+            stocks.data.forEach(async (stock) => {
+              try {
+                const res = await ProductoService.getProducto(stock.productoId);
+                console.log(res.data);
+                this.productos.push({
+                  nombre: res.data.descripcion,
+                  stock: stock.cantidad,
+                });
+                this.maxValue = this.productos[0].stock;
+              } catch (error) {
+                console.log(error);
+              }
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
   },
   mounted() {
-    this.$data.markers = this.$data.kioskoMarkers;
+    this.filterOptionsMap[0].arr = this.$data.kioskoMarkers;
+    this.filterOptionsMap[1].arr = this.$data.tiendaMarkers;
+
+    this.$data.markers = [
+      ...this.$data.kioskoMarkers,
+      ...this.$data.tiendaMarkers,
+    ];
+    this.listarTiendas();
+    this.listarSuperMercados();
+
+    this.listarTodasTiendas();
   },
   computed: {
     configMapa() {
@@ -202,7 +261,10 @@ export default {
 .dealers-location-container__title {
   margin: 24px 0;
   display: flex;
+  flex-direction: column;
 }
+
+
 
 .dealers-location-container__title h2 {
   margin-right: 16px;
