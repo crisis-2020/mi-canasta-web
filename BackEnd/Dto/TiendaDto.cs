@@ -16,6 +16,7 @@ namespace MiCanasta.MiCanasta.Dto
         public string Longitud { get; set; }
         public string Horario { get; set; }
         public int Limite { get; set; }
+        public string Tipo { get; set; }
         public List<UsuarioTiendaDto> UsuarioTiendas { get; set; }
         public List<StockDto> Stocks { get; set; }
         public List<CompraDto> Compras { get; set; }
