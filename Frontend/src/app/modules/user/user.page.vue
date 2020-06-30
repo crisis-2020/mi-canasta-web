@@ -93,7 +93,7 @@ import { UsuarioGet } from '../../core/model/usuario.model';
             },
 
             editUser(){
-                this.$router.push("/home/user/edit");
+                this.$router.push("/family/user/edit");
             }
         }
     }

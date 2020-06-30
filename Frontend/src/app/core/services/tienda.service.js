@@ -23,7 +23,7 @@ export default class TiendaService {
     }
 
     static async GetLimiteTienda(idTienda) {
-        return await axios.get(`${environments.api}/tiendas/${idTienda}/limite`);
+        return await axios.get(`${environments.api}/tiendas/${idTienda}`);
     }
 
     static async putTienda(idTienda, dni, putTienda) {

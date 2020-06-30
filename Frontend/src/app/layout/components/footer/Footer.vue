@@ -42,8 +42,9 @@
 </template>
 
 <script>
+import AuthService from '../../../core/services/auth.service';
 export default {
-  name: "FooterDelearComponent",
+  name: "FooterComponent",
   created() {
     this.$data.activedIndex = 2;
   },
@@ -62,7 +63,7 @@ export default {
 
     onSelecteFooterIcon2: function(index) {
       this.$data.activedIndex = index;
-      let data = JSON.parse(localStorage.getItem("data"));
+      let data = AuthService.getUsuarioAutenticacion();
       this.$router.push(`/family/family/` + data.usuario.familia.familiaId);
     },
 
