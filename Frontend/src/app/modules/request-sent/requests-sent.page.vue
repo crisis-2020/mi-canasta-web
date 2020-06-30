@@ -8,7 +8,7 @@
         v-for="(request, index) in nombreFam"
         :request="request"
         v-bind:key="index"
-        @actualizar-tarjeta="getSolicitud"
+        @actualizar-tarjeta="returnHome"
       ></request-card>
     </div>
     <ErrorModalShared
@@ -38,7 +38,7 @@ export default {
       mock: [{ familyName: "Familia82BDH" }],
       isShowModalError: false,
       error: { title: "Error" },
-      nombreFam: [],
+      nombreFam: []
     };
   },
   methods: {
@@ -50,8 +50,8 @@ export default {
         this.$data.nombreFam = [
           {
             familyName: input.data.nombreFamilia,
-            dni: dni,
-          },
+            dni: dni
+          }
         ];
       } catch (error) {
         console.log(error);
@@ -65,7 +65,11 @@ export default {
     closeModal() {
       this.$data.isShowModalError = false;
     },
-  },
+
+    returnHome() {
+      this.$router.push("/start/home");
+    }
+  }
 };
 </script>
 

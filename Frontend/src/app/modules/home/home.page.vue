@@ -46,6 +46,7 @@ import FamiliaService from "../../core/services/familia.service";
 import SolicitudService from "../../core/services/solicitud.service";
 import ButtonShared from "../../shared/button/button.component.vue";
 import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
+import AuthService from "../../core/services/auth.service";
 export default {
   name: "HomePage",
   components: { ButtonShared, ErrorModalShared },
@@ -73,12 +74,12 @@ export default {
         });
 
         this.$data.loadingCreaFamiliarButton = false;
-        let data = JSON.parse(localStorage.getItem("data"));
+        let data = AuthService.getUsuarioAutenticacion();
         data.usuario.familia = {};
         data.usuario.familia.familiaId = res.data.id;
         data.usuario.familia.nombre = res.data.familiaNombre;
-        localStorage.setItem("data", JSON.stringify(data));
-        this.$router.push("/home/family/" + data.usuario.familia.familiaId);
+        AuthService.saveUsuarioAutenticacion(data);
+        this.$router.push("/family/family/" + data.usuario.familia.familiaId);
       } catch (error) {
         console.log(error);
         this.messageError = `El grupo familiar '${this.$data.grupoFamiliar}' ya existe`;
@@ -97,7 +98,7 @@ export default {
         console.log(res);
         this.$data.errorFlagModalUnirse = true;
         this.$data.errorFlagModal = true;
-        this.$router.push("/home/solicitudes");
+        this.$router.push("/start/requests-sent");
       } catch (error) {
         console.log(error);
         this.messageError = `El grupo familiar '${this.$data.grupoFamiliar}' no existe o no está permitido el envío de solicitud en este momento`;

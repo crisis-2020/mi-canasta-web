@@ -42,6 +42,7 @@ import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
 import AuthService from "../../core/services/auth.service";
 import Usuario from "../../core/model/usuario.model";
 import ValidacionService from "../../core/services/validacion.service";
+import SolicitudService from "../../core/services/solicitud.service";
 export default {
   name: "LoginPage",
   components: { ButtonShared, ErrorModalShared },
@@ -72,10 +73,14 @@ export default {
           this.$data.loadingButton = false;
           AuthService.saveUsuarioAutenticacion(e.data);
 
-          if (e.data.usuario.familia != null) {
-            this.$router.push(`/home/family/${e.data.usuario.familia.familiaId}`);
+          if (e.data.usuario.solicitud != null) {
+            this.$router.push(`/start/requests-sent`);
+          } else if (e.data.usuario.tienda != null) {
+            this.$router.push(`/home/dealers`);
+          } else if (e.data.usuario.familia != null) {
+            this.validarSolicitudes(e);
           } else {
-            this.$router.push("/home");
+            this.$router.push("/start/home");
           }
         });
       } catch (error) {
@@ -96,6 +101,17 @@ export default {
 
         this.$data.isShowModalError = true;
         this.$data.loadingButton = false;
+      }
+    },
+    async validarSolicitudes(e) {
+      try {
+        await SolicitudService.obtenerSolicitudesPorFamilia(
+          e.data.usuario.familia.familiaId
+        );
+
+        this.$router.push(`/family/requests-received`);
+      } catch (error) {
+        this.$router.push(`/family/family/${e.data.usuario.familia.familiaId}`);
       }
     },
 

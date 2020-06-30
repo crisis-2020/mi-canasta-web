@@ -4,9 +4,13 @@
       <h2>Solicitudes Enviadas</h2>
     </div>
     <div class="request-received__allow">
-      <p>Desactivar solicitudes</p>
-
-      <a-switch default-checked />
+      <div v-if="aceptaSolicitudes" :value="false">
+        <p>La familia acepta solicitudes</p>
+      </div>
+      <div v-else>
+        <p>La familia no acepta solicitudes</p>
+      </div>
+      <a-switch v-model="aceptaSolicitudes" @change="onChange" />
     </div>
     <div class="request-received__list">
       <request-card
@@ -31,13 +35,14 @@ import RequestCard from "./components/request-received.card.vue";
 import SolicitudService from "../../core/services/solicitud.service";
 import UsuarioService from "../../core/services/usuario.service";
 import AuthService from "../../core/services/auth.service";
+import FamiliaService from "../../core/services/familia.service";
 export default {
   name: "RequestReceived",
   components: { RequestCard, ErrorModalShared },
 
   created() {
-    //this.$data.idFamilia = this.$route.params.idFam;
-    this.$data.usuario = AuthService.getUsuarioAutenticacion();
+    const data = AuthService.getUsuarioAutenticacion();
+    this.aceptaSolicitudes = data.usuario.familia.aceptaSolicitudes;
     this.getSolicitudes();
   },
 
@@ -47,15 +52,26 @@ export default {
       isShowModalError: false,
       error: { title: "Error" },
       Solicitudes: [],
+      aceptaSolicitudes: false
     };
   },
   methods: {
+    async onChange() {
+      try {
+        const data = AuthService.getUsuarioAutenticacion();
+        FamiliaService.desactivarSolicitud(data.usuario.familia.familiaId);
+        this.getSolicitudes();
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getSolicitudes() {
       try {
-        let usuario = this.$data.usuario.usuario;
+        const data = AuthService.getUsuarioAutenticacion();
+
         this.Solicitudes = [];
         const input = await SolicitudService.obtenerSolicitudesPorFamilia(
-          usuario.familia.familiaId
+          data.usuario.familia.familiaId
         );
         var SolicitudesData = input.data;
         var user = null;
@@ -66,15 +82,14 @@ export default {
             title: "Solicitud " + (i + 1),
             nombre: user.data.nombre + " " + user.data.apellidoPaterno,
             dni: user.data.dni,
-            familiaId: this.$data.idFamilia,
-            render: true,
+            familiaId: data.usuario.familia.familiaId,
+            render: true
           });
         }
         console.log(this.Solicitudes);
       } catch (error) {
-        console.log(error);
-        this.error.description = "No existen solicitudes pendientes";
-        this.$data.isShowModalError = true;
+        const data = AuthService.getUsuarioAutenticacion();
+        this.$router.push(`/family/family/${data.usuario.familia.familiaId}`);
       }
     },
 
@@ -83,8 +98,8 @@ export default {
     },
     closeModal() {
       this.$data.isShowModalError = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
