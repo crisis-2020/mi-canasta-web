@@ -14,6 +14,7 @@ namespace MiCanasta.MiCanasta.Model
         public string Longitud { get; set; }
         public string Horario { get; set; }
         public int Limite { get; set; }
+        public string Tipo { get; set; }
         public List<UsuarioTienda> UsuarioTiendas { get; set; }
         public List<Stock> Stocks { get; set; }
         public List<Compra> Compras { get; set; }
