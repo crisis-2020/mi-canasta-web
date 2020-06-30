@@ -47,6 +47,7 @@ import FamiliaService from "../../core/services/familia.service";
 import UsuarioService from "../../core/services/usuario.service";
 import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
 import ConfirmationModalShared from "../../shared/modal/confirmation-modal.component.vue";
+import AuthService from "../../core/services/auth.service";
 
 export default {
   name: "MembersCardShared",
@@ -77,7 +78,7 @@ export default {
   methods: {
 
     deleteUsuarioFromFamilia(){
-      if( localStorage.getItem("dni") == this.dni ){
+      if( AuthService.getUsuarioAutenticacion().usuario.usuario.dni == this.dni ){
         this.deleteYo();
       }
       else {
@@ -147,7 +148,7 @@ export default {
     },
 
     abrirModalConfirmacion(){
-      if(localStorage.getItem("dni") == this.dni ){
+      if(AuthService.getUsuarioAutenticacion().usuario.usuario.dni == this.dni ){
         if(this.numIntegrantes == 1)
           this.descriptionConfirmModal="¿Desea abandonar el grupo familiar? Toda la información de la familia se perderá";
         else this.descriptionConfirmModal="¿Desea abandonar el grupo familiar?";

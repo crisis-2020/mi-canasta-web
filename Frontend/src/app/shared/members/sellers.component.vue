@@ -23,7 +23,7 @@ import SelectShared from "../select/Select.component.vue";
 import UsuarioService from "../../core/services/usuario.service";
 
 export default {
-  name: "MembersCardShared",
+  name: "SellersCardShared",
   components: {SelectShared},
   props: [
     'person',

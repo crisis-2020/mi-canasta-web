@@ -92,7 +92,7 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpPut("/tiendas/{IdTienda}/{Dni}")]
+        [HttpPut("tiendas/{IdTienda}/{Dni}")]
         public ActionResult UpdateTienda(int IdTienda, string Dni, TiendaUpdateDto TiendaUpdateDto)
         {
             try

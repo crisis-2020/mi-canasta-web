@@ -31,6 +31,7 @@
 import MembersCardShared from "../../shared/members/members.component.vue";
 import FamiliaService from "../../core/services/familia.service";
 import UsuarioService from "../../core/services/usuario.service";
+import AuthService from "../../core/services/auth.service";
 
 
 export default {
@@ -120,9 +121,8 @@ export default {
 
     async getRolUsuario(){
        try {
-        let data = JSON.parse(localStorage.getItem("data"));
-        const res = await UsuarioService.getUsuario(data.usuario.usuario.dni);
-        this.roles = res.data.rolUsuarios;
+        this.roles = AuthService.getUsuarioAutenticacion().usuario.roles;
+        console.log(this.roles);
         for(let i=0; i < this.roles.length; i++){
           if(this.roles[i].rolPerfilId == 1) {
             this.userIsAdmin=true;
