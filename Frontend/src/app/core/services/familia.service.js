@@ -7,7 +7,6 @@ export default class FamiliaService {
             .post(`${environments.api}/familias`, familiaRequest)
     }
 
-
     static async listarFamilia(id) {
         return await axios.get(`${environments.api}/familias/${id}`);
     }
@@ -23,9 +22,4 @@ export default class FamiliaService {
     static async desactivarSolicitud(idFamilia){
         return await axios.put(`${environments.api}/familias/${idFamilia}`);
     }
-
-    static async asignarRolUsuario(idFamilia, dni){
-        return await axios.put(`${environments.api}/familias/${idFamilia}/usuarios/${dni}/RolesPorUsuario`);
-    }
-
 }

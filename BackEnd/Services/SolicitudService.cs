@@ -17,6 +17,7 @@ namespace MiCanasta.MiCanasta.Services
         SolicitudBusquedaDto ObtenerNombreFamilia(String Dni);
         bool BorrarSolicitud(SolicitudUsuarioDto solicitud);
         List<SolicitudGetDto> GetSolicitudesByFamiliaId(int? FamiliaId);
+        public void CancelarSolicitud(String Dni);
     }
 
 }

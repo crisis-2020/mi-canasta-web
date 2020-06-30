@@ -2,23 +2,29 @@
   <div class="dealers-container">
     <div class="dealers-container__members-quantity">
       <img src="../../../assets/ic_members.svg" alt="members" />
-      <p color-rojo>3/10</p>
+      <p color-rojo>{{ numIntegrantes }}/{{tienda.limite}}</p>
     </div>
     <div class="dealers-container__title">
       <h2>Lista de distribuidores</h2>
     </div>
 
     <div class="dealers-container__add">
-      <button  v-on:click="agregarSeller">
+      <button v-on:click="agregarSeller">
         <img src="../../../assets/ic_plus.svg" alt="plus" />
       </button>
 
-      
+    <ErrorModalShared
+      @Event="closeModal"
+      v-if="isShowModalError"
+      :title="error.title"
+      :description="error.description"
+    />
+
       <div class="input-shared-container">
         <input
           class="input-shared-component"
           type="text"
-          v-model="dni"
+          v-model="dni" 
           placeholder="Ingrese un DNI"
           maxlength="8"
         />
@@ -43,10 +49,13 @@
 import MembersCardShared from "../../shared/members/sellers.component.vue";
 import UsuarioService from "../../core/services/usuario.service";
 import TiendaService from "../../core/services/tienda.service";
+import ValidacionService from "../../core/services/validacion.service";
+import { TiendaGet } from '../../core/model/tienda.model';
+import ErrorModalShared from "../../shared/modal/error-modal.component.vue";
 
 export default {
   name: "HomeDealersPage",
-  components: { MembersCardShared },
+  components: { MembersCardShared, ErrorModalShared },
 
   data: function() {
     return {   
@@ -58,6 +67,9 @@ export default {
       unicoAdmin: false,
       rolx: false,
       dni: "",
+      tienda: TiendaGet,
+      isShowModalError: false,
+      error: { title: "¡Error!" },
     };
   },
 
@@ -65,18 +77,33 @@ export default {
     this.getRolUsuario();
     this.$data.idTienda = this.$route.params.id;
     this.listarMiembros();
+    this.GetLimiteTienda();
   },
 
 methods: {
 
+  async GetLimiteTienda(){
+    const res = await TiendaService.GetLimiteTienda(this.idTienda);
+    this.tienda = res.data;
+  },
+
   async agregarSeller(){
     try{
-      const res = await TiendaService.agregarSeller(this.$data.idTienda,
-      this.$data.dni,
-    );
-    this.$router.go();
-    console.log(res);
-    } catch (error) {
+        if (this.numIntegrantes < this.tienda.limite) {
+        const res = await TiendaService.agregarSeller(this.$data.idTienda,
+        this.$data.dni);
+        this.$router.go();
+        console.log(res); 
+        } else if (!ValidacionService.validarDni(this.dni)){
+        this.isShowModalError = true;
+        this.error.description = "El DNI ingresado no es válido";
+        this.cerrarModalConfirmacion();
+        } else {
+        this.isShowModalError = true;
+        this.error.description = "Se excedió el máximo de distribuidores de esta tienda";
+        this.cerrarModalConfirmacion();
+        }
+     } catch (error) {
       console.log(error);
     }
   },
@@ -146,8 +173,12 @@ methods: {
         console.log(error);        
       }
     },
-    cerrarModal() {
+    cerrarModalConfirmacion() {
       this.errorFlagModal = false;
+    },
+
+    closeModal() {
+      this.$data.isShowModalError = false;
     },
   },
 

@@ -29,14 +29,14 @@ namespace MiCanasta.MiCanasta.Services.Impl
         }
 
         public FamiliaCreateDto Create(FamiliaCreateDto model)
-        {
-
+        { 
             if (_context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre) != null) throw new ExistingFamilyException();
 
             else
             {
                 var familia = new Familia
                 {
+
                     Nombre = model.FamiliaNombre,
                     Dni = model.Dni,
                     AceptaSolicitudes = true,
@@ -58,7 +58,8 @@ namespace MiCanasta.MiCanasta.Services.Impl
                 _context.Add(familia);
                 _context.Add(entry);
                 _context.SaveChanges();
-
+                familia = _context.Familias.SingleOrDefault(x => x.Nombre == model.FamiliaNombre);
+                model.Id = familia.FamiliaId;
             }
             return _mapper.Map<FamiliaCreateDto>(model);
         }
@@ -176,62 +177,6 @@ namespace MiCanasta.MiCanasta.Services.Impl
             _context.Add(entry);
             _context.SaveChanges();
             return _mapper.Map<RolUsuarioCreateDto>(model);
-        }
-
-        public void asignaRolUsuario(int IdFamilia, string Dni)
-        {
-
-            var exist = _context.UsuarioFamilias.SingleOrDefault(x => x.Dni == Dni && x.FamiliaId == IdFamilia);
-            if (exist == null) throw new UserNotFoundException();
-
-
-            else
-            {
-                var rolUsuario = _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni);
-                if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 1))
-                {
-                    var entry = new RolUsuario
-                    {
-                        Dni = rolUsuario.Dni,
-                        RolPerfil = rolUsuario.RolPerfil,
-                        RolPerfilId = 2,
-                        Usuario = rolUsuario.Usuario,
-                    };
-
-                    DeleteRolUsuario(rolUsuario);
-                    AddRolUsuario(entry);
-                    _context.SaveChanges();
-
-                }
-
-                else if (rolUsuario == _context.RolUsuarios.SingleOrDefault(x => x.Dni == Dni && x.RolPerfilId == 2))
-                {
-                    var entry = new RolUsuario
-                    {
-                        Dni = rolUsuario.Dni,
-                        RolPerfil = rolUsuario.RolPerfil,
-                        RolPerfilId = 1,
-                        Usuario = rolUsuario.Usuario,
-                    };
-
-                    DeleteRolUsuario(rolUsuario);
-                    AddRolUsuario(entry);
-                    _context.SaveChanges();
-                }
-            }
-
-
-
-        }
-
-        void DeleteRolUsuario(RolUsuario rol)
-        {
-            _context.RolUsuarios.Remove(rol);
-
-        }
-        void AddRolUsuario(RolUsuario rol)
-        {
-            _context.RolUsuarios.Add(rol);
         }
 
     }

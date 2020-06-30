@@ -4,62 +4,102 @@
       <h2>Solicitudes Enviadas</h2>
     </div>
     <div class="request-received__allow">
-      <p>Desactivar solicitudes</p>
-
-      <a-switch default-checked />
+      <div v-if="aceptaSolicitudes" :value="false">
+        <p>La familia acepta solicitudes</p>
+      </div>
+      <div v-else>
+        <p>La familia no acepta solicitudes</p>
+      </div>
+      <a-switch v-model="aceptaSolicitudes" @change="onChange" />
     </div>
     <div class="request-received__list">
       <request-card
         v-for="(request, index) in Solicitudes"
         :request="request"
         v-bind:key="index"
+        @actualizar-tarjeta="getSolicitudes"
       ></request-card>
     </div>
+    <ErrorModalShared
+      @Event="closeModal"
+      v-if="isShowModalError"
+      :title="error.title"
+      :description="error.description"
+    />
   </div>
 </template>
 
 <script>
+import ErrorModalShared from "../../shared/modal/error-modal.component";
 import RequestCard from "./components/request-received.card.vue";
 import SolicitudService from "../../core/services/solicitud.service";
 import UsuarioService from "../../core/services/usuario.service";
+import AuthService from "../../core/services/auth.service";
+import FamiliaService from "../../core/services/familia.service";
 export default {
   name: "RequestReceived",
-  components: { RequestCard },
+  components: { RequestCard, ErrorModalShared },
 
   created() {
-    this.$data.idFamilia = this.$route.params.idFam;
+    const data = AuthService.getUsuarioAutenticacion();
+    this.aceptaSolicitudes = data.usuario.familia.aceptaSolicitudes;
     this.getSolicitudes();
   },
 
   data: function() {
     return {
+      usuario: {},
+      isShowModalError: false,
+      error: { title: "Error" },
       Solicitudes: [],
-      idFamilia: null,
+      aceptaSolicitudes: false
     };
   },
   methods: {
-    async getSolicitudes() {
-      const input = await SolicitudService.obtenerSolicitudesPorFamilia(
-        this.$data.idFamilia
-      );
-      var SolicitudesData = input.data;
-      var usuario;
-      for (let i = 0; i < SolicitudesData.length; i++) {
-        usuario = await this.getUsuarioData(SolicitudesData[i].dni);
-        this.Solicitudes.push({
-          title: "Solicitud " + (i + 1),
-          nombre: usuario.data.nombre + " " + usuario.data.apellidoPaterno,
-          dni: usuario.data.dni,
-          familiaId: this.$data.idFamilia,
-          render: true,
-        });
+    async onChange() {
+      try {
+        const data = AuthService.getUsuarioAutenticacion();
+        FamiliaService.desactivarSolicitud(data.usuario.familia.familiaId);
+        this.getSolicitudes();
+      } catch (error) {
+        console.log(error);
       }
-      console.log(this.Solicitudes);
     },
+    async getSolicitudes() {
+      try {
+        const data = AuthService.getUsuarioAutenticacion();
+
+        this.Solicitudes = [];
+        const input = await SolicitudService.obtenerSolicitudesPorFamilia(
+          data.usuario.familia.familiaId
+        );
+        var SolicitudesData = input.data;
+        var user = null;
+
+        for (let i = 0; i < SolicitudesData.length; i++) {
+          user = await this.getUsuarioData(SolicitudesData[i].dni);
+          this.Solicitudes.push({
+            title: "Solicitud " + (i + 1),
+            nombre: user.data.nombre + " " + user.data.apellidoPaterno,
+            dni: user.data.dni,
+            familiaId: data.usuario.familia.familiaId,
+            render: true
+          });
+        }
+        console.log(this.Solicitudes);
+      } catch (error) {
+        const data = AuthService.getUsuarioAutenticacion();
+        this.$router.push(`/family/family/${data.usuario.familia.familiaId}`);
+      }
+    },
+
     getUsuarioData(dni) {
       return UsuarioService.getUsuario(dni);
     },
-  },
+    closeModal() {
+      this.$data.isShowModalError = false;
+    }
+  }
 };
 </script>
 

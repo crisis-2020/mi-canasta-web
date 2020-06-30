@@ -55,5 +55,24 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
+        [HttpGet("{IdFamilia}")]
+        public ActionResult GetSolicitudesByFamily(int IdFamilia)
+        {
+                return Ok();
+        }
+        
+        [HttpDelete("{id}")]
+        public ActionResult CancelarSolicitud(String id)
+        {
+            try
+            {
+                _solicitudService.CancelarSolicitud(id);
+                return Ok("La solicitud se ha eliminado");
+            }
+            catch (SolicitudeNotFoundException SolicitudeNotFoundException)
+            {
+                return NotFound(SolicitudeNotFoundException.ExceptionDto);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ using MiCanasta.MiCanasta;
 using static MiCanasta.MiCanasta.Services.Impl.SolicitudServiceImpl;
 using MiCanasta.Dto;
 using System.Collections.Generic;
+using MiCanasta.Model.Identity;
 
 namespace MiCanasta.BackEnd.ConfigMapper
 {
@@ -41,6 +42,10 @@ namespace MiCanasta.BackEnd.ConfigMapper
             CreateMap<CompraUpdateDto, Compra>();
             CreateMap<Stock, StockRequestDto>();
             CreateMap<Solicitud, SolicitudGetDto>();
+
+            //
+            CreateMap<ApplicationUserDto, ApplicationUser>();
+            //
 
         }
 

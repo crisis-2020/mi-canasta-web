@@ -14,6 +14,7 @@ namespace MiCanasta.MiCanasta.Services
     {
         TiendaDto getById(int IdTienda);
         TiendaUsuarioDto PostUsuarioInTienda(int idTienda, string dni);
+        public TiendaLimiteDto GetLimiteTienda(int idTienda);
 
         List<StockDto> GetStocksById(int IdTienda);
         StockDto UpdateStock(int IdTienda, int IdProducto, StockUpdateDto StockUpdateDto);
@@ -22,5 +23,6 @@ namespace MiCanasta.MiCanasta.Services
         List<TiendaDataDto>GetTiendas();
         TiendaDetallesDto GetTiendaDetalles(int IdTienda);
 
+        TiendaUpdateDto UpdateTienda(int IdTienda, string Dni, TiendaUpdateDto TiendaUpdateDto);
     }
 }

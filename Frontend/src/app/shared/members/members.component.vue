@@ -9,12 +9,12 @@
       </div>
 
       <div class="member-container__personal">
-        <h2>{{ person.nombre }}</h2>
+        <h2>{{ person.nombre +" "+ person.apellidoPaterno}}</h2>
         <p>{{ person.dni }}</p>
       </div>
-      <div class="member-container__delete-btn"
-      >
-          <button
+      <div class="member-container__delete-btn">
+        
+      <button
           v-on:click="abrirModalConfirmacion"
           >Remover</button>
       </div>

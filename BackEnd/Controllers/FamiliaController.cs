@@ -77,20 +77,6 @@ namespace MiCanasta.MiCanasta.Controllers
             return Ok("Se desactivó realizar solicitudes y se eliminaron las existentes");
         }
 
-        [HttpPut("{IdFamilia}/usuarios/{Dni}/RolesPorUsuario")]
-        public ActionResult asignarRolUsuario(int IdFamilia, string dni)
-        {
-            try
-            {
-                _familiaService.asignaRolUsuario(IdFamilia, dni);
-                return Ok("El rol fue modificado");
-            }
-            catch (UserNotFoundException userNotFoundException)
-            {
-                return BadRequest(userNotFoundException.ExceptionDto);
-            }
-        }
-
         [HttpGet("{FamiliaId}")]
         public ActionResult GetFamilia(int FamiliaId)
         {

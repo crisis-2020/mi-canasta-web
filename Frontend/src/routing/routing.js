@@ -1,6 +1,7 @@
 import Router from "vue-router";
 import Vue from "vue";
 import LayoutPage from "../app/layout/components/layout/LayoutPage.vue";
+import LayoutDelears from "../app/layout/components/layout/LayoutDelears.vue";
 import LayoutLogin from "../app/layout/components/layout/LayoutLogin.vue";
 import LoginPage from "../app/modules/login/login.page.vue";
 import HomePage from "../app/modules/home/home.page.vue";
@@ -40,34 +41,38 @@ export default new Router({
       ],
     },
     {
-      path: "/home",
+      path: "/start",
+      name: "LayoutStart",
+      component: LayoutLogin,
+      children: [
+        {
+          path: "home",
+          name: "HomePage",
+          component: HomePage,
+        },
+        {
+          path: "requests-sent",
+          name: "RequestsSentPage",
+          component: RequestsSentPage,
+        },
+      ],
+    },
+    {
+      path: "/family",
       name: "LayoutPage",
       component: LayoutPage,
       children: [
-        { path: "/home", name: "HomePage", component: HomePage },
         { path: "family", name: "FamilyPage", component: HomeFamilyPage },
-        { path: "dealers", name: "DealersPage", component: DealersPage },
         { path: "sell", name: "SalePage", component: SalePage },
         { path: "user", name: "UserPage", component: UserPage },
-        {
-          path: "dealers/location",
-          name: "DealersLocation",
-          component: DealersLocation,
-        },
         {
           path: "solicitudes",
           name: "SolicitudPage",
           component: SolicitudPage,
         },
         { path: "family/:id", name: "FamilyPage", component: HomeFamilyPage },
-        { path: "dealers/:id", name: "DealersPage", component: DealersPage },
         {
-          path: "requests-sent",
-          name: "RequestsSentPage",
-          component: RequestsSentPage,
-        },
-        {
-          path: "requests-received/:idFam",
+          path: "requests-received",
           name: "RequestReceived",
           component: RequestReceived,
         },
@@ -77,6 +82,21 @@ export default new Router({
         { path: "buy", name: "BuyPage", component: BuyPage },
         { path: "user/edit", name: "UserEditPage", component: UserEditPage },
         { path: "stock", name: "StockPage", component: StockPage },
+        {
+          path: "location",
+          name: "DealersLocation",
+          component: DealersLocation,
+        },
+      ],
+    },
+    {
+      path: "/delear",
+      name: "LayoutDelears",
+      component: LayoutDelears,
+      children: [
+        
+        { path: "dealers/:id", name: "DealersPage", component: DealersPage },
+        { path: "dealers", name: "DealersPage", component: DealersPage },
       ],
     },
     {

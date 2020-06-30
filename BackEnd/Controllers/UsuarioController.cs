@@ -6,6 +6,15 @@ using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using MiCanasta.MiCanasta.Exceptions;
 using MiCanasta.MiCanasta.Dto;
+using System.Threading.Tasks;
+using MiCanasta.MiCanasta.Model;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace MiCanasta.MiCanasta.Controllers
 {
@@ -14,10 +23,16 @@ namespace MiCanasta.MiCanasta.Controllers
     public class UsuarioController : ControllerBase
     {
         private UsuarioService _usuarioService;
-        public UsuarioController(UsuarioService usuarioService)
+      
+        private readonly IConfiguration _configuration;
+
+        public UsuarioController(UsuarioService usuarioService, 
+            IConfiguration configuration)
         {
             _usuarioService = usuarioService;
+            _configuration = configuration;
         }
+
 
         [HttpGet("{id}")]
         public ActionResult<UsuarioDto> GetById(String id)
@@ -38,8 +53,12 @@ namespace MiCanasta.MiCanasta.Controllers
             try
             {
                 UsuarioDataDto usuarioData = _usuarioService.GetDatosUsuario(UsuarioLogin.Dni, UsuarioLogin.Contrasena);
-               
-                return Ok(usuarioData);
+                var usuarioGen = new
+                {
+                    usuariotoken = GenerateToken(usuarioData).Result,
+                    usuario = usuarioData
+                };
+                return Ok(usuarioGen);
             }
             catch(UserLoginIncorrectException UserIncorrect)
             {
@@ -70,17 +89,6 @@ namespace MiCanasta.MiCanasta.Controllers
             }
         }
 
-        [HttpPut("{Dni}/tiendas/{IdTienda}")]
-        public ActionResult UpdateTienda(string Dni, int IdTienda, TiendaUpdateDto TiendaUpdateDto ) {
-            try
-            {
-                return Ok(_usuarioService.UpdateTienda(Dni, IdTienda, TiendaUpdateDto));
-            }
-            catch (ActualPasswordNotMatchException e) {
-                return BadRequest(e.ExceptionDto); 
-            }
-        }
-
         [HttpGet("{Dni}/usuariosporfamilia")]
         public ActionResult UpdateTienda (string Dni)
         {
@@ -105,6 +113,55 @@ namespace MiCanasta.MiCanasta.Controllers
             {
                 return NotFound(SolicitudeNotFoundException.ExceptionDto);
             }
+        }
+
+        [HttpPut("{Dni}/RolesPorUsuario")]
+        public ActionResult cambiarRolUsuario(string Dni)
+        {
+            try
+            {
+                _usuarioService.cambiarRolUsuario(Dni);
+                return Ok("El rol fue modificado");
+            }
+            catch (UserNotFoundException userNotFoundException)
+            {
+                return BadRequest(userNotFoundException.ExceptionDto);
+            }
+        }
+
+        private async Task<string> GenerateToken(UsuarioDataDto user)
+        {
+            var secretKey = _configuration.GetValue<string>("SecretKey");
+
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.usuario.Dni),
+                new Claim(ClaimTypes.Name, user.usuario.Nombre),
+                new Claim(ClaimTypes.Surname, user.usuario.ApellidoPaterno)
+            };
+            //var roles = await _userManager.GetRolesAsync(user);
+
+            //foreach (var role in roles)
+            //{
+            //    claims.Add(
+            //        new Claim(ClaimTypes.Role, role)
+            //        );
+            //}
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(createdToken);
         }
     }
 }
